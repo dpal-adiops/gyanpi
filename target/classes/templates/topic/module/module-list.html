@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/layout3">
+
+<head>
+<title>Module-list</title>
+</head>
+
+<body>
+	
+	<div layout:fragment="content">
+		<!--breadcrumbs start-->
+         <div id="breadcrumbs-wrapper">
+            <!-- Search for small screen -->
+            <div class="header-search-wrapper grey lighten-2 hide-on-large-only">
+              <input type="text" name="Search" class="header-search-input z-depth-2" placeholder="Explore Materialize">
+            </div>
+            <div class="container">
+              <div class="row">
+                <div class="col s10 m6 l6">
+                  <h5 class="breadcrumbs-title">Modules</h5>
+                  <ol class="breadcrumbs">
+                    <li><a href="index.html">Dashboard</a>
+                    </li>
+                    <li th:text=${topicRO.key} class="active"></li>
+                  </ol>
+                </div>                
+              </div>
+            </div>
+          </div>
+          <!--breadcrumbs end-->		 
+		<div class="container">
+			<div class="section">
+				<div class="divider"></div>
+				<div id="basic-form" class="section">
+					<div class="row">
+						<div class="col s12 m12 l12">
+							<a th:href="@{/web/topics/{id}(id=${topicRO.id})}" class="btn grey lighten-5 grey-text" name="action">General</a>					
+					         		<a th:href="@{/web/topics/{id}/modules(id=${topicRO.id})}" name="action" class="btn blue">Modules</a>
+					        		<a th:href="@{/web/topics/{id}/questions(id=${topicRO.id})}" name="action" class="btn grey lighten-5 grey-text">Questions</a>
+					        		<a th:href="@{/web/topics/{id}/images(id=${topicRO.id})}" name="action" class="btn grey lighten-5 grey-text">Images</a>
+					        		<a th:href="@{/web/topics/{id}/videos(id=${topicRO.id})}" name="action" class="btn grey lighten-5 grey-text">Videos</a>
+					        		<a th:href="@{/web/topics/{id}/pages(id=${topicRO.id})}" name="action" class="btn grey lighten-5 grey-text">Pages</a>
+							<div class="card-panel">
+								<div class="row">
+									<div class="col s12">                   
+					                   <a th:href="@{/web/topics/{id}/modules/assign(id=${topicRO.id})}"   id="scale-demo" href="#!" class="btn-floating btn-large scale-transition">
+										    <i class="material-icons">add</i>
+										</a>
+					                  The list shows all assigned modules. Click assign to add more module.             
+					                </div>
+					                <div class="col s12">
+										<table class="centered">
+											<thead>
+												<tr>
+													 <th>Key</th>
+													  		<th>Name</th>
+													 <th></th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr th:if="${modules.empty}">
+										            <td colspan="3"> No Module Available </td>
+										        </tr>
+												  <tr th:each ="module : ${modules}">
+													   <td ><a th:href="@{/web/modules/{id}(id=${module.id})}"><span th:text="${module.key}"></span></a></td>
+															 	<td th:text="${module.name}"></td>
+													 <td>
+										                <a th:href="@{/web/topics/{topic_id}/modules/{id}/unassign(topic_id=${topicRO.id},id=${module.id})}" class="btn-floating btn-small"> <i class="material-icons">delete</i></a>
+										            </td>
+												</tr>
+											</tbody>
+										</table>
+									</div>		
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+
+<head th:replace="fragments/header :: header">
+<title>Header</title>
+</head>
+
+<body>
+
+  <div th:replace="fragments/navigation :: navigation"></div>
+
+	<div class="row">
+		<div class="col s3 ">
+			<!-- div th:replace="fragments/sidebar :: sidebar"></div> -->
+			<div layout:fragment="leftbar"></div>
+		</div>
+
+		<div class="col s6" id="mainContent">
+			<div layout:fragment="content"></div>
+		</div>
+		<div class="col s3 ">
+			<!-- div th:replace="fragments/sidebar :: sidebar"></div> -->
+			<div layout:fragment="rightbar"></div>
+		</div>
+	</div>
+
+
+
+
+
+<!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="/js/materialize.js"></script>
+  <script src="/js/init.js"></script>
+</body>
+
+</html>

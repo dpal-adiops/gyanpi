@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+
+<head th:replace="fragments/header :: header">
+<title>Header</title>
+</head>
+
+<body>
+
+
+
+<div th:replace="fragments/navigation :: navigation"></div>
+
+<div class="section no-pad-bot" id="index-banner">
+  <div class="container">
+    <div class="row">
+    	<div class="col s8">
+    		<br><br>
+		    <h1 class="header center orange-text">Gain confidence in maths!</h1>
+		    <div class="row center">
+		      <h5 class="header col s12 light"> Gyanly helps students to learn maths at their own pace through fun and interactive questions, built in support and motivating awards.</h5>
+		    </div>
+		    <div class="row center">
+		      <a href="#" id="download-button" class="btn-large waves-effect waves-light orange">Get Started</a>
+		    </div>
+		    <br><br><br>
+    	</div>
+    	<div class="col s4">
+    		 <div class="row">
+                <div class="card-panel">
+                  <div class="row">
+                    <form class="col s11"  th:action="@{/admin/login}" method='POST' >
+                      <h4 class="header2 center-align">Login</h4>
+                      <div class="row">
+                        <div class="input-field">
+                          <i class="material-icons prefix">account_circle</i>
+                          <input id="icon_prefix"  name="username" type="text" class="validate">
+                          <label for="icon_prefix">User Name</label>
+                        </div>
+                        <div class="input-field">
+                          <i class="material-icons prefix">lock_outline</i>
+                          <input id="icon_password" name="password" type="password" class="validate">
+                          <label for="icon_password">Password</label>
+                        </div>
+                        <div class="input-field">
+                          <div class="input-field">
+                            <button class="btn waves-effect waves-light" type="submit" name="action">
+                              <i class="material-icons">lock_open</i> Login</button>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+            </div>
+    	</div>    	
+    </div>    
+  </div>
+</div>
+
+
+	<div th:replace="fragments/footer :: footer"></div>
+
+<!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="/js/materialize.js"></script>
+  <script src="/js/init.js"></script>
+
+</body>
+
+</html>
