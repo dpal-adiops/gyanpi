@@ -107,14 +107,16 @@ public class TopicService{
        
               
       
-        	if(tTopicRO.getKey() !=null)
-        	newEntity.setKey(tTopicRO.getKey());
+        	if(tTopicRO.getKeyid() !=null)
+        	newEntity.setKeyid(tTopicRO.getKeyid());
         	if(tTopicRO.getName() !=null)
         	newEntity.setName(tTopicRO.getName());
-        	if(tTopicRO.getDesc() !=null)
-        	newEntity.setDesc(tTopicRO.getDesc());
+        	if(tTopicRO.getDescription() !=null)
+        	newEntity.setDescription(tTopicRO.getDescription());
         	if(tTopicRO.getTitle() !=null)
         	newEntity.setTitle(tTopicRO.getTitle());
+        	if(tTopicRO.getAuthorId() !=null)
+        	newEntity.setAuthorId(tTopicRO.getAuthorId());
 
   	 try {
         	 newEntity = mTopicRepository.save(newEntity);   

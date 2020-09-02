@@ -40,9 +40,10 @@ public class TopicCLI implements CommandLineRunner{
 			
 			for (int j = 1; j <= 5; j++) {
 				TopicRO tTopicRO= new TopicRO();
-				tTopicRO.setKey(tModuleRO.getKey()+"0"+j);
+				tTopicRO.setKeyid(tModuleRO.getKeyid()+"0"+j);
 				tTopicRO.setName("Level "+j);
 				tTopicRO.setTitle(tModuleRO.getName());
+				tTopicRO.setAuthorId(tCourseRO.getAuthorId());
 				try {
 					tTopicRO=mTopicService.createOrUpdateTopic(tTopicRO);
 					mTopicService.addTopicModule(tTopicRO.getId(), tModuleRO.getId());

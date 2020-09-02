@@ -32,7 +32,7 @@ import com.adiops.apigateway.question.entity.QuestionEntity;
  *
  */
 @Entity(name = "video")
-@Table(uniqueConstraints={@UniqueConstraint(columnNames={"key"})})
+@Table(uniqueConstraints={@UniqueConstraint(columnNames={"keyid"})})
 public class VideoEntity {
 
 	@Id
@@ -56,15 +56,18 @@ public class VideoEntity {
 		
 	}
 
-	@Column(name="key")
+	@Column(name="keyid")
 	@CsvBindByPosition(position = 0)
-	private String key;
+	private String keyid;
 	@Column(name="name")
 	@CsvBindByPosition(position = 1)
 	private String name;
 	@Column(name="url")
 	@CsvBindByPosition(position = 2)
 	private String url;
+	@Column(name="author_id")
+	@CsvBindByPosition(position = 3)
+	private String authorId;
 	
 	 	@ManyToMany(mappedBy = "videos")
 	 private Set<CourseEntity> courses = new HashSet<>();
@@ -76,12 +79,12 @@ public class VideoEntity {
 	 private Set<QuestionEntity> questions = new HashSet<>();
 	
 	
-	public void setKey(String key){
-		this.key=key;
+	public void setKeyid(String keyid){
+		this.keyid=keyid;
 	}
 	
-	public String getKey(){
-		return this.key;
+	public String getKeyid(){
+		return this.keyid;
 	}
 	
 	
@@ -102,6 +105,16 @@ public class VideoEntity {
 	
 	public String getUrl(){
 		return this.url;
+	}
+	
+	
+	
+	public void setAuthorId(String authorId){
+		this.authorId=authorId;
+	}
+	
+	public String getAuthorId(){
+		return this.authorId;
 	}
 	
 	

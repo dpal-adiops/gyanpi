@@ -32,7 +32,7 @@ public class ModuleWebController {
 	@Autowired
 	ModuleService mModuleService;
 
-	@GetMapping(value = "/web/modules")
+	@GetMapping(value = "/admin/web/modules")
 	public String getModules(Model model, @RequestParam(value = "page", defaultValue = "1") int pageNumber) {
 		List<ModuleRO> modules = mModuleService.findAll(pageNumber, ROW_PER_PAGE);
 		 
@@ -45,18 +45,18 @@ public class ModuleWebController {
 	    model.addAttribute("hasNext", hasNext);
 	    model.addAttribute("next", pageNumber + 1);
 	    model.addAttribute("selectedMenu", "module");
-	    return "module/module-list";
+	    return "admin/module/module-list";
 	}
 
-	@GetMapping(value = { "/web/modules/add" })
+	@GetMapping(value = { "/admin/web/modules/add" })
 	public String showAddModule(Model model) {
 		ModuleRO tModuleRO = new ModuleRO();
 	    model.addAttribute("selectedMenu", "module");
 	    model.addAttribute("moduleRO", tModuleRO);
-	    return "module/module-add";
+	    return "admin/module/module-add";
 	}
 
-	@PostMapping(value = "/web/modules/add")
+	@PostMapping(value = "/admin/web/modules/add")
 	public String addModule(@ModelAttribute ModuleRO tModuleRO,Model model)  {
 		try {
 		 tModuleRO=mModuleService.createOrUpdateModule(tModuleRO);
@@ -67,198 +67,198 @@ public class ModuleWebController {
 		
 		model.addAttribute("moduleRO", tModuleRO);
 		model.addAttribute("selectedMenu", "module");
-		return "module/module-edit";
+		return "admin/module/module-edit";
 	}
 
-	@GetMapping(value = { "/web/modules/{moduleId}" })
+	@GetMapping(value = { "/admin/web/modules/{moduleId}" })
 	public String showEditModule(Model model, @PathVariable Long moduleId) throws RestException {
 		ModuleRO tModuleRO = mModuleService.getModuleById(moduleId);
 	    model.addAttribute("selectedMenu", "module");
 	    model.addAttribute("moduleRO", tModuleRO);
-	    return "module/module-edit";
+	    return "admin/module/module-edit";
 	}
 
 	
 
-	@GetMapping(value = { "/web/modules/{moduleId}/delete" })
+	@GetMapping(value = { "/admin/web/modules/{moduleId}/delete" })
 	public String deleteModuleById(Model model, @PathVariable Long moduleId) throws RestException {
 		mModuleService.deleteModuleById(moduleId);
-		return "redirect:/web/modules";
+		return "redirect:/admin/web/modules";
 	}
 	
 	
-	@GetMapping(value = { "/web/modules/{moduleId}/courses" })
+	@GetMapping(value = { "/admin/web/modules/{moduleId}/courses" })
 	public String getModuleCourses(Model model, @PathVariable Long moduleId) throws RestException {
 		model.addAttribute("moduleRO", mModuleService.getModuleById(moduleId));
 		model.addAttribute("courses", mModuleService.findModuleCourses(moduleId));
 		model.addAttribute("selectedMenu", "module");
-		return "module/course/course-list";
+		return "admin/module/course/course-list";
 	}
 	
-	@GetMapping(value = { "/web/modules/{moduleId}/courses/assign" })
+	@GetMapping(value = { "/admin/web/modules/{moduleId}/courses/assign" })
 	public String assignCourses(Model model, @PathVariable Long moduleId) throws RestException {
 		model.addAttribute("moduleRO", mModuleService.getModuleById(moduleId));		
 		model.addAttribute("courses", mModuleService.findUnassignModuleCourses(moduleId));
 		model.addAttribute("selectedMenu", "module");
-		return "module/course/course-assign";
+		return "admin/module/course/course-assign";
 	}
 	
-	@GetMapping(value = { "/web/modules/{moduleId}/courses/{courseId}/assign" })
+	@GetMapping(value = { "/admin/web/modules/{moduleId}/courses/{courseId}/assign" })
 	public String getCourses(Model model, @PathVariable Long moduleId, @PathVariable Long courseId) throws RestException {
 		mModuleService.addModuleCourse(moduleId, courseId);
 		model.addAttribute("moduleRO", mModuleService.getModuleById(moduleId));
 		model.addAttribute("courses", mModuleService.findModuleCourses(moduleId));
 		model.addAttribute("selectedMenu", "module");
-		return "module/course/course-list";
+		return "admin/module/course/course-list";
 	}
 	
-	@GetMapping(value = { "/web/modules/{moduleId}/courses/{courseId}/unassign" })
+	@GetMapping(value = { "/admin/web/modules/{moduleId}/courses/{courseId}/unassign" })
 	public String unassignCourses(Model model, @PathVariable Long moduleId, @PathVariable Long courseId) throws RestException {
 		mModuleService.unassignModuleCourse(moduleId, courseId);
 		model.addAttribute("moduleRO", mModuleService.getModuleById(moduleId));
 		model.addAttribute("courses", mModuleService.findModuleCourses(moduleId));
 		model.addAttribute("selectedMenu", "module");
-		return "module/course/course-list";
+		return "admin/module/course/course-list";
 	}
 	
 	
-	@GetMapping(value = { "/web/modules/{moduleId}/topics" })
+	@GetMapping(value = { "/admin/web/modules/{moduleId}/topics" })
 	public String getModuleTopics(Model model, @PathVariable Long moduleId) throws RestException {
 		model.addAttribute("moduleRO", mModuleService.getModuleById(moduleId));
 		model.addAttribute("topics", mModuleService.findModuleTopics(moduleId));
 		model.addAttribute("selectedMenu", "module");
-		return "module/topic/topic-list";
+		return "admin/module/topic/topic-list";
 	}
 	
-	@GetMapping(value = { "/web/modules/{moduleId}/topics/assign" })
+	@GetMapping(value = { "/admin/web/modules/{moduleId}/topics/assign" })
 	public String assignTopics(Model model, @PathVariable Long moduleId) throws RestException {
 		model.addAttribute("moduleRO", mModuleService.getModuleById(moduleId));		
 		model.addAttribute("topics", mModuleService.findUnassignModuleTopics(moduleId));
 		model.addAttribute("selectedMenu", "module");
-		return "module/topic/topic-assign";
+		return "admin/module/topic/topic-assign";
 	}
 	
-	@GetMapping(value = { "/web/modules/{moduleId}/topics/{topicId}/assign" })
+	@GetMapping(value = { "/admin/web/modules/{moduleId}/topics/{topicId}/assign" })
 	public String getTopics(Model model, @PathVariable Long moduleId, @PathVariable Long topicId) throws RestException {
 		mModuleService.addModuleTopic(moduleId, topicId);
 		model.addAttribute("moduleRO", mModuleService.getModuleById(moduleId));
 		model.addAttribute("topics", mModuleService.findModuleTopics(moduleId));
 		model.addAttribute("selectedMenu", "module");
-		return "module/topic/topic-list";
+		return "admin/module/topic/topic-list";
 	}
 	
-	@GetMapping(value = { "/web/modules/{moduleId}/topics/{topicId}/unassign" })
+	@GetMapping(value = { "/admin/web/modules/{moduleId}/topics/{topicId}/unassign" })
 	public String unassignTopics(Model model, @PathVariable Long moduleId, @PathVariable Long topicId) throws RestException {
 		mModuleService.unassignModuleTopic(moduleId, topicId);
 		model.addAttribute("moduleRO", mModuleService.getModuleById(moduleId));
 		model.addAttribute("topics", mModuleService.findModuleTopics(moduleId));
 		model.addAttribute("selectedMenu", "module");
-		return "module/topic/topic-list";
+		return "admin/module/topic/topic-list";
 	}
 	
 	
-	@GetMapping(value = { "/web/modules/{moduleId}/images" })
+	@GetMapping(value = { "/admin/web/modules/{moduleId}/images" })
 	public String getModuleImages(Model model, @PathVariable Long moduleId) throws RestException {
 		model.addAttribute("moduleRO", mModuleService.getModuleById(moduleId));
 		model.addAttribute("images", mModuleService.findModuleImages(moduleId));
 		model.addAttribute("selectedMenu", "module");
-		return "module/image/image-list";
+		return "admin/module/image/image-list";
 	}
 	
-	@GetMapping(value = { "/web/modules/{moduleId}/images/assign" })
+	@GetMapping(value = { "/admin/web/modules/{moduleId}/images/assign" })
 	public String assignImages(Model model, @PathVariable Long moduleId) throws RestException {
 		model.addAttribute("moduleRO", mModuleService.getModuleById(moduleId));		
 		model.addAttribute("images", mModuleService.findUnassignModuleImages(moduleId));
 		model.addAttribute("selectedMenu", "module");
-		return "module/image/image-assign";
+		return "admin/module/image/image-assign";
 	}
 	
-	@GetMapping(value = { "/web/modules/{moduleId}/images/{imageId}/assign" })
+	@GetMapping(value = { "/admin/web/modules/{moduleId}/images/{imageId}/assign" })
 	public String getImages(Model model, @PathVariable Long moduleId, @PathVariable Long imageId) throws RestException {
 		mModuleService.addModuleImage(moduleId, imageId);
 		model.addAttribute("moduleRO", mModuleService.getModuleById(moduleId));
 		model.addAttribute("images", mModuleService.findModuleImages(moduleId));
 		model.addAttribute("selectedMenu", "module");
-		return "module/image/image-list";
+		return "admin/module/image/image-list";
 	}
 	
-	@GetMapping(value = { "/web/modules/{moduleId}/images/{imageId}/unassign" })
+	@GetMapping(value = { "/admin/web/modules/{moduleId}/images/{imageId}/unassign" })
 	public String unassignImages(Model model, @PathVariable Long moduleId, @PathVariable Long imageId) throws RestException {
 		mModuleService.unassignModuleImage(moduleId, imageId);
 		model.addAttribute("moduleRO", mModuleService.getModuleById(moduleId));
 		model.addAttribute("images", mModuleService.findModuleImages(moduleId));
 		model.addAttribute("selectedMenu", "module");
-		return "module/image/image-list";
+		return "admin/module/image/image-list";
 	}
 	
 	
-	@GetMapping(value = { "/web/modules/{moduleId}/videos" })
+	@GetMapping(value = { "/admin/web/modules/{moduleId}/videos" })
 	public String getModuleVideos(Model model, @PathVariable Long moduleId) throws RestException {
 		model.addAttribute("moduleRO", mModuleService.getModuleById(moduleId));
 		model.addAttribute("videos", mModuleService.findModuleVideos(moduleId));
 		model.addAttribute("selectedMenu", "module");
-		return "module/video/video-list";
+		return "admin/module/video/video-list";
 	}
 	
-	@GetMapping(value = { "/web/modules/{moduleId}/videos/assign" })
+	@GetMapping(value = { "/admin/web/modules/{moduleId}/videos/assign" })
 	public String assignVideos(Model model, @PathVariable Long moduleId) throws RestException {
 		model.addAttribute("moduleRO", mModuleService.getModuleById(moduleId));		
 		model.addAttribute("videos", mModuleService.findUnassignModuleVideos(moduleId));
 		model.addAttribute("selectedMenu", "module");
-		return "module/video/video-assign";
+		return "admin/module/video/video-assign";
 	}
 	
-	@GetMapping(value = { "/web/modules/{moduleId}/videos/{videoId}/assign" })
+	@GetMapping(value = { "/admin/web/modules/{moduleId}/videos/{videoId}/assign" })
 	public String getVideos(Model model, @PathVariable Long moduleId, @PathVariable Long videoId) throws RestException {
 		mModuleService.addModuleVideo(moduleId, videoId);
 		model.addAttribute("moduleRO", mModuleService.getModuleById(moduleId));
 		model.addAttribute("videos", mModuleService.findModuleVideos(moduleId));
 		model.addAttribute("selectedMenu", "module");
-		return "module/video/video-list";
+		return "admin/module/video/video-list";
 	}
 	
-	@GetMapping(value = { "/web/modules/{moduleId}/videos/{videoId}/unassign" })
+	@GetMapping(value = { "/admin/web/modules/{moduleId}/videos/{videoId}/unassign" })
 	public String unassignVideos(Model model, @PathVariable Long moduleId, @PathVariable Long videoId) throws RestException {
 		mModuleService.unassignModuleVideo(moduleId, videoId);
 		model.addAttribute("moduleRO", mModuleService.getModuleById(moduleId));
 		model.addAttribute("videos", mModuleService.findModuleVideos(moduleId));
 		model.addAttribute("selectedMenu", "module");
-		return "module/video/video-list";
+		return "admin/module/video/video-list";
 	}
 	
 	
-	@GetMapping(value = { "/web/modules/{moduleId}/pages" })
+	@GetMapping(value = { "/admin/web/modules/{moduleId}/pages" })
 	public String getModulePages(Model model, @PathVariable Long moduleId) throws RestException {
 		model.addAttribute("moduleRO", mModuleService.getModuleById(moduleId));
 		model.addAttribute("pages", mModuleService.findModulePages(moduleId));
 		model.addAttribute("selectedMenu", "module");
-		return "module/page/page-list";
+		return "admin/module/page/page-list";
 	}
 	
-	@GetMapping(value = { "/web/modules/{moduleId}/pages/assign" })
+	@GetMapping(value = { "/admin/web/modules/{moduleId}/pages/assign" })
 	public String assignPages(Model model, @PathVariable Long moduleId) throws RestException {
 		model.addAttribute("moduleRO", mModuleService.getModuleById(moduleId));		
 		model.addAttribute("pages", mModuleService.findUnassignModulePages(moduleId));
 		model.addAttribute("selectedMenu", "module");
-		return "module/page/page-assign";
+		return "admin/module/page/page-assign";
 	}
 	
-	@GetMapping(value = { "/web/modules/{moduleId}/pages/{pageId}/assign" })
+	@GetMapping(value = { "/admin/web/modules/{moduleId}/pages/{pageId}/assign" })
 	public String getPages(Model model, @PathVariable Long moduleId, @PathVariable Long pageId) throws RestException {
 		mModuleService.addModulePage(moduleId, pageId);
 		model.addAttribute("moduleRO", mModuleService.getModuleById(moduleId));
 		model.addAttribute("pages", mModuleService.findModulePages(moduleId));
 		model.addAttribute("selectedMenu", "module");
-		return "module/page/page-list";
+		return "admin/module/page/page-list";
 	}
 	
-	@GetMapping(value = { "/web/modules/{moduleId}/pages/{pageId}/unassign" })
+	@GetMapping(value = { "/admin/web/modules/{moduleId}/pages/{pageId}/unassign" })
 	public String unassignPages(Model model, @PathVariable Long moduleId, @PathVariable Long pageId) throws RestException {
 		mModuleService.unassignModulePage(moduleId, pageId);
 		model.addAttribute("moduleRO", mModuleService.getModuleById(moduleId));
 		model.addAttribute("pages", mModuleService.findModulePages(moduleId));
 		model.addAttribute("selectedMenu", "module");
-		return "module/page/page-list";
+		return "admin/module/page/page-list";
 	}
 	
 

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/layout3">
+
+<head>
+<title>AppRole-list</title>
+</head>
+
+<body>
+	
+	<div layout:fragment="content">
+		<!--breadcrumbs start-->
+         <div id="breadcrumbs-wrapper">
+            <!-- Search for small screen -->
+            <div class="header-search-wrapper grey lighten-2 hide-on-large-only">
+              <input type="text" name="Search" class="header-search-input z-depth-2" placeholder="Explore Materialize">
+            </div>
+            <div class="container">
+              <div class="row">
+                <div class="col s10 m6 l6">
+                  <h5 class="breadcrumbs-title">AppRoles</h5>
+                  <ol class="breadcrumbs">
+                    <li><a href="index.html">Dashboard</a>
+                    </li>
+                    <li th:text=${app_userRO.keyid} class="active"></li>
+                  </ol>
+                </div>                
+              </div>
+            </div>
+          </div>
+          <!--breadcrumbs end-->		 
+		<div class="container">
+			<div class="section">
+				<div class="divider"></div>
+				<div id="basic-form" class="section">
+					<div class="row">
+						<div class="col s12 m12 l12">
+							<a th:href="@{/admin/web/app_users/{id}(id=${app_userRO.id})}" class="btn grey lighten-5 grey-text" name="action">General</a>					
+					         		<a th:href="@{/admin/web/app_users/{id}/app_roles(id=${app_userRO.id})}" name="action" class="btn blue">AppRoles</a>
+							<div class="card-panel">
+								<div class="row">
+									<div class="col s12">                   
+					                   <a th:href="@{/admin/web/app_users/{id}/app_roles/assign(id=${app_userRO.id})}"   id="scale-demo" href="#!" class="btn-floating btn-large scale-transition">
+										    <i class="material-icons">add</i>
+										</a>
+					                  The list shows all assigned app_roles. Click assign to add more app_role.             
+					                </div>
+					                <div class="col s12">
+										<table class="centered">
+											<thead>
+												<tr>
+													 <th>keyid</th>
+													  		<th>Name</th>
+													  		<th>Permission</th>
+													 <th></th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr th:if="${app_roles.empty}">
+										            <td colspan="3"> No AppRole Available </td>
+										        </tr>
+												  <tr th:each ="app_role : ${app_roles}">
+													   <td ><a th:href="@{/admin/web/app_roles/{id}(id=${app_role.id})}"><span th:text="${app_role.keyid}"></span></a></td>
+															 	<td th:text="${app_role.name}"></td>
+															 	<td th:text="${app_role.permission}"></td>
+													 <td>
+										                <a th:href="@{/admin/web/app_users/{app_user_id}/app_roles/{id}/unassign(app_user_id=${app_userRO.id},id=${app_role.id})}" class="btn-floating btn-small"> <i class="material-icons">delete</i></a>
+										            </td>
+												</tr>
+											</tbody>
+										</table>
+									</div>		
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

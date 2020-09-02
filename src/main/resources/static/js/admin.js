@@ -1,5 +1,6 @@
 function addEditorForm(){
 	 var justHtml = quill.root.innerHTML;
-	 document.getElementById("desc").value=justHtml;
+	 var text=quill.getText()
+	 document.getElementById("desc").value=text;
 	 document.getElementById("editorForm").submit();
 }

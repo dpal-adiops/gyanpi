@@ -32,7 +32,7 @@ import com.adiops.apigateway.page.entity.PageEntity;
  *
  */
 @Entity(name = "course")
-@Table(uniqueConstraints={@UniqueConstraint(columnNames={"key"})})
+@Table(uniqueConstraints={@UniqueConstraint(columnNames={"keyid"})})
 public class CourseEntity {
 
 	@Id
@@ -56,15 +56,15 @@ public class CourseEntity {
 		
 	}
 
-	@Column(name="key")
+	@Column(name="keyid")
 	@CsvBindByPosition(position = 0)
-	private String key;
+	private String keyid;
 	@Column(name="name")
 	@CsvBindByPosition(position = 1)
 	private String name;
-	@Column(name="desc")
+	@Column(name="description")
 	@CsvBindByPosition(position = 2)
-	private String desc;
+	private String description;
 	@Column(name="author_id")
 	@CsvBindByPosition(position = 3)
 	private String authorId;
@@ -95,12 +95,12 @@ public class CourseEntity {
 	 private Set<PageEntity> pages = new HashSet<>();
 	
 	
-	public void setKey(String key){
-		this.key=key;
+	public void setKeyid(String keyid){
+		this.keyid=keyid;
 	}
 	
-	public String getKey(){
-		return this.key;
+	public String getKeyid(){
+		return this.keyid;
 	}
 	
 	
@@ -115,12 +115,12 @@ public class CourseEntity {
 	
 	
 	
-	public void setDesc(String desc){
-		this.desc=desc;
+	public void setDescription(String description){
+		this.description=description;
 	}
 	
-	public String getDesc(){
-		return this.desc;
+	public String getDescription(){
+		return this.description;
 	}
 	
 	

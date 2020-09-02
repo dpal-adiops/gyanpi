@@ -102,12 +102,14 @@ public class VideoService{
        
               
       
-        	if(tVideoRO.getKey() !=null)
-        	newEntity.setKey(tVideoRO.getKey());
+        	if(tVideoRO.getKeyid() !=null)
+        	newEntity.setKeyid(tVideoRO.getKeyid());
         	if(tVideoRO.getName() !=null)
         	newEntity.setName(tVideoRO.getName());
         	if(tVideoRO.getUrl() !=null)
         	newEntity.setUrl(tVideoRO.getUrl());
+        	if(tVideoRO.getAuthorId() !=null)
+        	newEntity.setAuthorId(tVideoRO.getAuthorId());
 
   	 try {
         	 newEntity = mVideoRepository.save(newEntity);   

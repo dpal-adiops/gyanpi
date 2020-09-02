@@ -35,9 +35,9 @@ public class DbinitCommandLineRunner implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		CourseRO tCourseRO= new CourseRO();
-		tCourseRO.setKey("Math10");
+		tCourseRO.setKeyid("Math10");
 		tCourseRO.setName("NCERT Class 10 Maths chapter-wise Quiz");
-		tCourseRO.setDesc("This test qiz brings to level wise questions to exam preparation. ");
+		tCourseRO.setDescription("This test qiz brings to level wise questions to exam preparation. ");
 		tCourseRO.setAuthorId("Sourabh Singh");
 		
 		

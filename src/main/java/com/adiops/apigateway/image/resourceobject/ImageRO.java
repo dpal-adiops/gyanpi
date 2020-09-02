@@ -18,9 +18,10 @@ public class ImageRO {
 	
 	private Date createdDate;
 	
-	private String key;
+	private String keyid;
 	private String name;
 	private String url;
+	private String authorId;
 	
 	public Long getId(){
 		return this.id;
@@ -31,12 +32,12 @@ public class ImageRO {
 	}
 	
 	
-	public void setKey(String key){
-		this.key=key;
+	public void setKeyid(String keyid){
+		this.keyid=keyid;
 	}
 	
-	public String getKey(){
-		return this.key;
+	public String getKeyid(){
+		return this.keyid;
 	}
 	
 	public void setName(String name){
@@ -53,6 +54,14 @@ public class ImageRO {
 	
 	public String getUrl(){
 		return this.url;
+	}
+	
+	public void setAuthorId(String authorId){
+		this.authorId=authorId;
+	}
+	
+	public String getAuthorId(){
+		return this.authorId;
 	}
 	
 	

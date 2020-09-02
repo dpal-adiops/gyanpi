@@ -107,12 +107,14 @@ public class ModuleService{
        
               
       
-        	if(tModuleRO.getKey() !=null)
-        	newEntity.setKey(tModuleRO.getKey());
+        	if(tModuleRO.getKeyid() !=null)
+        	newEntity.setKeyid(tModuleRO.getKeyid());
         	if(tModuleRO.getName() !=null)
         	newEntity.setName(tModuleRO.getName());
-        	if(tModuleRO.getDesc() !=null)
-        	newEntity.setDesc(tModuleRO.getDesc());
+        	if(tModuleRO.getDescription() !=null)
+        	newEntity.setDescription(tModuleRO.getDescription());
+        	if(tModuleRO.getAuthorId() !=null)
+        	newEntity.setAuthorId(tModuleRO.getAuthorId());
 
   	 try {
         	 newEntity = mModuleRepository.save(newEntity);   

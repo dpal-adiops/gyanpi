@@ -102,14 +102,16 @@ public class QuestionService{
        
               
       
-        	if(tQuestionRO.getKey() !=null)
-        	newEntity.setKey(tQuestionRO.getKey());
+        	if(tQuestionRO.getKeyid() !=null)
+        	newEntity.setKeyid(tQuestionRO.getKeyid());
         	if(tQuestionRO.getTitle() !=null)
         	newEntity.setTitle(tQuestionRO.getTitle());
-        	if(tQuestionRO.getDesc() !=null)
-        	newEntity.setDesc(tQuestionRO.getDesc());
+        	if(tQuestionRO.getDescription() !=null)
+        	newEntity.setDescription(tQuestionRO.getDescription());
         	if(tQuestionRO.getAnswer() !=null)
         	newEntity.setAnswer(tQuestionRO.getAnswer());
+        	if(tQuestionRO.getAuthorId() !=null)
+        	newEntity.setAuthorId(tQuestionRO.getAuthorId());
 
   	 try {
         	 newEntity = mQuestionRepository.save(newEntity);   

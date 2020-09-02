@@ -33,7 +33,7 @@ import com.adiops.apigateway.page.entity.PageEntity;
  *
  */
 @Entity(name = "module")
-@Table(uniqueConstraints={@UniqueConstraint(columnNames={"key"})})
+@Table(uniqueConstraints={@UniqueConstraint(columnNames={"keyid"})})
 public class ModuleEntity {
 
 	@Id
@@ -57,15 +57,18 @@ public class ModuleEntity {
 		
 	}
 
-	@Column(name="key")
+	@Column(name="keyid")
 	@CsvBindByPosition(position = 0)
-	private String key;
+	private String keyid;
 	@Column(name="name")
 	@CsvBindByPosition(position = 1)
 	private String name;
-	@Column(name="desc")
+	@Column(name="description")
 	@CsvBindByPosition(position = 2)
-	private String desc;
+	private String description;
+	@Column(name="author_id")
+	@CsvBindByPosition(position = 3)
+	private String authorId;
 	
 	 	@ManyToMany(mappedBy = "modules")
 	 private Set<CourseEntity> courses = new HashSet<>();
@@ -91,12 +94,12 @@ public class ModuleEntity {
 	 private Set<PageEntity> pages = new HashSet<>();
 	
 	
-	public void setKey(String key){
-		this.key=key;
+	public void setKeyid(String keyid){
+		this.keyid=keyid;
 	}
 	
-	public String getKey(){
-		return this.key;
+	public String getKeyid(){
+		return this.keyid;
 	}
 	
 	
@@ -111,12 +114,22 @@ public class ModuleEntity {
 	
 	
 	
-	public void setDesc(String desc){
-		this.desc=desc;
+	public void setDescription(String description){
+		this.description=description;
 	}
 	
-	public String getDesc(){
-		return this.desc;
+	public String getDescription(){
+		return this.description;
+	}
+	
+	
+	
+	public void setAuthorId(String authorId){
+		this.authorId=authorId;
+	}
+	
+	public String getAuthorId(){
+		return this.authorId;
 	}
 	
 	

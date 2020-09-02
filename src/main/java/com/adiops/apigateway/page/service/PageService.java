@@ -102,12 +102,14 @@ public class PageService{
        
               
       
-        	if(tPageRO.getKey() !=null)
-        	newEntity.setKey(tPageRO.getKey());
+        	if(tPageRO.getKeyid() !=null)
+        	newEntity.setKeyid(tPageRO.getKeyid());
         	if(tPageRO.getName() !=null)
         	newEntity.setName(tPageRO.getName());
-        	if(tPageRO.getDesc() !=null)
-        	newEntity.setDesc(tPageRO.getDesc());
+        	if(tPageRO.getDescription() !=null)
+        	newEntity.setDescription(tPageRO.getDescription());
+        	if(tPageRO.getAuthorId() !=null)
+        	newEntity.setAuthorId(tPageRO.getAuthorId());
 
   	 try {
         	 newEntity = mPageRepository.save(newEntity);   

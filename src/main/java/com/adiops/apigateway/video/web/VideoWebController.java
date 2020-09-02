@@ -32,7 +32,7 @@ public class VideoWebController {
 	@Autowired
 	VideoService mVideoService;
 
-	@GetMapping(value = "/web/videos")
+	@GetMapping(value = "/admin/web/videos")
 	public String getVideos(Model model, @RequestParam(value = "page", defaultValue = "1") int pageNumber) {
 		List<VideoRO> videos = mVideoService.findAll(pageNumber, ROW_PER_PAGE);
 		 
@@ -45,18 +45,18 @@ public class VideoWebController {
 	    model.addAttribute("hasNext", hasNext);
 	    model.addAttribute("next", pageNumber + 1);
 	    model.addAttribute("selectedMenu", "video");
-	    return "video/video-list";
+	    return "admin/video/video-list";
 	}
 
-	@GetMapping(value = { "/web/videos/add" })
+	@GetMapping(value = { "/admin/web/videos/add" })
 	public String showAddVideo(Model model) {
 		VideoRO tVideoRO = new VideoRO();
 	    model.addAttribute("selectedMenu", "video");
 	    model.addAttribute("videoRO", tVideoRO);
-	    return "video/video-add";
+	    return "admin/video/video-add";
 	}
 
-	@PostMapping(value = "/web/videos/add")
+	@PostMapping(value = "/admin/web/videos/add")
 	public String addVideo(@ModelAttribute VideoRO tVideoRO,Model model)  {
 		try {
 		 tVideoRO=mVideoService.createOrUpdateVideo(tVideoRO);
@@ -67,163 +67,163 @@ public class VideoWebController {
 		
 		model.addAttribute("videoRO", tVideoRO);
 		model.addAttribute("selectedMenu", "video");
-		return "video/video-edit";
+		return "admin/video/video-edit";
 	}
 
-	@GetMapping(value = { "/web/videos/{videoId}" })
+	@GetMapping(value = { "/admin/web/videos/{videoId}" })
 	public String showEditVideo(Model model, @PathVariable Long videoId) throws RestException {
 		VideoRO tVideoRO = mVideoService.getVideoById(videoId);
 	    model.addAttribute("selectedMenu", "video");
 	    model.addAttribute("videoRO", tVideoRO);
-	    return "video/video-edit";
+	    return "admin/video/video-edit";
 	}
 
 	
 
-	@GetMapping(value = { "/web/videos/{videoId}/delete" })
+	@GetMapping(value = { "/admin/web/videos/{videoId}/delete" })
 	public String deleteVideoById(Model model, @PathVariable Long videoId) throws RestException {
 		mVideoService.deleteVideoById(videoId);
-		return "redirect:/web/videos";
+		return "redirect:/admin/web/videos";
 	}
 	
 	
-	@GetMapping(value = { "/web/videos/{videoId}/courses" })
+	@GetMapping(value = { "/admin/web/videos/{videoId}/courses" })
 	public String getVideoCourses(Model model, @PathVariable Long videoId) throws RestException {
 		model.addAttribute("videoRO", mVideoService.getVideoById(videoId));
 		model.addAttribute("courses", mVideoService.findVideoCourses(videoId));
 		model.addAttribute("selectedMenu", "video");
-		return "video/course/course-list";
+		return "admin/video/course/course-list";
 	}
 	
-	@GetMapping(value = { "/web/videos/{videoId}/courses/assign" })
+	@GetMapping(value = { "/admin/web/videos/{videoId}/courses/assign" })
 	public String assignCourses(Model model, @PathVariable Long videoId) throws RestException {
 		model.addAttribute("videoRO", mVideoService.getVideoById(videoId));		
 		model.addAttribute("courses", mVideoService.findUnassignVideoCourses(videoId));
 		model.addAttribute("selectedMenu", "video");
-		return "video/course/course-assign";
+		return "admin/video/course/course-assign";
 	}
 	
-	@GetMapping(value = { "/web/videos/{videoId}/courses/{courseId}/assign" })
+	@GetMapping(value = { "/admin/web/videos/{videoId}/courses/{courseId}/assign" })
 	public String getCourses(Model model, @PathVariable Long videoId, @PathVariable Long courseId) throws RestException {
 		mVideoService.addVideoCourse(videoId, courseId);
 		model.addAttribute("videoRO", mVideoService.getVideoById(videoId));
 		model.addAttribute("courses", mVideoService.findVideoCourses(videoId));
 		model.addAttribute("selectedMenu", "video");
-		return "video/course/course-list";
+		return "admin/video/course/course-list";
 	}
 	
-	@GetMapping(value = { "/web/videos/{videoId}/courses/{courseId}/unassign" })
+	@GetMapping(value = { "/admin/web/videos/{videoId}/courses/{courseId}/unassign" })
 	public String unassignCourses(Model model, @PathVariable Long videoId, @PathVariable Long courseId) throws RestException {
 		mVideoService.unassignVideoCourse(videoId, courseId);
 		model.addAttribute("videoRO", mVideoService.getVideoById(videoId));
 		model.addAttribute("courses", mVideoService.findVideoCourses(videoId));
 		model.addAttribute("selectedMenu", "video");
-		return "video/course/course-list";
+		return "admin/video/course/course-list";
 	}
 	
 	
-	@GetMapping(value = { "/web/videos/{videoId}/modules" })
+	@GetMapping(value = { "/admin/web/videos/{videoId}/modules" })
 	public String getVideoModules(Model model, @PathVariable Long videoId) throws RestException {
 		model.addAttribute("videoRO", mVideoService.getVideoById(videoId));
 		model.addAttribute("modules", mVideoService.findVideoModules(videoId));
 		model.addAttribute("selectedMenu", "video");
-		return "video/module/module-list";
+		return "admin/video/module/module-list";
 	}
 	
-	@GetMapping(value = { "/web/videos/{videoId}/modules/assign" })
+	@GetMapping(value = { "/admin/web/videos/{videoId}/modules/assign" })
 	public String assignModules(Model model, @PathVariable Long videoId) throws RestException {
 		model.addAttribute("videoRO", mVideoService.getVideoById(videoId));		
 		model.addAttribute("modules", mVideoService.findUnassignVideoModules(videoId));
 		model.addAttribute("selectedMenu", "video");
-		return "video/module/module-assign";
+		return "admin/video/module/module-assign";
 	}
 	
-	@GetMapping(value = { "/web/videos/{videoId}/modules/{moduleId}/assign" })
+	@GetMapping(value = { "/admin/web/videos/{videoId}/modules/{moduleId}/assign" })
 	public String getModules(Model model, @PathVariable Long videoId, @PathVariable Long moduleId) throws RestException {
 		mVideoService.addVideoModule(videoId, moduleId);
 		model.addAttribute("videoRO", mVideoService.getVideoById(videoId));
 		model.addAttribute("modules", mVideoService.findVideoModules(videoId));
 		model.addAttribute("selectedMenu", "video");
-		return "video/module/module-list";
+		return "admin/video/module/module-list";
 	}
 	
-	@GetMapping(value = { "/web/videos/{videoId}/modules/{moduleId}/unassign" })
+	@GetMapping(value = { "/admin/web/videos/{videoId}/modules/{moduleId}/unassign" })
 	public String unassignModules(Model model, @PathVariable Long videoId, @PathVariable Long moduleId) throws RestException {
 		mVideoService.unassignVideoModule(videoId, moduleId);
 		model.addAttribute("videoRO", mVideoService.getVideoById(videoId));
 		model.addAttribute("modules", mVideoService.findVideoModules(videoId));
 		model.addAttribute("selectedMenu", "video");
-		return "video/module/module-list";
+		return "admin/video/module/module-list";
 	}
 	
 	
-	@GetMapping(value = { "/web/videos/{videoId}/topics" })
+	@GetMapping(value = { "/admin/web/videos/{videoId}/topics" })
 	public String getVideoTopics(Model model, @PathVariable Long videoId) throws RestException {
 		model.addAttribute("videoRO", mVideoService.getVideoById(videoId));
 		model.addAttribute("topics", mVideoService.findVideoTopics(videoId));
 		model.addAttribute("selectedMenu", "video");
-		return "video/topic/topic-list";
+		return "admin/video/topic/topic-list";
 	}
 	
-	@GetMapping(value = { "/web/videos/{videoId}/topics/assign" })
+	@GetMapping(value = { "/admin/web/videos/{videoId}/topics/assign" })
 	public String assignTopics(Model model, @PathVariable Long videoId) throws RestException {
 		model.addAttribute("videoRO", mVideoService.getVideoById(videoId));		
 		model.addAttribute("topics", mVideoService.findUnassignVideoTopics(videoId));
 		model.addAttribute("selectedMenu", "video");
-		return "video/topic/topic-assign";
+		return "admin/video/topic/topic-assign";
 	}
 	
-	@GetMapping(value = { "/web/videos/{videoId}/topics/{topicId}/assign" })
+	@GetMapping(value = { "/admin/web/videos/{videoId}/topics/{topicId}/assign" })
 	public String getTopics(Model model, @PathVariable Long videoId, @PathVariable Long topicId) throws RestException {
 		mVideoService.addVideoTopic(videoId, topicId);
 		model.addAttribute("videoRO", mVideoService.getVideoById(videoId));
 		model.addAttribute("topics", mVideoService.findVideoTopics(videoId));
 		model.addAttribute("selectedMenu", "video");
-		return "video/topic/topic-list";
+		return "admin/video/topic/topic-list";
 	}
 	
-	@GetMapping(value = { "/web/videos/{videoId}/topics/{topicId}/unassign" })
+	@GetMapping(value = { "/admin/web/videos/{videoId}/topics/{topicId}/unassign" })
 	public String unassignTopics(Model model, @PathVariable Long videoId, @PathVariable Long topicId) throws RestException {
 		mVideoService.unassignVideoTopic(videoId, topicId);
 		model.addAttribute("videoRO", mVideoService.getVideoById(videoId));
 		model.addAttribute("topics", mVideoService.findVideoTopics(videoId));
 		model.addAttribute("selectedMenu", "video");
-		return "video/topic/topic-list";
+		return "admin/video/topic/topic-list";
 	}
 	
 	
-	@GetMapping(value = { "/web/videos/{videoId}/questions" })
+	@GetMapping(value = { "/admin/web/videos/{videoId}/questions" })
 	public String getVideoQuestions(Model model, @PathVariable Long videoId) throws RestException {
 		model.addAttribute("videoRO", mVideoService.getVideoById(videoId));
 		model.addAttribute("questions", mVideoService.findVideoQuestions(videoId));
 		model.addAttribute("selectedMenu", "video");
-		return "video/question/question-list";
+		return "admin/video/question/question-list";
 	}
 	
-	@GetMapping(value = { "/web/videos/{videoId}/questions/assign" })
+	@GetMapping(value = { "/admin/web/videos/{videoId}/questions/assign" })
 	public String assignQuestions(Model model, @PathVariable Long videoId) throws RestException {
 		model.addAttribute("videoRO", mVideoService.getVideoById(videoId));		
 		model.addAttribute("questions", mVideoService.findUnassignVideoQuestions(videoId));
 		model.addAttribute("selectedMenu", "video");
-		return "video/question/question-assign";
+		return "admin/video/question/question-assign";
 	}
 	
-	@GetMapping(value = { "/web/videos/{videoId}/questions/{questionId}/assign" })
+	@GetMapping(value = { "/admin/web/videos/{videoId}/questions/{questionId}/assign" })
 	public String getQuestions(Model model, @PathVariable Long videoId, @PathVariable Long questionId) throws RestException {
 		mVideoService.addVideoQuestion(videoId, questionId);
 		model.addAttribute("videoRO", mVideoService.getVideoById(videoId));
 		model.addAttribute("questions", mVideoService.findVideoQuestions(videoId));
 		model.addAttribute("selectedMenu", "video");
-		return "video/question/question-list";
+		return "admin/video/question/question-list";
 	}
 	
-	@GetMapping(value = { "/web/videos/{videoId}/questions/{questionId}/unassign" })
+	@GetMapping(value = { "/admin/web/videos/{videoId}/questions/{questionId}/unassign" })
 	public String unassignQuestions(Model model, @PathVariable Long videoId, @PathVariable Long questionId) throws RestException {
 		mVideoService.unassignVideoQuestion(videoId, questionId);
 		model.addAttribute("videoRO", mVideoService.getVideoById(videoId));
 		model.addAttribute("questions", mVideoService.findVideoQuestions(videoId));
 		model.addAttribute("selectedMenu", "video");
-		return "video/question/question-list";
+		return "admin/video/question/question-list";
 	}
 	
 

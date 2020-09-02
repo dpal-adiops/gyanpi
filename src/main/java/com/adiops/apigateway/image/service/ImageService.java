@@ -102,12 +102,14 @@ public class ImageService{
        
               
       
-        	if(tImageRO.getKey() !=null)
-        	newEntity.setKey(tImageRO.getKey());
+        	if(tImageRO.getKeyid() !=null)
+        	newEntity.setKeyid(tImageRO.getKeyid());
         	if(tImageRO.getName() !=null)
         	newEntity.setName(tImageRO.getName());
         	if(tImageRO.getUrl() !=null)
         	newEntity.setUrl(tImageRO.getUrl());
+        	if(tImageRO.getAuthorId() !=null)
+        	newEntity.setAuthorId(tImageRO.getAuthorId());
 
   	 try {
         	 newEntity = mImageRepository.save(newEntity);   

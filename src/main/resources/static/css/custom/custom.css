@@ -9,3 +9,25 @@ NOTE:
 ------
 PLACE HERE YOUR OWN CSS CODES AND IF NEEDED, OVERRIDE THE STYLES FROM THE OTHER STYLESHEETS.
 WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BETTER LIKE THIS.  */
+.container2 {
+  margin: 0 auto;
+  max-width: 1280px;
+  width: 90%;
+}
+
+@media only screen and (min-width: 601px) {
+  .container2 {
+    width: 85%;
+  }
+}
+
+@media only screen and (min-width: 993px) {
+  .container2 {
+    width: 70%;
+  }
+}
+
+.container .row {
+  margin-left: -0.75rem;
+  margin-right: -0.75rem;
+}

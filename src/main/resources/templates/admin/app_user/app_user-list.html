@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/layout3">
+
+<head>
+<title>AppUser-list</title>
+</head>
+
+<body>
+
+<section id="content" layout:fragment="content">	
+	<div  class="container">		
+		<div class="section">
+			<h4 class="header">AppUsers</h4>
+			<div class="divider"></div>
+			<br>
+			<div class="row">
+				<div class="col s12">                   
+                   <a th:href="@{/admin/web/app_users/add}"  id="scale-demo" href="#!" class="btn-floating btn-large scale-transition">
+					    <i class="material-icons">add</i>
+					</a>
+                  The list shows all app_users of the author. Click New to add app_user.             
+                </div>
+                <div class="col s12">
+					<table class="centered">
+						<thead>
+						<tr>
+							  	<th>Keyid</th>
+							  	<th>UserName</th>
+							  	<th>Email</th>
+							  	<th>FirstName</th>
+							  	<th>LastName</th>
+							  	<th>EncryptedPassword</th>
+							  	<th>Enabled</th>
+							 <th></th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr th:if="${app_users.empty}">
+				            <td colspan="3"> No AppUser Available </td>
+				        </tr>
+						 <tr th:each ="app_user : ${app_users}">
+							 	<td><a th:href="@{/admin/web/app_users/{id}(id=${app_user.id})}"><span th:text="${app_user.keyid}"></span></a></td>
+							 	<td><a th:href="@{/admin/web/app_users/{id}(id=${app_user.id})}"><span th:text="${app_user.userName}"></span></a></td>
+							 	<td><a th:href="@{/admin/web/app_users/{id}(id=${app_user.id})}"><span th:text="${app_user.email}"></span></a></td>
+							 	<td><a th:href="@{/admin/web/app_users/{id}(id=${app_user.id})}"><span th:text="${app_user.firstName}"></span></a></td>
+							 	<td><a th:href="@{/admin/web/app_users/{id}(id=${app_user.id})}"><span th:text="${app_user.lastName}"></span></a></td>
+							 	<td><a th:href="@{/admin/web/app_users/{id}(id=${app_user.id})}"><span th:text="${app_user.encryptedPassword}"></span></a></td>
+							 	<td><a th:href="@{/admin/web/app_users/{id}(id=${app_user.id})}"><span th:text="${app_user.enabled}"></span></a></td>
+							 <td>
+				                <a th:href="@{/admin/web/app_users/{id}/delete(id=${app_user.id})}" class="btn-floating btn-small"> <i class="material-icons">delete</i></a>
+				            </td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>	
+</body>
+</html>

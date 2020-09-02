@@ -32,7 +32,7 @@ public class ImageWebController {
 	@Autowired
 	ImageService mImageService;
 
-	@GetMapping(value = "/web/images")
+	@GetMapping(value = "/admin/web/images")
 	public String getImages(Model model, @RequestParam(value = "page", defaultValue = "1") int pageNumber) {
 		List<ImageRO> images = mImageService.findAll(pageNumber, ROW_PER_PAGE);
 		 
@@ -45,18 +45,18 @@ public class ImageWebController {
 	    model.addAttribute("hasNext", hasNext);
 	    model.addAttribute("next", pageNumber + 1);
 	    model.addAttribute("selectedMenu", "image");
-	    return "image/image-list";
+	    return "admin/image/image-list";
 	}
 
-	@GetMapping(value = { "/web/images/add" })
+	@GetMapping(value = { "/admin/web/images/add" })
 	public String showAddImage(Model model) {
 		ImageRO tImageRO = new ImageRO();
 	    model.addAttribute("selectedMenu", "image");
 	    model.addAttribute("imageRO", tImageRO);
-	    return "image/image-add";
+	    return "admin/image/image-add";
 	}
 
-	@PostMapping(value = "/web/images/add")
+	@PostMapping(value = "/admin/web/images/add")
 	public String addImage(@ModelAttribute ImageRO tImageRO,Model model)  {
 		try {
 		 tImageRO=mImageService.createOrUpdateImage(tImageRO);
@@ -67,163 +67,163 @@ public class ImageWebController {
 		
 		model.addAttribute("imageRO", tImageRO);
 		model.addAttribute("selectedMenu", "image");
-		return "image/image-edit";
+		return "admin/image/image-edit";
 	}
 
-	@GetMapping(value = { "/web/images/{imageId}" })
+	@GetMapping(value = { "/admin/web/images/{imageId}" })
 	public String showEditImage(Model model, @PathVariable Long imageId) throws RestException {
 		ImageRO tImageRO = mImageService.getImageById(imageId);
 	    model.addAttribute("selectedMenu", "image");
 	    model.addAttribute("imageRO", tImageRO);
-	    return "image/image-edit";
+	    return "admin/image/image-edit";
 	}
 
 	
 
-	@GetMapping(value = { "/web/images/{imageId}/delete" })
+	@GetMapping(value = { "/admin/web/images/{imageId}/delete" })
 	public String deleteImageById(Model model, @PathVariable Long imageId) throws RestException {
 		mImageService.deleteImageById(imageId);
-		return "redirect:/web/images";
+		return "redirect:/admin/web/images";
 	}
 	
 	
-	@GetMapping(value = { "/web/images/{imageId}/courses" })
+	@GetMapping(value = { "/admin/web/images/{imageId}/courses" })
 	public String getImageCourses(Model model, @PathVariable Long imageId) throws RestException {
 		model.addAttribute("imageRO", mImageService.getImageById(imageId));
 		model.addAttribute("courses", mImageService.findImageCourses(imageId));
 		model.addAttribute("selectedMenu", "image");
-		return "image/course/course-list";
+		return "admin/image/course/course-list";
 	}
 	
-	@GetMapping(value = { "/web/images/{imageId}/courses/assign" })
+	@GetMapping(value = { "/admin/web/images/{imageId}/courses/assign" })
 	public String assignCourses(Model model, @PathVariable Long imageId) throws RestException {
 		model.addAttribute("imageRO", mImageService.getImageById(imageId));		
 		model.addAttribute("courses", mImageService.findUnassignImageCourses(imageId));
 		model.addAttribute("selectedMenu", "image");
-		return "image/course/course-assign";
+		return "admin/image/course/course-assign";
 	}
 	
-	@GetMapping(value = { "/web/images/{imageId}/courses/{courseId}/assign" })
+	@GetMapping(value = { "/admin/web/images/{imageId}/courses/{courseId}/assign" })
 	public String getCourses(Model model, @PathVariable Long imageId, @PathVariable Long courseId) throws RestException {
 		mImageService.addImageCourse(imageId, courseId);
 		model.addAttribute("imageRO", mImageService.getImageById(imageId));
 		model.addAttribute("courses", mImageService.findImageCourses(imageId));
 		model.addAttribute("selectedMenu", "image");
-		return "image/course/course-list";
+		return "admin/image/course/course-list";
 	}
 	
-	@GetMapping(value = { "/web/images/{imageId}/courses/{courseId}/unassign" })
+	@GetMapping(value = { "/admin/web/images/{imageId}/courses/{courseId}/unassign" })
 	public String unassignCourses(Model model, @PathVariable Long imageId, @PathVariable Long courseId) throws RestException {
 		mImageService.unassignImageCourse(imageId, courseId);
 		model.addAttribute("imageRO", mImageService.getImageById(imageId));
 		model.addAttribute("courses", mImageService.findImageCourses(imageId));
 		model.addAttribute("selectedMenu", "image");
-		return "image/course/course-list";
+		return "admin/image/course/course-list";
 	}
 	
 	
-	@GetMapping(value = { "/web/images/{imageId}/modules" })
+	@GetMapping(value = { "/admin/web/images/{imageId}/modules" })
 	public String getImageModules(Model model, @PathVariable Long imageId) throws RestException {
 		model.addAttribute("imageRO", mImageService.getImageById(imageId));
 		model.addAttribute("modules", mImageService.findImageModules(imageId));
 		model.addAttribute("selectedMenu", "image");
-		return "image/module/module-list";
+		return "admin/image/module/module-list";
 	}
 	
-	@GetMapping(value = { "/web/images/{imageId}/modules/assign" })
+	@GetMapping(value = { "/admin/web/images/{imageId}/modules/assign" })
 	public String assignModules(Model model, @PathVariable Long imageId) throws RestException {
 		model.addAttribute("imageRO", mImageService.getImageById(imageId));		
 		model.addAttribute("modules", mImageService.findUnassignImageModules(imageId));
 		model.addAttribute("selectedMenu", "image");
-		return "image/module/module-assign";
+		return "admin/image/module/module-assign";
 	}
 	
-	@GetMapping(value = { "/web/images/{imageId}/modules/{moduleId}/assign" })
+	@GetMapping(value = { "/admin/web/images/{imageId}/modules/{moduleId}/assign" })
 	public String getModules(Model model, @PathVariable Long imageId, @PathVariable Long moduleId) throws RestException {
 		mImageService.addImageModule(imageId, moduleId);
 		model.addAttribute("imageRO", mImageService.getImageById(imageId));
 		model.addAttribute("modules", mImageService.findImageModules(imageId));
 		model.addAttribute("selectedMenu", "image");
-		return "image/module/module-list";
+		return "admin/image/module/module-list";
 	}
 	
-	@GetMapping(value = { "/web/images/{imageId}/modules/{moduleId}/unassign" })
+	@GetMapping(value = { "/admin/web/images/{imageId}/modules/{moduleId}/unassign" })
 	public String unassignModules(Model model, @PathVariable Long imageId, @PathVariable Long moduleId) throws RestException {
 		mImageService.unassignImageModule(imageId, moduleId);
 		model.addAttribute("imageRO", mImageService.getImageById(imageId));
 		model.addAttribute("modules", mImageService.findImageModules(imageId));
 		model.addAttribute("selectedMenu", "image");
-		return "image/module/module-list";
+		return "admin/image/module/module-list";
 	}
 	
 	
-	@GetMapping(value = { "/web/images/{imageId}/topics" })
+	@GetMapping(value = { "/admin/web/images/{imageId}/topics" })
 	public String getImageTopics(Model model, @PathVariable Long imageId) throws RestException {
 		model.addAttribute("imageRO", mImageService.getImageById(imageId));
 		model.addAttribute("topics", mImageService.findImageTopics(imageId));
 		model.addAttribute("selectedMenu", "image");
-		return "image/topic/topic-list";
+		return "admin/image/topic/topic-list";
 	}
 	
-	@GetMapping(value = { "/web/images/{imageId}/topics/assign" })
+	@GetMapping(value = { "/admin/web/images/{imageId}/topics/assign" })
 	public String assignTopics(Model model, @PathVariable Long imageId) throws RestException {
 		model.addAttribute("imageRO", mImageService.getImageById(imageId));		
 		model.addAttribute("topics", mImageService.findUnassignImageTopics(imageId));
 		model.addAttribute("selectedMenu", "image");
-		return "image/topic/topic-assign";
+		return "admin/image/topic/topic-assign";
 	}
 	
-	@GetMapping(value = { "/web/images/{imageId}/topics/{topicId}/assign" })
+	@GetMapping(value = { "/admin/web/images/{imageId}/topics/{topicId}/assign" })
 	public String getTopics(Model model, @PathVariable Long imageId, @PathVariable Long topicId) throws RestException {
 		mImageService.addImageTopic(imageId, topicId);
 		model.addAttribute("imageRO", mImageService.getImageById(imageId));
 		model.addAttribute("topics", mImageService.findImageTopics(imageId));
 		model.addAttribute("selectedMenu", "image");
-		return "image/topic/topic-list";
+		return "admin/image/topic/topic-list";
 	}
 	
-	@GetMapping(value = { "/web/images/{imageId}/topics/{topicId}/unassign" })
+	@GetMapping(value = { "/admin/web/images/{imageId}/topics/{topicId}/unassign" })
 	public String unassignTopics(Model model, @PathVariable Long imageId, @PathVariable Long topicId) throws RestException {
 		mImageService.unassignImageTopic(imageId, topicId);
 		model.addAttribute("imageRO", mImageService.getImageById(imageId));
 		model.addAttribute("topics", mImageService.findImageTopics(imageId));
 		model.addAttribute("selectedMenu", "image");
-		return "image/topic/topic-list";
+		return "admin/image/topic/topic-list";
 	}
 	
 	
-	@GetMapping(value = { "/web/images/{imageId}/questions" })
+	@GetMapping(value = { "/admin/web/images/{imageId}/questions" })
 	public String getImageQuestions(Model model, @PathVariable Long imageId) throws RestException {
 		model.addAttribute("imageRO", mImageService.getImageById(imageId));
 		model.addAttribute("questions", mImageService.findImageQuestions(imageId));
 		model.addAttribute("selectedMenu", "image");
-		return "image/question/question-list";
+		return "admin/image/question/question-list";
 	}
 	
-	@GetMapping(value = { "/web/images/{imageId}/questions/assign" })
+	@GetMapping(value = { "/admin/web/images/{imageId}/questions/assign" })
 	public String assignQuestions(Model model, @PathVariable Long imageId) throws RestException {
 		model.addAttribute("imageRO", mImageService.getImageById(imageId));		
 		model.addAttribute("questions", mImageService.findUnassignImageQuestions(imageId));
 		model.addAttribute("selectedMenu", "image");
-		return "image/question/question-assign";
+		return "admin/image/question/question-assign";
 	}
 	
-	@GetMapping(value = { "/web/images/{imageId}/questions/{questionId}/assign" })
+	@GetMapping(value = { "/admin/web/images/{imageId}/questions/{questionId}/assign" })
 	public String getQuestions(Model model, @PathVariable Long imageId, @PathVariable Long questionId) throws RestException {
 		mImageService.addImageQuestion(imageId, questionId);
 		model.addAttribute("imageRO", mImageService.getImageById(imageId));
 		model.addAttribute("questions", mImageService.findImageQuestions(imageId));
 		model.addAttribute("selectedMenu", "image");
-		return "image/question/question-list";
+		return "admin/image/question/question-list";
 	}
 	
-	@GetMapping(value = { "/web/images/{imageId}/questions/{questionId}/unassign" })
+	@GetMapping(value = { "/admin/web/images/{imageId}/questions/{questionId}/unassign" })
 	public String unassignQuestions(Model model, @PathVariable Long imageId, @PathVariable Long questionId) throws RestException {
 		mImageService.unassignImageQuestion(imageId, questionId);
 		model.addAttribute("imageRO", mImageService.getImageById(imageId));
 		model.addAttribute("questions", mImageService.findImageQuestions(imageId));
 		model.addAttribute("selectedMenu", "image");
-		return "image/question/question-list";
+		return "admin/image/question/question-list";
 	}
 	
 

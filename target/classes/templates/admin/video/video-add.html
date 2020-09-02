@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/layout3">
+
+<head>
+<title>Video-list</title>
+</head>
+
+<body>
+	<div layout:fragment="content">			 
+		<div class="container">
+			<div class="section">
+				<div class="divider"></div>
+				<div id="basic-form" class="section">
+					<div class="row">
+						<div class="col s12 m12 l12">													
+							<div class="card-panel">								 
+								 <h4 class="header2"><span>Add Video :</span></h4>
+								 <p class="caption">Fields with a red asterisk (*) are mandatory.</p>
+								  <p th:if="${error != null}" th:text="${error}" class="chip"></p>	
+								   <form action="#" th:action="@{/admin/web/videos/add}" method="POST" id="editorForm" th:object="${videoRO}">
+							             <div class="row">
+											         <div class="input-field col s12 l6">
+											          <input type="text" id="keyid" name="keyid" class="validate"  th:field="*{keyid}">
+											          <label for="keyid">Keyid</label>
+											        </div>	
+											         <div class="input-field col s12 l6">
+											          <input type="text" id="name" name="name" class="validate"  th:field="*{name}">
+											          <label for="name">Name</label>
+											        </div>	
+											         <div class="input-field col s12 l6">
+											          <input type="text" id="url" name="url" class="validate"  th:field="*{url}">
+											          <label for="url">Url</label>
+											        </div>	
+											         <div class="input-field col s12 l6">
+											          <input type="text" id="authorId" name="authorId" class="validate"  th:field="*{authorId}">
+											          <label for="authorId">AuthorId</label>
+											        </div>	
+							             </div>
+							              <br>
+						             		<button class="btn btn-success btn-sm"  onClick="addEditorForm()">Apply</button>
+						        </form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</body>
+</html>

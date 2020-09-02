@@ -32,7 +32,7 @@ public class PageWebController {
 	@Autowired
 	PageService mPageService;
 
-	@GetMapping(value = "/web/pages")
+	@GetMapping(value = "/admin/web/pages")
 	public String getPages(Model model, @RequestParam(value = "page", defaultValue = "1") int pageNumber) {
 		List<PageRO> pages = mPageService.findAll(pageNumber, ROW_PER_PAGE);
 		 
@@ -45,18 +45,18 @@ public class PageWebController {
 	    model.addAttribute("hasNext", hasNext);
 	    model.addAttribute("next", pageNumber + 1);
 	    model.addAttribute("selectedMenu", "page");
-	    return "page/page-list";
+	    return "admin/page/page-list";
 	}
 
-	@GetMapping(value = { "/web/pages/add" })
+	@GetMapping(value = { "/admin/web/pages/add" })
 	public String showAddPage(Model model) {
 		PageRO tPageRO = new PageRO();
 	    model.addAttribute("selectedMenu", "page");
 	    model.addAttribute("pageRO", tPageRO);
-	    return "page/page-add";
+	    return "admin/page/page-add";
 	}
 
-	@PostMapping(value = "/web/pages/add")
+	@PostMapping(value = "/admin/web/pages/add")
 	public String addPage(@ModelAttribute PageRO tPageRO,Model model)  {
 		try {
 		 tPageRO=mPageService.createOrUpdatePage(tPageRO);
@@ -67,163 +67,163 @@ public class PageWebController {
 		
 		model.addAttribute("pageRO", tPageRO);
 		model.addAttribute("selectedMenu", "page");
-		return "page/page-edit";
+		return "admin/page/page-edit";
 	}
 
-	@GetMapping(value = { "/web/pages/{pageId}" })
+	@GetMapping(value = { "/admin/web/pages/{pageId}" })
 	public String showEditPage(Model model, @PathVariable Long pageId) throws RestException {
 		PageRO tPageRO = mPageService.getPageById(pageId);
 	    model.addAttribute("selectedMenu", "page");
 	    model.addAttribute("pageRO", tPageRO);
-	    return "page/page-edit";
+	    return "admin/page/page-edit";
 	}
 
 	
 
-	@GetMapping(value = { "/web/pages/{pageId}/delete" })
+	@GetMapping(value = { "/admin/web/pages/{pageId}/delete" })
 	public String deletePageById(Model model, @PathVariable Long pageId) throws RestException {
 		mPageService.deletePageById(pageId);
-		return "redirect:/web/pages";
+		return "redirect:/admin/web/pages";
 	}
 	
 	
-	@GetMapping(value = { "/web/pages/{pageId}/courses" })
+	@GetMapping(value = { "/admin/web/pages/{pageId}/courses" })
 	public String getPageCourses(Model model, @PathVariable Long pageId) throws RestException {
 		model.addAttribute("pageRO", mPageService.getPageById(pageId));
 		model.addAttribute("courses", mPageService.findPageCourses(pageId));
 		model.addAttribute("selectedMenu", "page");
-		return "page/course/course-list";
+		return "admin/page/course/course-list";
 	}
 	
-	@GetMapping(value = { "/web/pages/{pageId}/courses/assign" })
+	@GetMapping(value = { "/admin/web/pages/{pageId}/courses/assign" })
 	public String assignCourses(Model model, @PathVariable Long pageId) throws RestException {
 		model.addAttribute("pageRO", mPageService.getPageById(pageId));		
 		model.addAttribute("courses", mPageService.findUnassignPageCourses(pageId));
 		model.addAttribute("selectedMenu", "page");
-		return "page/course/course-assign";
+		return "admin/page/course/course-assign";
 	}
 	
-	@GetMapping(value = { "/web/pages/{pageId}/courses/{courseId}/assign" })
+	@GetMapping(value = { "/admin/web/pages/{pageId}/courses/{courseId}/assign" })
 	public String getCourses(Model model, @PathVariable Long pageId, @PathVariable Long courseId) throws RestException {
 		mPageService.addPageCourse(pageId, courseId);
 		model.addAttribute("pageRO", mPageService.getPageById(pageId));
 		model.addAttribute("courses", mPageService.findPageCourses(pageId));
 		model.addAttribute("selectedMenu", "page");
-		return "page/course/course-list";
+		return "admin/page/course/course-list";
 	}
 	
-	@GetMapping(value = { "/web/pages/{pageId}/courses/{courseId}/unassign" })
+	@GetMapping(value = { "/admin/web/pages/{pageId}/courses/{courseId}/unassign" })
 	public String unassignCourses(Model model, @PathVariable Long pageId, @PathVariable Long courseId) throws RestException {
 		mPageService.unassignPageCourse(pageId, courseId);
 		model.addAttribute("pageRO", mPageService.getPageById(pageId));
 		model.addAttribute("courses", mPageService.findPageCourses(pageId));
 		model.addAttribute("selectedMenu", "page");
-		return "page/course/course-list";
+		return "admin/page/course/course-list";
 	}
 	
 	
-	@GetMapping(value = { "/web/pages/{pageId}/modules" })
+	@GetMapping(value = { "/admin/web/pages/{pageId}/modules" })
 	public String getPageModules(Model model, @PathVariable Long pageId) throws RestException {
 		model.addAttribute("pageRO", mPageService.getPageById(pageId));
 		model.addAttribute("modules", mPageService.findPageModules(pageId));
 		model.addAttribute("selectedMenu", "page");
-		return "page/module/module-list";
+		return "admin/page/module/module-list";
 	}
 	
-	@GetMapping(value = { "/web/pages/{pageId}/modules/assign" })
+	@GetMapping(value = { "/admin/web/pages/{pageId}/modules/assign" })
 	public String assignModules(Model model, @PathVariable Long pageId) throws RestException {
 		model.addAttribute("pageRO", mPageService.getPageById(pageId));		
 		model.addAttribute("modules", mPageService.findUnassignPageModules(pageId));
 		model.addAttribute("selectedMenu", "page");
-		return "page/module/module-assign";
+		return "admin/page/module/module-assign";
 	}
 	
-	@GetMapping(value = { "/web/pages/{pageId}/modules/{moduleId}/assign" })
+	@GetMapping(value = { "/admin/web/pages/{pageId}/modules/{moduleId}/assign" })
 	public String getModules(Model model, @PathVariable Long pageId, @PathVariable Long moduleId) throws RestException {
 		mPageService.addPageModule(pageId, moduleId);
 		model.addAttribute("pageRO", mPageService.getPageById(pageId));
 		model.addAttribute("modules", mPageService.findPageModules(pageId));
 		model.addAttribute("selectedMenu", "page");
-		return "page/module/module-list";
+		return "admin/page/module/module-list";
 	}
 	
-	@GetMapping(value = { "/web/pages/{pageId}/modules/{moduleId}/unassign" })
+	@GetMapping(value = { "/admin/web/pages/{pageId}/modules/{moduleId}/unassign" })
 	public String unassignModules(Model model, @PathVariable Long pageId, @PathVariable Long moduleId) throws RestException {
 		mPageService.unassignPageModule(pageId, moduleId);
 		model.addAttribute("pageRO", mPageService.getPageById(pageId));
 		model.addAttribute("modules", mPageService.findPageModules(pageId));
 		model.addAttribute("selectedMenu", "page");
-		return "page/module/module-list";
+		return "admin/page/module/module-list";
 	}
 	
 	
-	@GetMapping(value = { "/web/pages/{pageId}/topics" })
+	@GetMapping(value = { "/admin/web/pages/{pageId}/topics" })
 	public String getPageTopics(Model model, @PathVariable Long pageId) throws RestException {
 		model.addAttribute("pageRO", mPageService.getPageById(pageId));
 		model.addAttribute("topics", mPageService.findPageTopics(pageId));
 		model.addAttribute("selectedMenu", "page");
-		return "page/topic/topic-list";
+		return "admin/page/topic/topic-list";
 	}
 	
-	@GetMapping(value = { "/web/pages/{pageId}/topics/assign" })
+	@GetMapping(value = { "/admin/web/pages/{pageId}/topics/assign" })
 	public String assignTopics(Model model, @PathVariable Long pageId) throws RestException {
 		model.addAttribute("pageRO", mPageService.getPageById(pageId));		
 		model.addAttribute("topics", mPageService.findUnassignPageTopics(pageId));
 		model.addAttribute("selectedMenu", "page");
-		return "page/topic/topic-assign";
+		return "admin/page/topic/topic-assign";
 	}
 	
-	@GetMapping(value = { "/web/pages/{pageId}/topics/{topicId}/assign" })
+	@GetMapping(value = { "/admin/web/pages/{pageId}/topics/{topicId}/assign" })
 	public String getTopics(Model model, @PathVariable Long pageId, @PathVariable Long topicId) throws RestException {
 		mPageService.addPageTopic(pageId, topicId);
 		model.addAttribute("pageRO", mPageService.getPageById(pageId));
 		model.addAttribute("topics", mPageService.findPageTopics(pageId));
 		model.addAttribute("selectedMenu", "page");
-		return "page/topic/topic-list";
+		return "admin/page/topic/topic-list";
 	}
 	
-	@GetMapping(value = { "/web/pages/{pageId}/topics/{topicId}/unassign" })
+	@GetMapping(value = { "/admin/web/pages/{pageId}/topics/{topicId}/unassign" })
 	public String unassignTopics(Model model, @PathVariable Long pageId, @PathVariable Long topicId) throws RestException {
 		mPageService.unassignPageTopic(pageId, topicId);
 		model.addAttribute("pageRO", mPageService.getPageById(pageId));
 		model.addAttribute("topics", mPageService.findPageTopics(pageId));
 		model.addAttribute("selectedMenu", "page");
-		return "page/topic/topic-list";
+		return "admin/page/topic/topic-list";
 	}
 	
 	
-	@GetMapping(value = { "/web/pages/{pageId}/questions" })
+	@GetMapping(value = { "/admin/web/pages/{pageId}/questions" })
 	public String getPageQuestions(Model model, @PathVariable Long pageId) throws RestException {
 		model.addAttribute("pageRO", mPageService.getPageById(pageId));
 		model.addAttribute("questions", mPageService.findPageQuestions(pageId));
 		model.addAttribute("selectedMenu", "page");
-		return "page/question/question-list";
+		return "admin/page/question/question-list";
 	}
 	
-	@GetMapping(value = { "/web/pages/{pageId}/questions/assign" })
+	@GetMapping(value = { "/admin/web/pages/{pageId}/questions/assign" })
 	public String assignQuestions(Model model, @PathVariable Long pageId) throws RestException {
 		model.addAttribute("pageRO", mPageService.getPageById(pageId));		
 		model.addAttribute("questions", mPageService.findUnassignPageQuestions(pageId));
 		model.addAttribute("selectedMenu", "page");
-		return "page/question/question-assign";
+		return "admin/page/question/question-assign";
 	}
 	
-	@GetMapping(value = { "/web/pages/{pageId}/questions/{questionId}/assign" })
+	@GetMapping(value = { "/admin/web/pages/{pageId}/questions/{questionId}/assign" })
 	public String getQuestions(Model model, @PathVariable Long pageId, @PathVariable Long questionId) throws RestException {
 		mPageService.addPageQuestion(pageId, questionId);
 		model.addAttribute("pageRO", mPageService.getPageById(pageId));
 		model.addAttribute("questions", mPageService.findPageQuestions(pageId));
 		model.addAttribute("selectedMenu", "page");
-		return "page/question/question-list";
+		return "admin/page/question/question-list";
 	}
 	
-	@GetMapping(value = { "/web/pages/{pageId}/questions/{questionId}/unassign" })
+	@GetMapping(value = { "/admin/web/pages/{pageId}/questions/{questionId}/unassign" })
 	public String unassignQuestions(Model model, @PathVariable Long pageId, @PathVariable Long questionId) throws RestException {
 		mPageService.unassignPageQuestion(pageId, questionId);
 		model.addAttribute("pageRO", mPageService.getPageById(pageId));
 		model.addAttribute("questions", mPageService.findPageQuestions(pageId));
 		model.addAttribute("selectedMenu", "page");
-		return "page/question/question-list";
+		return "admin/page/question/question-list";
 	}
 	
 

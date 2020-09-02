@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/layout3">
+
+<head>
+<title>AppUser-list</title>
+</head>
+
+<body>
+	<div layout:fragment="content">			 
+		<div class="container">
+			<div class="section">
+				<div class="divider"></div>
+				<div id="basic-form" class="section">
+					<div class="row">
+						<div class="col s12 m12 l12">													
+							<div class="card-panel">								 
+								 <h4 class="header2"><span>Add AppUser :</span></h4>
+								 <p class="caption">Fields with a red asterisk (*) are mandatory.</p>
+								  <p th:if="${error != null}" th:text="${error}" class="chip"></p>	
+								   <form action="#" th:action="@{/admin/web/app_users/add}" method="POST" id="editorForm" th:object="${app_userRO}">
+							             <div class="row">
+											         <div class="input-field col s12 l6">
+											          <input type="text" id="keyid" name="keyid" class="validate"  th:field="*{keyid}">
+											          <label for="keyid">Keyid</label>
+											        </div>	
+											         <div class="input-field col s12 l6">
+											          <input type="text" id="userName" name="userName" class="validate"  th:field="*{userName}">
+											          <label for="userName">UserName</label>
+											        </div>	
+											         <div class="input-field col s12 l6">
+											          <input type="text" id="email" name="email" class="validate"  th:field="*{email}">
+											          <label for="email">Email</label>
+											        </div>	
+											         <div class="input-field col s12 l6">
+											          <input type="text" id="firstName" name="firstName" class="validate"  th:field="*{firstName}">
+											          <label for="firstName">FirstName</label>
+											        </div>	
+											         <div class="input-field col s12 l6">
+											          <input type="text" id="lastName" name="lastName" class="validate"  th:field="*{lastName}">
+											          <label for="lastName">LastName</label>
+											        </div>	
+											         <div class="input-field col s12 l6">
+											          <input type="text" id="encryptedPassword" name="encryptedPassword" class="validate"  th:field="*{encryptedPassword}">
+											          <label for="encryptedPassword">EncryptedPassword</label>
+											        </div>	
+											         <div class="input-field col s12 l6">
+											          <input type="text" id="enabled" name="enabled" class="validate"  th:field="*{enabled}">
+											          <label for="enabled">Enabled</label>
+											        </div>	
+							             </div>
+							              <br>
+						             		<button class="btn btn-success btn-sm"  onClick="addEditorForm()">Apply</button>
+						        </form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</body>
+</html>

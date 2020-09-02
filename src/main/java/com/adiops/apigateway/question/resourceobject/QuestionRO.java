@@ -18,10 +18,11 @@ public class QuestionRO {
 	
 	private Date createdDate;
 	
-	private String key;
+	private String keyid;
 	private String title;
-	private String desc;
+	private String description;
 	private String answer;
+	private String authorId;
 	
 	public Long getId(){
 		return this.id;
@@ -32,12 +33,12 @@ public class QuestionRO {
 	}
 	
 	
-	public void setKey(String key){
-		this.key=key;
+	public void setKeyid(String keyid){
+		this.keyid=keyid;
 	}
 	
-	public String getKey(){
-		return this.key;
+	public String getKeyid(){
+		return this.keyid;
 	}
 	
 	public void setTitle(String title){
@@ -48,12 +49,12 @@ public class QuestionRO {
 		return this.title;
 	}
 	
-	public void setDesc(String desc){
-		this.desc=desc;
+	public void setDescription(String description){
+		this.description=description;
 	}
 	
-	public String getDesc(){
-		return this.desc;
+	public String getDescription(){
+		return this.description;
 	}
 	
 	public void setAnswer(String answer){
@@ -62,6 +63,14 @@ public class QuestionRO {
 	
 	public String getAnswer(){
 		return this.answer;
+	}
+	
+	public void setAuthorId(String authorId){
+		this.authorId=authorId;
+	}
+	
+	public String getAuthorId(){
+		return this.authorId;
 	}
 	
 	

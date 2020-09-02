@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/layout3">
+
+<head>
+<title>Page-list</title>
+</head>
+
+<body>
+	
+	<div layout:fragment="content">
+		<!--breadcrumbs start-->
+         <div id="breadcrumbs-wrapper">
+            <!-- Search for small screen -->
+            <div class="header-search-wrapper grey lighten-2 hide-on-large-only">
+              <input type="text" name="Search" class="header-search-input z-depth-2" placeholder="Explore Materialize">
+            </div>
+            <div class="container">
+              <div class="row">
+                <div class="col s10 m6 l6">
+                  <h5 class="breadcrumbs-title">Pages</h5>
+                  <ol class="breadcrumbs">
+                    <li><a href="index.html">Dashboard</a>
+                    </li>
+                    <li th:text=${moduleRO.keyid} class="active"></li>
+                  </ol>
+                </div>                
+              </div>
+            </div>
+          </div>
+          <!--breadcrumbs end-->		 
+		<div class="container">
+			<div class="section">
+				<div class="divider"></div>
+				<div id="basic-form" class="section">
+					<div class="row">
+						<div class="col s12 m12 l12">
+							<a th:href="@{/admin/web/modules/{id}(id=${moduleRO.id})}" class="btn grey lighten-5 grey-text" name="action">General</a>					
+					        		<a th:href="@{/admin/web/modules/{id}/courses(id=${moduleRO.id})}" name="action" class="btn grey lighten-5 grey-text">Courses</a>
+					        		<a th:href="@{/admin/web/modules/{id}/topics(id=${moduleRO.id})}" name="action" class="btn grey lighten-5 grey-text">Topics</a>
+					        		<a th:href="@{/admin/web/modules/{id}/images(id=${moduleRO.id})}" name="action" class="btn grey lighten-5 grey-text">Images</a>
+					        		<a th:href="@{/admin/web/modules/{id}/videos(id=${moduleRO.id})}" name="action" class="btn grey lighten-5 grey-text">Videos</a>
+					         		<a th:href="@{/admin/web/modules/{id}/pages(id=${moduleRO.id})}" name="action" class="btn blue">Pages</a>
+							<div class="card-panel">
+								<div class="row">
+									<div class="col s12">                   
+					                  
+					                  The list shows all unassigned pages. Click assign to add more page.             
+					                </div>
+					                <div class="col s12">
+										<table class="centered">
+											<thead>
+												<tr>
+													 <th>KeyId</th>
+													  	<th>Name</th>
+													  	<th>AuthorId</th>
+													 <th></th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr th:if="${pages.empty}">
+										            <td colspan="3"> No Page Available </td>
+										        </tr>
+												  <tr th:each ="page : ${pages}">
+													   <td ><a th:href="@{/admin/web/pages/{id}(id=${page.id})}"><span th:text="${page.key}"></span></a></td>
+														 		<td th:text="${page.name}"></td>
+														 		<td th:text="${page.authorId}"></td>
+													 <td>
+										                <a th:href="@{/admin/web/modules/{module_id}/pages/{id}/assign(module_id=${moduleRO.id},id=${page.id})}" class="btn-floating btn-small"> <i class="material-icons">add</i></a>
+										            </td>
+												</tr>
+											</tbody>
+										</table>
+									</div>		
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

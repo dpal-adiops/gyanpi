@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/layout3">
+
+<head>
+<title>AppRole-list</title>
+</head>
+
+<body>
+	<div layout:fragment="content">
+		<!--breadcrumbs start-->
+         <div id="breadcrumbs-wrapper">
+            <!-- Search for small screen -->
+            <div class="header-search-wrapper grey lighten-2 hide-on-large-only">
+              <input type="text" name="Search" class="header-search-input z-depth-2" placeholder="Explore Materialize">
+            </div>
+            <div class="container">
+              <div class="row">
+                <div class="col s10 m6 l6">
+                  <h5 class="breadcrumbs-title">AppRoles</h5>
+                  <ol class="breadcrumbs">
+                    <li><a href="index.html">Dashboard</a>
+                    </li>
+                    <li th:text=${app_roleRO.keyid} class="active"></li>
+                  </ol>
+                </div>                
+              </div>
+            </div>
+          </div>
+          <!--breadcrumbs end-->		 
+		<div class="container">
+			<div class="section">
+				<div class="divider"></div>
+				<div id="basic-form" class="section">
+					<div class="row">
+						<div class="col s12 m12 l12">
+							<a class="btn blue" name="action">General</a>					
+					         	<a th:href="@{/admin/web/app_roles/{id}/app_users(id=${app_roleRO.id})}" name="action" class="btn grey lighten-5 grey-text">AppUsers</a>
+							<div class="card-panel">								 
+								 <h4 class="header2"><span>Edit AppRole : General</span></h4>
+								 <p class="caption">Fields with a red asterisk (*) are mandatory.</p>	
+								 <p th:if="${error != null}" th:text="${error}" class="chip"></p>
+								   <form  th:action="@{/admin/web/app_roles/add}" method="POST" id="editorForm"   th:object="${app_roleRO}">
+							            <div class="row">
+										       
+											         <div class="input-field col s12 l6">
+											          <input type="text" id="keyid" name="keyid" class="validate"  th:field="*{keyid}">
+											          <label for="keyid">Keyid</label>
+											        </div>	
+										       
+											         <div class="input-field col s12 l6">
+											          <input type="text" id="name" name="name" class="validate"  th:field="*{name}">
+											          <label for="name">Name</label>
+											        </div>	
+										       
+										        	<div class="input-field col s12 l6">													  
+											          <input type="hidden" id="description" name="description"  th:field="*{description}">
+										          	  <label for="description">Description</label>
+										          	   <br><br>
+										          	  <div id="editor-container" th:utext="*{description}"></div>											        
+											        </div>
+										       
+											         <div class="input-field col s12 l6">
+											          <input type="text" id="permission" name="permission" class="validate"  th:field="*{permission}">
+											          <label for="permission">Permission</label>
+											        </div>	
+							            </div>
+							             <br> 
+							             	<input type="hidden" id="id" th:field="*{id}">
+							             	<button class="btn btn-success btn-sm"  onClick="addEditorForm()">Apply</button>
+						        </form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</body>
+</html>

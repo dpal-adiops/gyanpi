@@ -102,12 +102,12 @@ public class CourseService{
        
               
       
-        	if(tCourseRO.getKey() !=null)
-        	newEntity.setKey(tCourseRO.getKey());
+        	if(tCourseRO.getKeyid() !=null)
+        	newEntity.setKeyid(tCourseRO.getKeyid());
         	if(tCourseRO.getName() !=null)
         	newEntity.setName(tCourseRO.getName());
-        	if(tCourseRO.getDesc() !=null)
-        	newEntity.setDesc(tCourseRO.getDesc());
+        	if(tCourseRO.getDescription() !=null)
+        	newEntity.setDescription(tCourseRO.getDescription());
         	if(tCourseRO.getAuthorId() !=null)
         	newEntity.setAuthorId(tCourseRO.getAuthorId());
 

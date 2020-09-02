@@ -44,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests().antMatchers("/admin/login","/css/**", "/js/**", "/images/**").permitAll();
-		http.csrf().disable().authorizeRequests().antMatchers("/**").hasAnyRole("USER").and().formLogin()
+		http.csrf().disable().authorizeRequests().antMatchers("/admin/**").hasAnyRole("ADMIN").and().formLogin()
 				.loginPage("/admin/login").and().logout().logoutUrl("/logout")// Custom User Logout Page
 				.logoutSuccessUrl("/").and()
                 /*

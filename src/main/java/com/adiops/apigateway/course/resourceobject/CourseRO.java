@@ -18,9 +18,9 @@ public class CourseRO {
 	
 	private Date createdDate;
 	
-	private String key;
+	private String keyid;
 	private String name;
-	private String desc;
+	private String description;
 	private String authorId;
 	
 	public Long getId(){
@@ -32,12 +32,12 @@ public class CourseRO {
 	}
 	
 	
-	public void setKey(String key){
-		this.key=key;
+	public void setKeyid(String keyid){
+		this.keyid=keyid;
 	}
 	
-	public String getKey(){
-		return this.key;
+	public String getKeyid(){
+		return this.keyid;
 	}
 	
 	public void setName(String name){
@@ -48,12 +48,12 @@ public class CourseRO {
 		return this.name;
 	}
 	
-	public void setDesc(String desc){
-		this.desc=desc;
+	public void setDescription(String description){
+		this.description=description;
 	}
 	
-	public String getDesc(){
-		return this.desc;
+	public String getDescription(){
+		return this.description;
 	}
 	
 	public void setAuthorId(String authorId){
