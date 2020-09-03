@@ -53,6 +53,7 @@
 													 <th>KeyId</th>
 													  	<th>Name</th>
 													  	<th>AuthorId</th>
+													  	<th>DomainId</th>
 													 <th></th>
 												</tr>
 											</thead>
@@ -61,9 +62,10 @@
 										            <td colspan="3"> No Module Available </td>
 										        </tr>
 												  <tr th:each ="module : ${modules}">
-													   <td ><a th:href="@{/admin/web/modules/{id}(id=${module.id})}"><span th:text="${module.key}"></span></a></td>
+													   <td ><a th:href="@{/admin/web/modules/{id}(id=${module.id})}"><span th:text="${module.keyid}"></span></a></td>
 														 		<td th:text="${module.name}"></td>
 														 		<td th:text="${module.authorId}"></td>
+														 		<td th:text="${module.domainId}"></td>
 													 <td>
 										                <a th:href="@{/admin/web/pages/{page_id}/modules/{id}/assign(page_id=${pageRO.id},id=${module.id})}" class="btn-floating btn-small"> <i class="material-icons">add</i></a>
 										            </td>

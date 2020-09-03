@@ -55,6 +55,7 @@
 													  	<th>Name</th>
 													  	<th>Title</th>
 													  	<th>AuthorId</th>
+													  	<th>DomainId</th>
 													 <th></th>
 												</tr>
 											</thead>
@@ -63,10 +64,11 @@
 										            <td colspan="3"> No Topic Available </td>
 										        </tr>
 												  <tr th:each ="topic : ${topics}">
-													   <td ><a th:href="@{/admin/web/topics/{id}(id=${topic.id})}"><span th:text="${topic.key}"></span></a></td>
+													   <td ><a th:href="@{/admin/web/topics/{id}(id=${topic.id})}"><span th:text="${topic.keyid}"></span></a></td>
 														 		<td th:text="${topic.name}"></td>
 														 		<td th:text="${topic.title}"></td>
 														 		<td th:text="${topic.authorId}"></td>
+														 		<td th:text="${topic.domainId}"></td>
 													 <td>
 										                <a th:href="@{/admin/web/modules/{module_id}/topics/{id}/assign(module_id=${moduleRO.id},id=${topic.id})}" class="btn-floating btn-small"> <i class="material-icons">add</i></a>
 										            </td>

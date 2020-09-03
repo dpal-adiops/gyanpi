@@ -54,6 +54,7 @@
 													 <th>KeyId</th>
 													  	<th>Name</th>
 													  	<th>AuthorId</th>
+													  	<th>DomainId</th>
 													 <th></th>
 												</tr>
 											</thead>
@@ -62,9 +63,10 @@
 										            <td colspan="3"> No Course Available </td>
 										        </tr>
 												  <tr th:each ="course : ${courses}">
-													   <td ><a th:href="@{/admin/web/courses/{id}(id=${course.id})}"><span th:text="${course.key}"></span></a></td>
+													   <td ><a th:href="@{/admin/web/courses/{id}(id=${course.id})}"><span th:text="${course.keyid}"></span></a></td>
 														 		<td th:text="${course.name}"></td>
 														 		<td th:text="${course.authorId}"></td>
+														 		<td th:text="${course.domainId}"></td>
 													 <td>
 										                <a th:href="@{/admin/web/modules/{module_id}/courses/{id}/assign(module_id=${moduleRO.id},id=${course.id})}" class="btn-floating btn-small"> <i class="material-icons">add</i></a>
 										            </td>

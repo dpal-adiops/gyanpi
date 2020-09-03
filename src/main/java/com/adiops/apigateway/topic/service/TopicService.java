@@ -3,6 +3,8 @@ package  com.adiops.apigateway.topic.service;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -69,7 +71,7 @@ public class TopicService{
 	 */
 	
 	public List<TopicRO> getTopicROs() {
-		List<TopicRO> tTopicROs = mTopicRepository.findAll().stream()
+		List<TopicRO> tTopicROs = mTopicRepository.findAll(Sort.by(Sort.Direction.ASC, "keyid")).stream()
 				.map(entity -> mModelMapper.map(entity, TopicRO.class)).collect(Collectors.toList());
 		return tTopicROs;
 	}
@@ -117,6 +119,8 @@ public class TopicService{
         	newEntity.setTitle(tTopicRO.getTitle());
         	if(tTopicRO.getAuthorId() !=null)
         	newEntity.setAuthorId(tTopicRO.getAuthorId());
+        	if(tTopicRO.getDomainId() !=null)
+        	newEntity.setDomainId(tTopicRO.getDomainId());
 
   	 try {
         	 newEntity = mTopicRepository.save(newEntity);   
@@ -203,7 +207,14 @@ public class TopicService{
 					tModuleROs.add(mModelMapper.map(re, ModuleRO.class));
 				});
 			});
-		}				
+		}	
+		Collections.sort(tModuleROs, new Comparator<ModuleRO>() {
+			  @Override
+			  public int compare(ModuleRO u1, ModuleRO u2) {
+			    return u1.getKeyid().compareTo(u2.getKeyid());
+			  }
+			});
+						
 		return tModuleROs;
 	}
 	
@@ -274,7 +285,14 @@ public class TopicService{
 					tQuestionROs.add(mModelMapper.map(re, QuestionRO.class));
 				});
 			});
-		}				
+		}	
+		Collections.sort(tQuestionROs, new Comparator<QuestionRO>() {
+			  @Override
+			  public int compare(QuestionRO u1, QuestionRO u2) {
+			    return u1.getKeyid().compareTo(u2.getKeyid());
+			  }
+			});
+						
 		return tQuestionROs;
 	}
 	
@@ -345,7 +363,14 @@ public class TopicService{
 					tImageROs.add(mModelMapper.map(re, ImageRO.class));
 				});
 			});
-		}				
+		}	
+		Collections.sort(tImageROs, new Comparator<ImageRO>() {
+			  @Override
+			  public int compare(ImageRO u1, ImageRO u2) {
+			    return u1.getKeyid().compareTo(u2.getKeyid());
+			  }
+			});
+						
 		return tImageROs;
 	}
 	
@@ -416,7 +441,14 @@ public class TopicService{
 					tVideoROs.add(mModelMapper.map(re, VideoRO.class));
 				});
 			});
-		}				
+		}	
+		Collections.sort(tVideoROs, new Comparator<VideoRO>() {
+			  @Override
+			  public int compare(VideoRO u1, VideoRO u2) {
+			    return u1.getKeyid().compareTo(u2.getKeyid());
+			  }
+			});
+						
 		return tVideoROs;
 	}
 	
@@ -487,7 +519,14 @@ public class TopicService{
 					tPageROs.add(mModelMapper.map(re, PageRO.class));
 				});
 			});
-		}				
+		}	
+		Collections.sort(tPageROs, new Comparator<PageRO>() {
+			  @Override
+			  public int compare(PageRO u1, PageRO u2) {
+			    return u1.getKeyid().compareTo(u2.getKeyid());
+			  }
+			});
+						
 		return tPageROs;
 	}
 	
@@ -543,5 +582,13 @@ public class TopicService{
 		return tPageROs;
 	}
 	
+	public TopicRO getTopicByKeyId(String key) throws RestException {
+		Optional<?> tTopic= Optional.ofNullable(mTopicRepository.findByKeyid(key));
+		 if(tTopic.isPresent()) {
+	            return mModelMapper.map(tTopic.get(), TopicRO.class);
+	        } else {
+	            throw new RestException("No topic record exist for given id");
+	        }
+	}
 	
 }

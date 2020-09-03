@@ -3,6 +3,8 @@ package  com.adiops.apigateway.question.service;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -64,7 +66,7 @@ public class QuestionService{
 	 */
 	
 	public List<QuestionRO> getQuestionROs() {
-		List<QuestionRO> tQuestionROs = mQuestionRepository.findAll().stream()
+		List<QuestionRO> tQuestionROs = mQuestionRepository.findAll(Sort.by(Sort.Direction.ASC, "keyid")).stream()
 				.map(entity -> mModelMapper.map(entity, QuestionRO.class)).collect(Collectors.toList());
 		return tQuestionROs;
 	}
@@ -112,6 +114,8 @@ public class QuestionService{
         	newEntity.setAnswer(tQuestionRO.getAnswer());
         	if(tQuestionRO.getAuthorId() !=null)
         	newEntity.setAuthorId(tQuestionRO.getAuthorId());
+        	if(tQuestionRO.getDomainId() !=null)
+        	newEntity.setDomainId(tQuestionRO.getDomainId());
 
   	 try {
         	 newEntity = mQuestionRepository.save(newEntity);   
@@ -198,7 +202,14 @@ public class QuestionService{
 					tTopicROs.add(mModelMapper.map(re, TopicRO.class));
 				});
 			});
-		}				
+		}	
+		Collections.sort(tTopicROs, new Comparator<TopicRO>() {
+			  @Override
+			  public int compare(TopicRO u1, TopicRO u2) {
+			    return u1.getKeyid().compareTo(u2.getKeyid());
+			  }
+			});
+						
 		return tTopicROs;
 	}
 	
@@ -269,7 +280,14 @@ public class QuestionService{
 					tImageROs.add(mModelMapper.map(re, ImageRO.class));
 				});
 			});
-		}				
+		}	
+		Collections.sort(tImageROs, new Comparator<ImageRO>() {
+			  @Override
+			  public int compare(ImageRO u1, ImageRO u2) {
+			    return u1.getKeyid().compareTo(u2.getKeyid());
+			  }
+			});
+						
 		return tImageROs;
 	}
 	
@@ -340,7 +358,14 @@ public class QuestionService{
 					tVideoROs.add(mModelMapper.map(re, VideoRO.class));
 				});
 			});
-		}				
+		}	
+		Collections.sort(tVideoROs, new Comparator<VideoRO>() {
+			  @Override
+			  public int compare(VideoRO u1, VideoRO u2) {
+			    return u1.getKeyid().compareTo(u2.getKeyid());
+			  }
+			});
+						
 		return tVideoROs;
 	}
 	
@@ -411,7 +436,14 @@ public class QuestionService{
 					tPageROs.add(mModelMapper.map(re, PageRO.class));
 				});
 			});
-		}				
+		}	
+		Collections.sort(tPageROs, new Comparator<PageRO>() {
+			  @Override
+			  public int compare(PageRO u1, PageRO u2) {
+			    return u1.getKeyid().compareTo(u2.getKeyid());
+			  }
+			});
+						
 		return tPageROs;
 	}
 	

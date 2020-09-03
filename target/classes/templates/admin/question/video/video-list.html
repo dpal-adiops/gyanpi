@@ -56,6 +56,7 @@
 													  		<th>Name</th>
 													  		<th>Url</th>
 													  		<th>AuthorId</th>
+													  		<th>DomainId</th>
 													 <th></th>
 												</tr>
 											</thead>
@@ -68,6 +69,7 @@
 															 	<td th:text="${video.name}"></td>
 															 	<td th:text="${video.url}"></td>
 															 	<td th:text="${video.authorId}"></td>
+															 	<td th:text="${video.domainId}"></td>
 													 <td>
 										                <a th:href="@{/admin/web/questions/{question_id}/videos/{id}/unassign(question_id=${questionRO.id},id=${video.id})}" class="btn-floating btn-small"> <i class="material-icons">delete</i></a>
 										            </td>

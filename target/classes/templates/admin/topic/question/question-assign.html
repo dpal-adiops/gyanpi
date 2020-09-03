@@ -55,6 +55,7 @@
 													  	<th>Title</th>
 													  	<th>Answer</th>
 													  	<th>AuthorId</th>
+													  	<th>DomainId</th>
 													 <th></th>
 												</tr>
 											</thead>
@@ -63,10 +64,11 @@
 										            <td colspan="3"> No Question Available </td>
 										        </tr>
 												  <tr th:each ="question : ${questions}">
-													   <td ><a th:href="@{/admin/web/questions/{id}(id=${question.id})}"><span th:text="${question.key}"></span></a></td>
+													   <td ><a th:href="@{/admin/web/questions/{id}(id=${question.id})}"><span th:text="${question.keyid}"></span></a></td>
 														 		<td th:text="${question.title}"></td>
 														 		<td th:text="${question.answer}"></td>
 														 		<td th:text="${question.authorId}"></td>
+														 		<td th:text="${question.domainId}"></td>
 													 <td>
 										                <a th:href="@{/admin/web/topics/{topic_id}/questions/{id}/assign(topic_id=${topicRO.id},id=${question.id})}" class="btn-floating btn-small"> <i class="material-icons">add</i></a>
 										            </td>

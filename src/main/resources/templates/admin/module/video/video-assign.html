@@ -55,6 +55,7 @@
 													  	<th>Name</th>
 													  	<th>Url</th>
 													  	<th>AuthorId</th>
+													  	<th>DomainId</th>
 													 <th></th>
 												</tr>
 											</thead>
@@ -63,10 +64,11 @@
 										            <td colspan="3"> No Video Available </td>
 										        </tr>
 												  <tr th:each ="video : ${videos}">
-													   <td ><a th:href="@{/admin/web/videos/{id}(id=${video.id})}"><span th:text="${video.key}"></span></a></td>
+													   <td ><a th:href="@{/admin/web/videos/{id}(id=${video.id})}"><span th:text="${video.keyid}"></span></a></td>
 														 		<td th:text="${video.name}"></td>
 														 		<td th:text="${video.url}"></td>
 														 		<td th:text="${video.authorId}"></td>
+														 		<td th:text="${video.domainId}"></td>
 													 <td>
 										                <a th:href="@{/admin/web/modules/{module_id}/videos/{id}/assign(module_id=${moduleRO.id},id=${video.id})}" class="btn-floating btn-small"> <i class="material-icons">add</i></a>
 										            </td>

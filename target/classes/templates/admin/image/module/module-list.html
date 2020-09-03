@@ -55,6 +55,7 @@
 													 <th>keyid</th>
 													  		<th>Name</th>
 													  		<th>AuthorId</th>
+													  		<th>DomainId</th>
 													 <th></th>
 												</tr>
 											</thead>
@@ -66,6 +67,7 @@
 													   <td ><a th:href="@{/admin/web/modules/{id}(id=${module.id})}"><span th:text="${module.keyid}"></span></a></td>
 															 	<td th:text="${module.name}"></td>
 															 	<td th:text="${module.authorId}"></td>
+															 	<td th:text="${module.domainId}"></td>
 													 <td>
 										                <a th:href="@{/admin/web/images/{image_id}/modules/{id}/unassign(image_id=${imageRO.id},id=${module.id})}" class="btn-floating btn-small"> <i class="material-icons">delete</i></a>
 										            </td>

@@ -29,6 +29,7 @@
 							  	<th>Name</th>
 							  	<th>Url</th>
 							  	<th>AuthorId</th>
+							  	<th>DomainId</th>
 							 <th></th>
 						</tr>
 						</thead>
@@ -41,6 +42,7 @@
 							 	<td><a th:href="@{/admin/web/images/{id}(id=${image.id})}"><span th:text="${image.name}"></span></a></td>
 							 	<td><a th:href="@{/admin/web/images/{id}(id=${image.id})}"><span th:text="${image.url}"></span></a></td>
 							 	<td><a th:href="@{/admin/web/images/{id}(id=${image.id})}"><span th:text="${image.authorId}"></span></a></td>
+							 	<td><a th:href="@{/admin/web/images/{id}(id=${image.id})}"><span th:text="${image.domainId}"></span></a></td>
 							 <td>
 				                <a th:href="@{/admin/web/images/{id}/delete(id=${image.id})}" class="btn-floating btn-small"> <i class="material-icons">delete</i></a>
 				            </td>

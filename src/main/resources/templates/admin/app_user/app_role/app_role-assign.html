@@ -58,7 +58,7 @@
 										            <td colspan="3"> No AppRole Available </td>
 										        </tr>
 												  <tr th:each ="app_role : ${app_roles}">
-													   <td ><a th:href="@{/admin/web/app_roles/{id}(id=${app_role.id})}"><span th:text="${app_role.key}"></span></a></td>
+													   <td ><a th:href="@{/admin/web/app_roles/{id}(id=${app_role.id})}"><span th:text="${app_role.keyid}"></span></a></td>
 														 		<td th:text="${app_role.name}"></td>
 														 		<td th:text="${app_role.permission}"></td>
 													 <td>

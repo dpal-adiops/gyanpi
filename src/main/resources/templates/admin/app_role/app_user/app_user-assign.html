@@ -62,7 +62,7 @@
 										            <td colspan="3"> No AppUser Available </td>
 										        </tr>
 												  <tr th:each ="app_user : ${app_users}">
-													   <td ><a th:href="@{/admin/web/app_users/{id}(id=${app_user.id})}"><span th:text="${app_user.key}"></span></a></td>
+													   <td ><a th:href="@{/admin/web/app_users/{id}(id=${app_user.id})}"><span th:text="${app_user.keyid}"></span></a></td>
 														 		<td th:text="${app_user.userName}"></td>
 														 		<td th:text="${app_user.email}"></td>
 														 		<td th:text="${app_user.firstName}"></td>

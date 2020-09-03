@@ -56,6 +56,7 @@
 													  		<th>Name</th>
 													  		<th>Url</th>
 													  		<th>AuthorId</th>
+													  		<th>DomainId</th>
 													 <th></th>
 												</tr>
 											</thead>
@@ -68,6 +69,7 @@
 															 	<td th:text="${image.name}"></td>
 															 	<td th:text="${image.url}"></td>
 															 	<td th:text="${image.authorId}"></td>
+															 	<td th:text="${image.domainId}"></td>
 													 <td>
 										                <a th:href="@{/admin/web/courses/{course_id}/images/{id}/unassign(course_id=${courseRO.id},id=${image.id})}" class="btn-floating btn-small"> <i class="material-icons">delete</i></a>
 										            </td>

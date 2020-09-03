@@ -3,6 +3,8 @@ package  com.adiops.apigateway.course.service;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -64,7 +66,7 @@ public class CourseService{
 	 */
 	
 	public List<CourseRO> getCourseROs() {
-		List<CourseRO> tCourseROs = mCourseRepository.findAll().stream()
+		List<CourseRO> tCourseROs = mCourseRepository.findAll(Sort.by(Sort.Direction.ASC, "keyid")).stream()
 				.map(entity -> mModelMapper.map(entity, CourseRO.class)).collect(Collectors.toList());
 		return tCourseROs;
 	}
@@ -110,6 +112,8 @@ public class CourseService{
         	newEntity.setDescription(tCourseRO.getDescription());
         	if(tCourseRO.getAuthorId() !=null)
         	newEntity.setAuthorId(tCourseRO.getAuthorId());
+        	if(tCourseRO.getDomainId() !=null)
+        	newEntity.setDomainId(tCourseRO.getDomainId());
 
   	 try {
         	 newEntity = mCourseRepository.save(newEntity);   
@@ -196,7 +200,14 @@ public class CourseService{
 					tModuleROs.add(mModelMapper.map(re, ModuleRO.class));
 				});
 			});
-		}				
+		}	
+		Collections.sort(tModuleROs, new Comparator<ModuleRO>() {
+			  @Override
+			  public int compare(ModuleRO u1, ModuleRO u2) {
+			    return u1.getKeyid().compareTo(u2.getKeyid());
+			  }
+			});
+						
 		return tModuleROs;
 	}
 	
@@ -267,7 +278,14 @@ public class CourseService{
 					tImageROs.add(mModelMapper.map(re, ImageRO.class));
 				});
 			});
-		}				
+		}	
+		Collections.sort(tImageROs, new Comparator<ImageRO>() {
+			  @Override
+			  public int compare(ImageRO u1, ImageRO u2) {
+			    return u1.getKeyid().compareTo(u2.getKeyid());
+			  }
+			});
+						
 		return tImageROs;
 	}
 	
@@ -338,7 +356,14 @@ public class CourseService{
 					tVideoROs.add(mModelMapper.map(re, VideoRO.class));
 				});
 			});
-		}				
+		}	
+		Collections.sort(tVideoROs, new Comparator<VideoRO>() {
+			  @Override
+			  public int compare(VideoRO u1, VideoRO u2) {
+			    return u1.getKeyid().compareTo(u2.getKeyid());
+			  }
+			});
+						
 		return tVideoROs;
 	}
 	
@@ -409,7 +434,14 @@ public class CourseService{
 					tPageROs.add(mModelMapper.map(re, PageRO.class));
 				});
 			});
-		}				
+		}	
+		Collections.sort(tPageROs, new Comparator<PageRO>() {
+			  @Override
+			  public int compare(PageRO u1, PageRO u2) {
+			    return u1.getKeyid().compareTo(u2.getKeyid());
+			  }
+			});
+						
 		return tPageROs;
 	}
 	

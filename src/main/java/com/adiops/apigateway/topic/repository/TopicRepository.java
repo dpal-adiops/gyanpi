@@ -19,4 +19,6 @@ import  com.adiops.apigateway.topic.entity.TopicEntity;
 @Repository
 public interface TopicRepository extends JpaRepository<TopicEntity, Long>{
 
+	TopicEntity findByKeyid(String key);
+
 }

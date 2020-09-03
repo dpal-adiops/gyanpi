@@ -71,6 +71,9 @@ public class QuestionEntity {
 	@Column(name="author_id")
 	@CsvBindByPosition(position = 4)
 	private String authorId;
+	@Column(name="domain_id")
+	@CsvBindByPosition(position = 6)
+	private String domainId;
 	
 	 @ManyToMany 
 @JoinTable( 
@@ -136,6 +139,16 @@ public class QuestionEntity {
 	
 	public String getAuthorId(){
 		return this.authorId;
+	}
+	
+	
+	
+	public void setDomainId(String domainId){
+		this.domainId=domainId;
+	}
+	
+	public String getDomainId(){
+		return this.domainId;
 	}
 	
 	

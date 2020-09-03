@@ -72,6 +72,9 @@ public class TopicEntity {
 	@Column(name="author_id")
 	@CsvBindByPosition(position = 4)
 	private String authorId;
+	@Column(name="domain_id")
+	@CsvBindByPosition(position = 5)
+	private String domainId;
 	
 	 	@ManyToMany(mappedBy = "topics")
 	 private Set<ModuleEntity> modules = new HashSet<>();
@@ -135,6 +138,16 @@ public class TopicEntity {
 	
 	public String getAuthorId(){
 		return this.authorId;
+	}
+	
+	
+	
+	public void setDomainId(String domainId){
+		this.domainId=domainId;
+	}
+	
+	public String getDomainId(){
+		return this.domainId;
 	}
 	
 	

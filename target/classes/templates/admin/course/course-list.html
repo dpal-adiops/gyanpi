@@ -28,6 +28,7 @@
 							  	<th>Keyid</th>
 							  	<th>Name</th>
 							  	<th>AuthorId</th>
+							  	<th>DomainId</th>
 							 <th></th>
 						</tr>
 						</thead>
@@ -39,6 +40,7 @@
 							 	<td><a th:href="@{/admin/web/courses/{id}(id=${course.id})}"><span th:text="${course.keyid}"></span></a></td>
 							 	<td><a th:href="@{/admin/web/courses/{id}(id=${course.id})}"><span th:text="${course.name}"></span></a></td>
 							 	<td><a th:href="@{/admin/web/courses/{id}(id=${course.id})}"><span th:text="${course.authorId}"></span></a></td>
+							 	<td><a th:href="@{/admin/web/courses/{id}(id=${course.id})}"><span th:text="${course.domainId}"></span></a></td>
 							 <td>
 				                <a th:href="@{/admin/web/courses/{id}/delete(id=${course.id})}" class="btn-floating btn-small"> <i class="material-icons">delete</i></a>
 				            </td>

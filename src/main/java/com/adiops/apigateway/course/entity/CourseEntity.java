@@ -68,6 +68,9 @@ public class CourseEntity {
 	@Column(name="author_id")
 	@CsvBindByPosition(position = 3)
 	private String authorId;
+	@Column(name="domain_id")
+	@CsvBindByPosition(position = 4)
+	private String domainId;
 	
 	 @ManyToMany 
 @JoinTable( 
@@ -131,6 +134,16 @@ public class CourseEntity {
 	
 	public String getAuthorId(){
 		return this.authorId;
+	}
+	
+	
+	
+	public void setDomainId(String domainId){
+		this.domainId=domainId;
+	}
+	
+	public String getDomainId(){
+		return this.domainId;
 	}
 	
 	

@@ -3,6 +3,8 @@ package  com.adiops.apigateway.app.role.service;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -49,7 +51,7 @@ public class AppRoleService{
 	 */
 	
 	public List<AppRoleRO> getAppRoleROs() {
-		List<AppRoleRO> tAppRoleROs = mAppRoleRepository.findAll().stream()
+		List<AppRoleRO> tAppRoleROs = mAppRoleRepository.findAll(Sort.by(Sort.Direction.ASC, "keyid")).stream()
 				.map(entity -> mModelMapper.map(entity, AppRoleRO.class)).collect(Collectors.toList());
 		return tAppRoleROs;
 	}
@@ -181,7 +183,14 @@ public class AppRoleService{
 					tAppUserROs.add(mModelMapper.map(re, AppUserRO.class));
 				});
 			});
-		}				
+		}	
+		Collections.sort(tAppUserROs, new Comparator<AppUserRO>() {
+			  @Override
+			  public int compare(AppUserRO u1, AppUserRO u2) {
+			    return u1.getKeyid().compareTo(u2.getKeyid());
+			  }
+			});
+						
 		return tAppUserROs;
 	}
 	

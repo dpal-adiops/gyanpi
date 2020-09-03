@@ -55,6 +55,7 @@
 													  	<th>Name</th>
 													  	<th>Url</th>
 													  	<th>AuthorId</th>
+													  	<th>DomainId</th>
 													 <th></th>
 												</tr>
 											</thead>
@@ -63,10 +64,11 @@
 										            <td colspan="3"> No Image Available </td>
 										        </tr>
 												  <tr th:each ="image : ${images}">
-													   <td ><a th:href="@{/admin/web/images/{id}(id=${image.id})}"><span th:text="${image.key}"></span></a></td>
+													   <td ><a th:href="@{/admin/web/images/{id}(id=${image.id})}"><span th:text="${image.keyid}"></span></a></td>
 														 		<td th:text="${image.name}"></td>
 														 		<td th:text="${image.url}"></td>
 														 		<td th:text="${image.authorId}"></td>
+														 		<td th:text="${image.domainId}"></td>
 													 <td>
 										                <a th:href="@{/admin/web/topics/{topic_id}/images/{id}/assign(topic_id=${topicRO.id},id=${image.id})}" class="btn-floating btn-small"> <i class="material-icons">add</i></a>
 										            </td>

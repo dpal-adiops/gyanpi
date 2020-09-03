@@ -3,6 +3,8 @@ package  com.adiops.apigateway.page.service;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -64,7 +66,7 @@ public class PageService{
 	 */
 	
 	public List<PageRO> getPageROs() {
-		List<PageRO> tPageROs = mPageRepository.findAll().stream()
+		List<PageRO> tPageROs = mPageRepository.findAll(Sort.by(Sort.Direction.ASC, "keyid")).stream()
 				.map(entity -> mModelMapper.map(entity, PageRO.class)).collect(Collectors.toList());
 		return tPageROs;
 	}
@@ -110,6 +112,8 @@ public class PageService{
         	newEntity.setDescription(tPageRO.getDescription());
         	if(tPageRO.getAuthorId() !=null)
         	newEntity.setAuthorId(tPageRO.getAuthorId());
+        	if(tPageRO.getDomainId() !=null)
+        	newEntity.setDomainId(tPageRO.getDomainId());
 
   	 try {
         	 newEntity = mPageRepository.save(newEntity);   
@@ -196,7 +200,14 @@ public class PageService{
 					tCourseROs.add(mModelMapper.map(re, CourseRO.class));
 				});
 			});
-		}				
+		}	
+		Collections.sort(tCourseROs, new Comparator<CourseRO>() {
+			  @Override
+			  public int compare(CourseRO u1, CourseRO u2) {
+			    return u1.getKeyid().compareTo(u2.getKeyid());
+			  }
+			});
+						
 		return tCourseROs;
 	}
 	
@@ -267,7 +278,14 @@ public class PageService{
 					tModuleROs.add(mModelMapper.map(re, ModuleRO.class));
 				});
 			});
-		}				
+		}	
+		Collections.sort(tModuleROs, new Comparator<ModuleRO>() {
+			  @Override
+			  public int compare(ModuleRO u1, ModuleRO u2) {
+			    return u1.getKeyid().compareTo(u2.getKeyid());
+			  }
+			});
+						
 		return tModuleROs;
 	}
 	
@@ -338,7 +356,14 @@ public class PageService{
 					tTopicROs.add(mModelMapper.map(re, TopicRO.class));
 				});
 			});
-		}				
+		}	
+		Collections.sort(tTopicROs, new Comparator<TopicRO>() {
+			  @Override
+			  public int compare(TopicRO u1, TopicRO u2) {
+			    return u1.getKeyid().compareTo(u2.getKeyid());
+			  }
+			});
+						
 		return tTopicROs;
 	}
 	
@@ -409,7 +434,14 @@ public class PageService{
 					tQuestionROs.add(mModelMapper.map(re, QuestionRO.class));
 				});
 			});
-		}				
+		}	
+		Collections.sort(tQuestionROs, new Comparator<QuestionRO>() {
+			  @Override
+			  public int compare(QuestionRO u1, QuestionRO u2) {
+			    return u1.getKeyid().compareTo(u2.getKeyid());
+			  }
+			});
+						
 		return tQuestionROs;
 	}
 	

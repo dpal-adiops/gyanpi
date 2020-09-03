@@ -54,6 +54,7 @@
 													 <th>KeyId</th>
 													  	<th>Name</th>
 													  	<th>AuthorId</th>
+													  	<th>DomainId</th>
 													 <th></th>
 												</tr>
 											</thead>
@@ -62,9 +63,10 @@
 										            <td colspan="3"> No Page Available </td>
 										        </tr>
 												  <tr th:each ="page : ${pages}">
-													   <td ><a th:href="@{/admin/web/pages/{id}(id=${page.id})}"><span th:text="${page.key}"></span></a></td>
+													   <td ><a th:href="@{/admin/web/pages/{id}(id=${page.id})}"><span th:text="${page.keyid}"></span></a></td>
 														 		<td th:text="${page.name}"></td>
 														 		<td th:text="${page.authorId}"></td>
+														 		<td th:text="${page.domainId}"></td>
 													 <td>
 										                <a th:href="@{/admin/web/topics/{topic_id}/pages/{id}/assign(topic_id=${topicRO.id},id=${page.id})}" class="btn-floating btn-small"> <i class="material-icons">add</i></a>
 										            </td>

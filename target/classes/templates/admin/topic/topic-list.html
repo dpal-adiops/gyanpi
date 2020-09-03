@@ -29,6 +29,7 @@
 							  	<th>Name</th>
 							  	<th>Title</th>
 							  	<th>AuthorId</th>
+							  	<th>DomainId</th>
 							 <th></th>
 						</tr>
 						</thead>
@@ -41,6 +42,7 @@
 							 	<td><a th:href="@{/admin/web/topics/{id}(id=${topic.id})}"><span th:text="${topic.name}"></span></a></td>
 							 	<td><a th:href="@{/admin/web/topics/{id}(id=${topic.id})}"><span th:text="${topic.title}"></span></a></td>
 							 	<td><a th:href="@{/admin/web/topics/{id}(id=${topic.id})}"><span th:text="${topic.authorId}"></span></a></td>
+							 	<td><a th:href="@{/admin/web/topics/{id}(id=${topic.id})}"><span th:text="${topic.domainId}"></span></a></td>
 							 <td>
 				                <a th:href="@{/admin/web/topics/{id}/delete(id=${topic.id})}" class="btn-floating btn-small"> <i class="material-icons">delete</i></a>
 				            </td>

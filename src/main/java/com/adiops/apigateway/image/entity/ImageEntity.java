@@ -68,6 +68,9 @@ public class ImageEntity {
 	@Column(name="author_id")
 	@CsvBindByPosition(position = 3)
 	private String authorId;
+	@Column(name="domain_id")
+	@CsvBindByPosition(position = 4)
+	private String domainId;
 	
 	 	@ManyToMany(mappedBy = "images")
 	 private Set<CourseEntity> courses = new HashSet<>();
@@ -127,6 +130,16 @@ public class ImageEntity {
 	
 	public String getAuthorId(){
 		return this.authorId;
+	}
+	
+	
+	
+	public void setDomainId(String domainId){
+		this.domainId=domainId;
+	}
+	
+	public String getDomainId(){
+		return this.domainId;
 	}
 	
 	

@@ -28,6 +28,7 @@
 							  	<th>Keyid</th>
 							  	<th>Name</th>
 							  	<th>AuthorId</th>
+							  	<th>DomainId</th>
 							 <th></th>
 						</tr>
 						</thead>
@@ -39,6 +40,7 @@
 							 	<td><a th:href="@{/admin/web/modules/{id}(id=${module.id})}"><span th:text="${module.keyid}"></span></a></td>
 							 	<td><a th:href="@{/admin/web/modules/{id}(id=${module.id})}"><span th:text="${module.name}"></span></a></td>
 							 	<td><a th:href="@{/admin/web/modules/{id}(id=${module.id})}"><span th:text="${module.authorId}"></span></a></td>
+							 	<td><a th:href="@{/admin/web/modules/{id}(id=${module.id})}"><span th:text="${module.domainId}"></span></a></td>
 							 <td>
 				                <a th:href="@{/admin/web/modules/{id}/delete(id=${module.id})}" class="btn-floating btn-small"> <i class="material-icons">delete</i></a>
 				            </td>

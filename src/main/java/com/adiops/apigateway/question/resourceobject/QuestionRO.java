@@ -23,6 +23,7 @@ public class QuestionRO {
 	private String description;
 	private String answer;
 	private String authorId;
+	private String domainId;
 	
 	public Long getId(){
 		return this.id;
@@ -71,6 +72,14 @@ public class QuestionRO {
 	
 	public String getAuthorId(){
 		return this.authorId;
+	}
+	
+	public void setDomainId(String domainId){
+		this.domainId=domainId;
+	}
+	
+	public String getDomainId(){
+		return this.domainId;
 	}
 	
 	

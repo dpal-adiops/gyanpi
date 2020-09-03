@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+
+	<head th:replace="theme/head :: head">
+	<title>Header</title>
+	</head>
+	
+	<body>
+		<!-- Start Page Loading -->
+		<div th:replace="theme/loader :: loader"></div>
+		<!-- End Page Loading -->
+		<!-- START HEADER -->
+		<header id="header" class="page-topbar"
+			th:replace="theme/header :: header"> </header>
+		<!-- END HEADER -->
+		<!-- //////////////////////////////////////////////////////////////////////////// -->
+		<!-- START MAIN -->
+		
+				<section id="content" layout:fragment="content"></section>
+			
+		<!-- END MAIN -->
+		<!-- //////////////////////////////////////////////////////////////////////////// -->
+		
+		<!-- ================================================
+	    Scripts
+	    ================================================ -->
+		<!-- jQuery Library -->
+		<script type="text/javascript" src="/vendors/jquery-3.2.1.min.js"></script>
+		<!--materialize js-->
+		<script type="text/javascript" src="/js/materialize.min.js"></script>
+		<!--prism-->
+		<script type="text/javascript" src="/vendors/prism/prism.js"></script>
+		<!--scrollbar-->
+		<script type="text/javascript"
+			src="/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+		<!--plugins.js - Some Specific JS codes for Plugin Settings-->
+		<script type="text/javascript" src="/js/plugins.js"></script>
+		<!--custom-script.js - Add your own theme custom JS-->
+		<script type="text/javascript" src="/js/custom-script.js"></script>
+		
+		 <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>  
+		 <script type="text/javascript" id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.0.1/es5/latest.js?tex-mml-svg.js">
+		 </script>
+		 <script src="/js/quillplugin.js"></script>
+		  <script src="/js/admin.js"></script>
+	</body>
+</html>
