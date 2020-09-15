@@ -38,6 +38,8 @@ import com.adiops.apigateway.question.repository.QuestionRepository;
 import com.adiops.apigateway.question.resourceobject.QuestionRO;
 
 
+
+
 /**
  * This is the implementation class for Video responsible for all the CRUD operations and other business related operations.
  * @author Deepak Pal
@@ -57,6 +59,10 @@ public class VideoService{
 	TopicRepository mTopicRepository;
 	@Autowired
 	QuestionRepository mQuestionRepository;
+	
+	
+	
+	
 	@Autowired
 	private ModelMapper mModelMapper;
 
@@ -496,6 +502,20 @@ public class VideoService{
 		
 		return tQuestionROs;
 	}
+	
+	
+	
+	
+	
+	public VideoRO getVideoByKeyId(String key) {
+		Optional<?> tVideo= Optional.ofNullable(mVideoRepository.findByKeyid(key));
+		 if(tVideo.isPresent()) {
+	            return mModelMapper.map(tVideo.get(), VideoRO.class);
+	        }
+	      return null;  
+	}
+	
+	
 	
 	
 }

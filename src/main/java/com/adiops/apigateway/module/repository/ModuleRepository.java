@@ -19,4 +19,5 @@ import  com.adiops.apigateway.module.entity.ModuleEntity;
 @Repository
 public interface ModuleRepository extends JpaRepository<ModuleEntity, Long>{
 
+	ModuleEntity findByKeyid(String key);
 }

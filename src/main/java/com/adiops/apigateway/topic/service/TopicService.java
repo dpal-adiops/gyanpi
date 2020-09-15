@@ -41,6 +41,8 @@ import com.adiops.apigateway.page.repository.PageRepository;
 import com.adiops.apigateway.page.resourceobject.PageRO;
 
 
+
+
 /**
  * This is the implementation class for Topic responsible for all the CRUD operations and other business related operations.
  * @author Deepak Pal
@@ -62,6 +64,10 @@ public class TopicService{
 	VideoRepository mVideoRepository;
 	@Autowired
 	PageRepository mPageRepository;
+	
+	
+	
+	
 	@Autowired
 	private ModelMapper mModelMapper;
 
@@ -582,13 +588,19 @@ public class TopicService{
 		return tPageROs;
 	}
 	
-	public TopicRO getTopicByKeyId(String key) throws RestException {
+	
+	
+	
+	
+	public TopicRO getTopicByKeyId(String key) {
 		Optional<?> tTopic= Optional.ofNullable(mTopicRepository.findByKeyid(key));
 		 if(tTopic.isPresent()) {
 	            return mModelMapper.map(tTopic.get(), TopicRO.class);
-	        } else {
-	            throw new RestException("No topic record exist for given id");
 	        }
+	      return null;  
 	}
+	
+	
+	
 	
 }

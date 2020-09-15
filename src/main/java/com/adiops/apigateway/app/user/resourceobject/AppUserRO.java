@@ -3,6 +3,7 @@ package com.adiops.apigateway.app.user.resourceobject;
 import java.util.Date;
 
 
+
 /**
  * This class is responsible for transfer the resource AppUser Data
  * @author Deepak Pal
@@ -24,7 +25,11 @@ public class AppUserRO {
 	private String firstName;
 	private String lastName;
 	private String encryptedPassword;
+	private String mobile;
 	private Boolean enabled;
+	
+	
+	
 	
 	public Long getId(){
 		return this.id;
@@ -83,6 +88,14 @@ public class AppUserRO {
 		return this.encryptedPassword;
 	}
 	
+	public void setMobile(String mobile){
+		this.mobile=mobile;
+	}
+	
+	public String getMobile(){
+		return this.mobile;
+	}
+	
 	public void setEnabled(Boolean enabled){
 		this.enabled=enabled;
 	}
@@ -90,6 +103,8 @@ public class AppUserRO {
 	public Boolean getEnabled(){
 		return this.enabled;
 	}
+	
+	
 	
 	
 }

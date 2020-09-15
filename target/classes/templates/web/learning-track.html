@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/layout4">
+
+<head>
+<title>Course-list</title>
+</head>
+
+<body>
+
+<section id="content" layout:fragment="content">	
+	<div  class="container2">		
+			
+			<div class="row">
+				<div class="col s12 m12 l12"> 
+			      <div class="card">
+			        <div class="progress">
+					   <div class="determinate"   th:style="'width:'+@{${courseBO.progress}}+'%'" ></div>
+					</div>
+			        <div class="card-content">
+			          <span class="card-title" th:text="${courseBO.courseRO.name}"></span>
+			          <p th:text="${courseBO.courseRO.description}"></p>
+			        </div>
+			      </div>
+			    </div>
+			</div>
+			<div class="row">
+				<div class="col s12 m12 l12" th:each ="moduleBO : ${courseBO.moduleBOs}">
+					<ul class="collapsible">
+						<li>
+							<div class="collapsible-header" th:classappend="${moduleBO.moduleLineGroupRO.step > 0? 'active' : ''}" >								
+								<i class="material-icons" >filter_drama</i><span th:text="${moduleBO.moduleRO.name}"></span>
+								<span class="col s1 progress">
+								   <span class="determinate"   th:style="'width:'+@{${moduleBO.progress}}+'%'" ></span>
+								</span>
+							</div>
+							<div class="collapsible-body">								
+								<div th:text="${moduleBO.moduleRO.description}"></div>
+								<div class="row " >
+									<div class="col s6 m3 l3" th:each ="topicBO : ${moduleBO.getTopicBOs()}">
+									      <div class="card" th:classappend="${topicBO.topicLineGroupRO.status == 2? 'teal lighten-2 white-text' : topicBO.topicLineGroupRO.status == 3?'blue lighten-2 white-text':'grey lighten-5 grey-text'}" >									     
+									           <div  class="card-content">									           		
+									           		<a th:if="${topicBO.topicLineGroupRO.status == 3}" th:href="@{/web/browse/{id}(id=${topicBO.topicRO.keyid})}" ><i class="material-icons  white-text">done_all</i><span class="card-title white-text"><span  th:text="${topicBO.topicLineGroupRO.title}"></span></span></a>	
+									           		<a th:if="${topicBO.topicLineGroupRO.status == 2}" th:href="@{/web/browse/{id}(id=${topicBO.topicRO.keyid})}" ><i class="material-icons  white-text">golf_course</i><span class="card-title white-text"><span  th:text="${topicBO.topicLineGroupRO.title}"></span></span></a>		
+									           		<span th:if="${topicBO.topicLineGroupRO.status == 1}"><i class="material-icons">lock_outline</i><span  class="card-title" th:text="${topicBO.topicLineGroupRO.title}"></span></span>
+									           		<br><span th:text="${topicBO.topicLineGroupRO.step}"></span>/<span th:text="${topicBO.topicLineGroupRO.totalStep}"></span>
+									           </div>							         
+									      </div>
+									</div>
+								</div>	
+							</div>
+						</li>						
+					</ul>
+				</div>
+			</div>
+	</div>
+</section>	
+</body>
+</html>

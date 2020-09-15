@@ -19,4 +19,7 @@ import  com.adiops.apigateway.app.user.entity.AppUserEntity;
 @Repository
 public interface AppUserRepository extends JpaRepository<AppUserEntity, Long>{
 
+	AppUserEntity findByKeyid(String key);
+
+	AppUserEntity findByUserName(String name);
 }

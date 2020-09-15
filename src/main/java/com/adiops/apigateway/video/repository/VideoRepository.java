@@ -19,4 +19,5 @@ import  com.adiops.apigateway.video.entity.VideoEntity;
 @Repository
 public interface VideoRepository extends JpaRepository<VideoEntity, Long>{
 
+	VideoEntity findByKeyid(String key);
 }

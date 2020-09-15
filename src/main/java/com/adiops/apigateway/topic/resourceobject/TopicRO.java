@@ -3,6 +3,7 @@ package com.adiops.apigateway.topic.resourceobject;
 import java.util.Date;
 
 
+
 /**
  * This class is responsible for transfer the resource Topic Data
  * @author Deepak Pal
@@ -24,6 +25,9 @@ public class TopicRO {
 	private String title;
 	private String authorId;
 	private String domainId;
+	
+	
+	
 	
 	public Long getId(){
 		return this.id;
@@ -81,6 +85,8 @@ public class TopicRO {
 	public String getDomainId(){
 		return this.domainId;
 	}
+	
+	
 	
 	
 }

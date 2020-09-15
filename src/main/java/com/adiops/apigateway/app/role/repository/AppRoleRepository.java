@@ -19,4 +19,5 @@ import  com.adiops.apigateway.app.role.entity.AppRoleEntity;
 @Repository
 public interface AppRoleRepository extends JpaRepository<AppRoleEntity, Long>{
 
+	AppRoleEntity findByKeyid(String key);
 }

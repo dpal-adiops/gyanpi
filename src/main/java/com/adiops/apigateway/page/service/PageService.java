@@ -38,6 +38,8 @@ import com.adiops.apigateway.question.repository.QuestionRepository;
 import com.adiops.apigateway.question.resourceobject.QuestionRO;
 
 
+
+
 /**
  * This is the implementation class for Page responsible for all the CRUD operations and other business related operations.
  * @author Deepak Pal
@@ -57,6 +59,10 @@ public class PageService{
 	TopicRepository mTopicRepository;
 	@Autowired
 	QuestionRepository mQuestionRepository;
+	
+	
+	
+	
 	@Autowired
 	private ModelMapper mModelMapper;
 
@@ -496,6 +502,20 @@ public class PageService{
 		
 		return tQuestionROs;
 	}
+	
+	
+	
+	
+	
+	public PageRO getPageByKeyId(String key) {
+		Optional<?> tPage= Optional.ofNullable(mPageRepository.findByKeyid(key));
+		 if(tPage.isPresent()) {
+	            return mModelMapper.map(tPage.get(), PageRO.class);
+	        }
+	      return null;  
+	}
+	
+	
 	
 	
 }

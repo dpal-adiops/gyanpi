@@ -19,4 +19,5 @@ import  com.adiops.apigateway.page.entity.PageEntity;
 @Repository
 public interface PageRepository extends JpaRepository<PageEntity, Long>{
 
+	PageEntity findByKeyid(String key);
 }

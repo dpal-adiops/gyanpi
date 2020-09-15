@@ -3,6 +3,7 @@ package com.adiops.apigateway.page.resourceobject;
 import java.util.Date;
 
 
+
 /**
  * This class is responsible for transfer the resource Page Data
  * @author Deepak Pal
@@ -23,6 +24,9 @@ public class PageRO {
 	private String description;
 	private String authorId;
 	private String domainId;
+	
+	
+	
 	
 	public Long getId(){
 		return this.id;
@@ -72,6 +76,8 @@ public class PageRO {
 	public String getDomainId(){
 		return this.domainId;
 	}
+	
+	
 	
 	
 }

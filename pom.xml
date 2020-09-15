@@ -71,14 +71,25 @@
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 
-		
+		<!-- optional, it brings userful tags to display spring security stuff -->
+        <dependency>
+            <groupId>org.thymeleaf.extras</groupId>
+            <artifactId>thymeleaf-extras-springsecurity5</artifactId>
+        </dependency>
 
 		<dependency>
 			<groupId>javax.transaction</groupId>
 			<artifactId>javax.transaction-api</artifactId>
 		</dependency>
 
-
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-aspects</artifactId>
+		    </dependency>
+		<dependency>
+	        <groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-starter-aop</artifactId>
+    	</dependency>
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
@@ -152,6 +163,29 @@
 					<version>1</version>
 					<projectId>GCLOUD_CONFIG</projectId>
 				</configuration>
+			</plugin>
+			<plugin>
+			    <groupId>org.codehaus.mojo</groupId>
+			    <artifactId>aspectj-maven-plugin</artifactId>
+			    <version>1.11</version>
+			    <!-- configuration and executions -->
+			    <configuration>
+				    <complianceLevel>1.8</complianceLevel>
+				    <Xlint>ignore</Xlint>
+				    <aspectLibraries>
+				        <aspectLibrary>
+				            <groupId>org.springframework</groupId>
+				            <artifactId>spring-aspects</artifactId>
+				        </aspectLibrary>
+				    </aspectLibraries>
+				    <executions>
+					    <execution>
+					        <goals>
+					            <goal>compile</goal>
+					        </goals>
+					    </execution>
+					</executions>
+				</configuration>				
 			</plugin>
 		</plugins>
 		

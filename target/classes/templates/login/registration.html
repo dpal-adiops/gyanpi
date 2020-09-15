@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+
+<head th:replace="fragments/header :: header">
+<title>Header</title>
+</head>
+
+<body>
+
+
+
+<div th:replace="fragments/navigation :: navigation"></div>
+
+<div class="section no-pad-bot" id="index-banner">
+  <div class="container">
+    <div class="row">
+    	<div class="col s12 m8">
+    		<br><br>
+		    <h1 class="header center orange-text">Gain confidence in maths!</h1>
+		    <div class="row center">
+		      <h5 class="header col s12 light"> Gyanpi helps students to learn maths at their own pace through fun and interactive questions, built in support and motivating awards.</h5>
+		    </div>
+		    <div class="row center">
+		      <a th:href="@{/signup}"  id="download-button" class="btn-large waves-effect waves-light orange">Get Started</a>
+		    </div>
+		    <br><br><br>
+    	</div>
+    	<div class="col s12 m4">
+    		 <div class="row">
+						<div class="col s12 m12 l12">													
+							<div class="card-panel">								 
+								 <h4 class="header2"><span>User Registration :</span></h4>
+								  <p th:if="${error != null}" th:text="${error}" class="chip"></p>	
+								   <form action="#" th:action="@{/web/users/add}" method="POST" id="editorForm" th:object="${userRO}">
+							             <div class="row">
+											        	
+											        
+											        	
+											         <div class="input-field col s12 l6">
+											          <input type="text" id="firstName" name="firstName" class="validate"  th:field="*{firstName}">
+											          <label for="firstName">FirstName</label>
+											        </div>	
+											         <div class="input-field col s12 l6">
+											          <input type="text" id="lastName" name="lastName" class="validate"  th:field="*{lastName}">
+											          <label for="lastName">LastName</label>
+											        </div>	
+											        <div class="input-field col s12 l6">
+											          <input type="text" id="email" name="email" class="validate"  th:field="*{email}">
+											          <label for="email">Email</label>
+											        </div>
+											         <div class="input-field col s12 l6">
+											          <input type="text" id="encryptedPassword" name="encryptedPassword" class="validate"  th:field="*{encryptedPassword}">
+											          <label for="encryptedPassword">Password</label>
+											        </div>	
+											        
+							             </div>
+							              <br>
+						             		<button class="btn btn-success btn-sm" >Apply</button>
+						             		<button class="btn btn-success btn-sm" >Back to Login</button>
+						        </form>
+							</div>
+						</div>
+					</div>
+    	</div>    	
+    </div>    
+  </div>
+</div>
+
+
+	<div th:replace="fragments/footer :: footer"></div>
+
+<!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="/js/materialize.js"></script>
+  <script src="/js/init.js"></script>
+
+</body>
+
+</html>

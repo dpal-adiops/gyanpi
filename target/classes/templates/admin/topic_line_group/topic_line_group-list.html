@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/layout3">
+
+<head>
+<title>TopicLineGroup-list</title>
+</head>
+
+<body>
+
+<section id="content" layout:fragment="content">	
+	<div  class="container">		
+		<div class="section">
+			<h4 class="header">TopicLineGroups</h4>
+			<div class="divider"></div>
+			<br>
+			<div class="row">
+				<div class="col s12">                   
+                   <a th:href="@{/admin/web/topic_line_groups/add}"  id="scale-demo" href="#!" class="btn-floating btn-large scale-transition">
+					    <i class="material-icons">add</i>
+					</a>
+                  The list shows all topic_line_groups of the author. Click New to add topic_line_group.             
+                </div>
+                <div class="col s12">
+					<table class="centered">
+						<thead>
+						<tr>
+							  	<th>Keyid</th>
+							  	<th>Status</th>
+							  	<th>Score</th>
+							  	<th>MaxScore</th>
+							  	<th>Title</th>
+							  	<th>UserKey</th>
+							  	<th>CourseKey</th>
+							  	<th>ModuleKey</th>
+							  	<th>TopicKey</th>
+							  	<th>Step</th>
+							  	<th>TotalStep</th>
+							 <th></th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr th:if="${topic_line_groups.empty}">
+				            <td colspan="3"> No TopicLineGroup Available </td>
+				        </tr>
+						 <tr th:each ="topic_line_group : ${topic_line_groups}">
+							 	<td><a th:href="@{/admin/web/topic_line_groups/{id}(id=${topic_line_group.id})}"><span th:text="${topic_line_group.keyid}"></span></a></td>
+							 	<td><a th:href="@{/admin/web/topic_line_groups/{id}(id=${topic_line_group.id})}"><span th:text="${topic_line_group.status}"></span></a></td>
+							 	<td><a th:href="@{/admin/web/topic_line_groups/{id}(id=${topic_line_group.id})}"><span th:text="${topic_line_group.score}"></span></a></td>
+							 	<td><a th:href="@{/admin/web/topic_line_groups/{id}(id=${topic_line_group.id})}"><span th:text="${topic_line_group.maxScore}"></span></a></td>
+							 	<td><a th:href="@{/admin/web/topic_line_groups/{id}(id=${topic_line_group.id})}"><span th:text="${topic_line_group.title}"></span></a></td>
+							 	<td><a th:href="@{/admin/web/topic_line_groups/{id}(id=${topic_line_group.id})}"><span th:text="${topic_line_group.userKey}"></span></a></td>
+							 	<td><a th:href="@{/admin/web/topic_line_groups/{id}(id=${topic_line_group.id})}"><span th:text="${topic_line_group.courseKey}"></span></a></td>
+							 	<td><a th:href="@{/admin/web/topic_line_groups/{id}(id=${topic_line_group.id})}"><span th:text="${topic_line_group.moduleKey}"></span></a></td>
+							 	<td><a th:href="@{/admin/web/topic_line_groups/{id}(id=${topic_line_group.id})}"><span th:text="${topic_line_group.topicKey}"></span></a></td>
+							 	<td><a th:href="@{/admin/web/topic_line_groups/{id}(id=${topic_line_group.id})}"><span th:text="${topic_line_group.step}"></span></a></td>
+							 	<td><a th:href="@{/admin/web/topic_line_groups/{id}(id=${topic_line_group.id})}"><span th:text="${topic_line_group.totalStep}"></span></a></td>
+							 <td>
+				                <a th:href="@{/admin/web/topic_line_groups/{id}/delete(id=${topic_line_group.id})}" class="btn-floating btn-small"> <i class="material-icons">delete</i></a>
+				            </td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>	
+</body>
+</html>

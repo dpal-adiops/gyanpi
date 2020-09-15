@@ -31,7 +31,8 @@ import org.springframework.security.web.authentication.rememberme.TokenBasedReme
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-	
+	@Resource(name = "userService")
+	private UserDetailsService userDetailsService;
 	
 	/**
      * To configure Spring Security, here are some considerations.
@@ -43,9 +44,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      */
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/admin/login","/css/**", "/js/**", "/images/**").permitAll();
+		http.authorizeRequests().antMatchers("/login","/h2-console/**","/css/**", "/js/**", "/images/**").permitAll();
+		http.sessionManagement().invalidSessionUrl("/logout");
 		http.csrf().disable().authorizeRequests().antMatchers("/admin/**").hasAnyRole("ADMIN").and().formLogin()
-				.loginPage("/admin/login").and().logout().logoutUrl("/logout")// Custom User Logout Page
+				.loginPage("/login").and().logout().logoutUrl("/logout")// Custom User Logout Page
 				.logoutSuccessUrl("/").and()
                 /*
                  * By default, all paths are accessible to everyone, ensuring normal access to static resources.
@@ -53,21 +55,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                  */
                 .authorizeRequests().anyRequest().permitAll()
                 .and()
-                .exceptionHandling().accessDeniedPage("/403");
+                .exceptionHandling().accessDeniedPage("/");
+		http.csrf().disable();
+		http.headers().frameOptions().disable();
 		
 
 	}
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-
-        auth.inMemoryAuthentication()
-                .withUser("user").password("{noop}password").roles("USER")
-                .and()
-                .withUser("admin").password("{noop}admin").roles("USER", "ADMIN");
-
-    }
-   
-
-	
+	@Autowired
+	public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(userDetailsService).passwordEncoder(encoder());
+	}
+		
+	@Bean
+	public BCryptPasswordEncoder encoder() {
+		return new BCryptPasswordEncoder();
+	}
 }

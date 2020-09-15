@@ -38,6 +38,8 @@ import com.adiops.apigateway.page.repository.PageRepository;
 import com.adiops.apigateway.page.resourceobject.PageRO;
 
 
+
+
 /**
  * This is the implementation class for Course responsible for all the CRUD operations and other business related operations.
  * @author Deepak Pal
@@ -57,6 +59,10 @@ public class CourseService{
 	VideoRepository mVideoRepository;
 	@Autowired
 	PageRepository mPageRepository;
+	
+	
+	
+	
 	@Autowired
 	private ModelMapper mModelMapper;
 
@@ -496,6 +502,20 @@ public class CourseService{
 		
 		return tPageROs;
 	}
+	
+	
+	
+	
+	
+	public CourseRO getCourseByKeyId(String key) {
+		Optional<?> tCourse= Optional.ofNullable(mCourseRepository.findByKeyid(key));
+		 if(tCourse.isPresent()) {
+	            return mModelMapper.map(tCourse.get(), CourseRO.class);
+	        }
+	      return null;  
+	}
+	
+	
 	
 	
 }

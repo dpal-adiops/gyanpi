@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/layout3">
+
+<head>
+<title>LearningPath-list</title>
+</head>
+
+<body>
+	<div layout:fragment="content">
+		<!--breadcrumbs start-->
+         <div id="breadcrumbs-wrapper">
+            <!-- Search for small screen -->
+            <div class="header-search-wrapper grey lighten-2 hide-on-large-only">
+              <input type="text" name="Search" class="header-search-input z-depth-2" placeholder="Explore Materialize">
+            </div>
+            <div class="container">
+              <div class="row">
+                <div class="col s10 m6 l6">
+                  <h5 class="breadcrumbs-title">LearningPaths</h5>
+                  <ol class="breadcrumbs">
+                    <li><a href="index.html">Dashboard</a>
+                    </li>
+                    <li th:text=${learning_pathRO.keyid} class="active"></li>
+                  </ol>
+                </div>                
+              </div>
+            </div>
+          </div>
+          <!--breadcrumbs end-->		 
+		<div class="container">
+			<div class="section">
+				<div class="divider"></div>
+				<div id="basic-form" class="section">
+					<div class="row">
+						<div class="col s12 m12 l12">
+							<a class="btn blue" name="action">General</a>					
+							<div class="card-panel">								 
+								 <h4 class="header2"><span>Edit LearningPath : General</span></h4>
+								 <p class="caption">Fields with a red asterisk (*) are mandatory.</p>	
+								 <p th:if="${error != null}" th:text="${error}" class="chip"></p>
+								   <form  th:action="@{/admin/web/learning_paths/add}" method="POST" id="editorForm"   th:object="${learning_pathRO}">
+							            <div class="row">
+										       
+											         <div class="input-field col s12 l6">
+											          <input type="text" id="keyid" name="keyid" class="validate"  th:field="*{keyid}">
+											          <label for="keyid">Keyid</label>
+											        </div>	
+										       
+											         <div class="input-field col s12 l6">
+											          <input type="text" id="status" name="status" class="validate"  th:field="*{status}">
+											          <label for="status">Status</label>
+											        </div>	
+										       
+											         <div class="input-field col s12 l6">
+											          <input type="text" id="score" name="score" class="validate"  th:field="*{score}">
+											          <label for="score">Score</label>
+											        </div>	
+										       
+											         <div class="input-field col s12 l6">
+											          <input type="text" id="maxScore" name="maxScore" class="validate"  th:field="*{maxScore}">
+											          <label for="maxScore">MaxScore</label>
+											        </div>	
+										       
+											         <div class="input-field col s12 l6">
+											          <input type="text" id="userKey" name="userKey" class="validate"  th:field="*{userKey}">
+											          <label for="userKey">UserKey</label>
+											        </div>	
+										       
+											         <div class="input-field col s12 l6">
+											          <input type="text" id="step" name="step" class="validate"  th:field="*{step}">
+											          <label for="step">Step</label>
+											        </div>	
+										       
+											         <div class="input-field col s12 l6">
+											          <input type="text" id="totalStep" name="totalStep" class="validate"  th:field="*{totalStep}">
+											          <label for="totalStep">TotalStep</label>
+											        </div>	
+							            </div>
+							             <br> 
+							             	<input type="hidden" id="id" th:field="*{id}">
+							             	<button class="btn btn-success btn-sm"  onClick="addEditorForm()">Apply</button>
+						        </form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</body>
+</html>

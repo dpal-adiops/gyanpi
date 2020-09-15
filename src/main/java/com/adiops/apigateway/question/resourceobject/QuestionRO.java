@@ -3,6 +3,7 @@ package com.adiops.apigateway.question.resourceobject;
 import java.util.Date;
 
 
+
 /**
  * This class is responsible for transfer the resource Question Data
  * @author Deepak Pal
@@ -24,6 +25,9 @@ public class QuestionRO {
 	private String answer;
 	private String authorId;
 	private String domainId;
+	
+	
+	
 	
 	public Long getId(){
 		return this.id;
@@ -81,6 +85,8 @@ public class QuestionRO {
 	public String getDomainId(){
 		return this.domainId;
 	}
+	
+	
 	
 	
 }

@@ -12,6 +12,10 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 
+import com.adiops.apigateway.app.role.resourceobject.AppRoleRO;
+import com.adiops.apigateway.app.role.service.AppRoleService;
+import com.adiops.apigateway.app.user.resourceobject.AppUserRO;
+import com.adiops.apigateway.app.user.service.AppUserService;
 import com.adiops.apigateway.common.response.RestException;
 import com.adiops.apigateway.course.resourceobject.CourseRO;
 import com.adiops.apigateway.course.service.CourseService;
@@ -33,11 +37,18 @@ public class TopicCLI implements CommandLineRunner {
 
 	@Autowired
 	ResourceLoader resourceLoader;
+	
 	@Autowired
 	TopicService mTopicService;
 
 	@Autowired
 	QuestionService mQuestionService;
+	
+	@Autowired
+	AppUserService mAppUserService;
+	
+	@Autowired
+	AppRoleService mAppRoleService;
 
 	@Override
 	@Transactional
@@ -45,7 +56,7 @@ public class TopicCLI implements CommandLineRunner {
 		try {
 			importFile();
 			importCourse();			
-						
+			addRoles();		
 		} catch (RestException e) {
 			e.printStackTrace();
 		}
@@ -79,16 +90,29 @@ public class TopicCLI implements CommandLineRunner {
 	}
 
 	@Transactional
-	public void importFile() throws IOException, RestException {
+	private void importFile() throws IOException, RestException {
 		Resource resource = resourceLoader.getResource("classpath:db/questions.csv");
 		InputStream inputStream = resource.getInputStream();
 		mQuestionService.importCSV(inputStream);
 	}
 
 	@Transactional
-	public void addQuestionsToTopic(TopicRO topicRO) throws IOException, RestException {
+	private void addQuestionsToTopic(TopicRO topicRO) throws IOException, RestException {
 		for (QuestionRO tQuestionRO : mQuestionService.getQuestionROs()) {
 			mTopicService.addTopicQuestion(topicRO.getId(), tQuestionRO.getId());
 		}
+	}
+	
+	@Transactional
+	private void addRoles() throws RestException {
+		AppRoleRO tAppRole=	mAppRoleService.getAppRoleByKeyId("SYS_ADMIN");
+		AppUserRO tAppUserRO = mAppUserService.getAppUserByKeyId("AD001");
+		
+		mAppUserService.addAppUserAppRole(tAppUserRO.getId(), tAppRole.getId());
+		tAppRole=	mAppRoleService.getAppRoleByKeyId("APP_LEARNER");
+		mAppUserService.addAppUserAppRole(tAppUserRO.getId(), tAppRole.getId());
+		
+		tAppUserRO = mAppUserService.getAppUserByKeyId("USER001");
+		mAppUserService.addAppUserAppRole(tAppUserRO.getId(), tAppRole.getId());
 	}
 }

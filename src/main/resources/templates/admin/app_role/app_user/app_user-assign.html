@@ -53,6 +53,7 @@
 													  	<th>FirstName</th>
 													  	<th>LastName</th>
 													  	<th>EncryptedPassword</th>
+													  	<th>Mobile</th>
 													  	<th>Enabled</th>
 													 <th></th>
 												</tr>
@@ -68,6 +69,7 @@
 														 		<td th:text="${app_user.firstName}"></td>
 														 		<td th:text="${app_user.lastName}"></td>
 														 		<td th:text="${app_user.encryptedPassword}"></td>
+														 		<td th:text="${app_user.mobile}"></td>
 														 		<td th:text="${app_user.enabled}"></td>
 													 <td>
 										                <a th:href="@{/admin/web/app_roles/{app_role_id}/app_users/{id}/assign(app_role_id=${app_roleRO.id},id=${app_user.id})}" class="btn-floating btn-small"> <i class="material-icons">add</i></a>

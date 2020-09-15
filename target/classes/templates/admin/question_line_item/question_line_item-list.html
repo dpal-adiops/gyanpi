@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/layout3">
+
+<head>
+<title>QuestionLineItem-list</title>
+</head>
+
+<body>
+
+<section id="content" layout:fragment="content">	
+	<div  class="container">		
+		<div class="section">
+			<h4 class="header">QuestionLineItems</h4>
+			<div class="divider"></div>
+			<br>
+			<div class="row">
+				<div class="col s12">                   
+                   <a th:href="@{/admin/web/question_line_items/add}"  id="scale-demo" href="#!" class="btn-floating btn-large scale-transition">
+					    <i class="material-icons">add</i>
+					</a>
+                  The list shows all question_line_items of the author. Click New to add question_line_item.             
+                </div>
+                <div class="col s12">
+					<table class="centered">
+						<thead>
+						<tr>
+							  	<th>Keyid</th>
+							  	<th>Status</th>
+							  	<th>Score</th>
+							  	<th>MaxScore</th>
+							  	<th>Title</th>
+							  	<th>UserKey</th>
+							  	<th>CourseKey</th>
+							  	<th>ModuleKey</th>
+							  	<th>TopicKey</th>
+							  	<th>QuestionKey</th>
+							  	<th>Answer</th>
+							  	<th>CorrectAnswer</th>
+							  	<th>QuestionType</th>
+							 <th></th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr th:if="${question_line_items.empty}">
+				            <td colspan="3"> No QuestionLineItem Available </td>
+				        </tr>
+						 <tr th:each ="question_line_item : ${question_line_items}">
+							 	<td><a th:href="@{/admin/web/question_line_items/{id}(id=${question_line_item.id})}"><span th:text="${question_line_item.keyid}"></span></a></td>
+							 	<td><a th:href="@{/admin/web/question_line_items/{id}(id=${question_line_item.id})}"><span th:text="${question_line_item.status}"></span></a></td>
+							 	<td><a th:href="@{/admin/web/question_line_items/{id}(id=${question_line_item.id})}"><span th:text="${question_line_item.score}"></span></a></td>
+							 	<td><a th:href="@{/admin/web/question_line_items/{id}(id=${question_line_item.id})}"><span th:text="${question_line_item.maxScore}"></span></a></td>
+							 	<td><a th:href="@{/admin/web/question_line_items/{id}(id=${question_line_item.id})}"><span th:text="${question_line_item.title}"></span></a></td>
+							 	<td><a th:href="@{/admin/web/question_line_items/{id}(id=${question_line_item.id})}"><span th:text="${question_line_item.userKey}"></span></a></td>
+							 	<td><a th:href="@{/admin/web/question_line_items/{id}(id=${question_line_item.id})}"><span th:text="${question_line_item.courseKey}"></span></a></td>
+							 	<td><a th:href="@{/admin/web/question_line_items/{id}(id=${question_line_item.id})}"><span th:text="${question_line_item.moduleKey}"></span></a></td>
+							 	<td><a th:href="@{/admin/web/question_line_items/{id}(id=${question_line_item.id})}"><span th:text="${question_line_item.topicKey}"></span></a></td>
+							 	<td><a th:href="@{/admin/web/question_line_items/{id}(id=${question_line_item.id})}"><span th:text="${question_line_item.questionKey}"></span></a></td>
+							 	<td><a th:href="@{/admin/web/question_line_items/{id}(id=${question_line_item.id})}"><span th:text="${question_line_item.answer}"></span></a></td>
+							 	<td><a th:href="@{/admin/web/question_line_items/{id}(id=${question_line_item.id})}"><span th:text="${question_line_item.correctAnswer}"></span></a></td>
+							 	<td><a th:href="@{/admin/web/question_line_items/{id}(id=${question_line_item.id})}"><span th:text="${question_line_item.questionType}"></span></a></td>
+							 <td>
+				                <a th:href="@{/admin/web/question_line_items/{id}/delete(id=${question_line_item.id})}" class="btn-floating btn-small"> <i class="material-icons">delete</i></a>
+				            </td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>	
+</body>
+</html>

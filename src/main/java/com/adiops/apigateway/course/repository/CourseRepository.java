@@ -19,4 +19,5 @@ import  com.adiops.apigateway.course.entity.CourseEntity;
 @Repository
 public interface CourseRepository extends JpaRepository<CourseEntity, Long>{
 
+	CourseEntity findByKeyid(String key);
 }

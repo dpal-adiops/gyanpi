@@ -1,0 +1,3 @@
+"AD001","admin","admin@admin.com","admin","admin","$2a$10$YA.PVfb/D8v.4HKg2KgKv.4MBRnLJylI8vxpXzeE91sn1hi.KwZxS","987654321",1
+"ED001","mathadmin","mathadmin@admin.com","math","admin","$2a$10$1Y7jGFXFtI4q1rinIDo9CerRkh3XUhOwjDkbkSJKDcjgmY7ihULZi","987654321",1
+"USER001","user","mathadmin@admin.com","math","user","$2a$10$1Y7jGFXFtI4q1rinIDo9CerRkh3XUhOwjDkbkSJKDcjgmY7ihULZi","987654321",1

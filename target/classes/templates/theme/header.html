@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html xmlns:th="http://www.thymeleaf.org">
+<html  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" xmlns:th="http://www.thymeleaf.org">
 <head></head>
 <body>
   <!-- START HEADER -->
@@ -12,37 +12,22 @@
           <ul class="left">
             <li>
               <h1 class="logo-wrapper">
-                <a href="index.html" class="brand-logo darken-1">
-                    <img src="/images/logo/materialize-logo.png" alt="materialize logo">
-                    <span class="logo-text hide-on-med-and-down">Sadhka</span>
+                <a href="/" class="brand-logo darken-1">
+                    <span class="logo-text">G&gamma;&alpha;&#951;(&pi;)</span>
                   </a>
               </h1>
             </li>
           </ul>
-          <div class="header-search-wrapper hide-on-med-and-down">
-            <i class="material-icons">search</i>
-            <input type="text" name="Search" class="header-search-input z-depth-2" placeholder="Explore Sadhka" />
-          </div>
+          
           <ul class="right hide-on-med-and-down">
           	
-            <li>
-              <a href="javascript:void(0);" class="waves-effect waves-block waves-light translation-button" data-activates="translation-dropdown">
-                  <span class="flag-icon flag-icon-gb"></span>
-                </a>
-            </li>
            
             <li>
               <a href="javascript:void(0);" class="waves-effect waves-block waves-light toggle-fullscreen">
                   <i class="material-icons">settings_overscan</i>
                 </a>
             </li>
-            <li>
-              <a href="javascript:void(0);" class="waves-effect waves-block waves-light notification-button" data-activates="notifications-dropdown">
-                  <i class="material-icons">notifications_none
-                    <small class="notification-badge pink accent-2">0</small>
-                  </i>
-                </a>
-            </li>
+           
             <li>
               <a href="javascript:void(0);" class="waves-effect waves-block waves-light profile-button" data-activates="profile-dropdown">
                   <span class="avatar-status avatar-online">
@@ -51,18 +36,13 @@
                   </span>
                 </a>
             </li>
-            <li>
-              <a href="#" data-activates="chat-out" class="waves-effect waves-block waves-light chat-collapse">
-                  <i class="material-icons">format_indent_increase</i>
-                </a>
-            </li>
+            
           </ul>
           <!-- translation-button -->
           
           <ul id="translation-dropdown" class="dropdown-content">
             <li>
-              <a href="#!" class="grey-text text-darken-1">
-                  <i class="flag-icon flag-icon-gb"></i> English</a>
+             <span sec:authentication="name"></span>
             </li>
             
           </ul>

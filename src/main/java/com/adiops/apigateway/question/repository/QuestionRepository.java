@@ -19,4 +19,5 @@ import  com.adiops.apigateway.question.entity.QuestionEntity;
 @Repository
 public interface QuestionRepository extends JpaRepository<QuestionEntity, Long>{
 
+	QuestionEntity findByKeyid(String key);
 }

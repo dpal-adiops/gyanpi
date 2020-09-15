@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Set;
 import java.util.HashSet;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,11 +13,16 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -38,9 +44,12 @@ public class AppRoleEntity {
 	
 	@Column
 	@CsvDate(value = "dd/MM/yyyy")
-	@Temporal(TemporalType.DATE)
+	@UpdateTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date lastModified;	
 	
+	@CreationTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column
 	private Date createdDate;
 	
@@ -72,6 +81,11 @@ public class AppRoleEntity {
  joinColumns = @JoinColumn(name = "app_role_id"),
  inverseJoinColumns = @JoinColumn(name = "app_user_id"))
 	 private Set<AppUserEntity> app_users = new HashSet<>();
+	
+	
+	
+	
+	
 	
 	
 	public void setKeyid(String keyid){
@@ -121,6 +135,11 @@ public class AppRoleEntity {
 	public Set<AppUserEntity> getAppUsers(){
 		return this.app_users;
 	}
+	
+	
+	
+	
+	
 	
 	
 }

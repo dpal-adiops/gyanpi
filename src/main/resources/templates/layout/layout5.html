@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 
 <html xmlns:th="http://www.thymeleaf.org"
+ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
 	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
 
 	<head th:replace="theme/head :: head">
@@ -17,9 +18,19 @@
 		<!-- END HEADER -->
 		<!-- //////////////////////////////////////////////////////////////////////////// -->
 		<!-- START MAIN -->
-		
+		<div id="main">
+		 	<!-- START WRAPPER -->
+      		<div class="wrapper">
+				<aside id="left-sidebar-nav" layout:fragment="left-sidebar-nav">
+					<a href="#" data-activates="slide-out" class="sidebar-collapse btn-floating btn-medium waves-effect waves-light hide-on-large-only">
+			            <i class="material-icons">menu</i>
+			          </a>					
+				</aside>
+				
 				<section id="content" layout:fragment="content"></section>
-			
+			</div>	
+		</div>
+    
 		<!-- END MAIN -->
 		<!-- //////////////////////////////////////////////////////////////////////////// -->
 		

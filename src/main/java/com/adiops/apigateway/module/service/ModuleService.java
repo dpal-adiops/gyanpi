@@ -41,6 +41,8 @@ import com.adiops.apigateway.page.repository.PageRepository;
 import com.adiops.apigateway.page.resourceobject.PageRO;
 
 
+
+
 /**
  * This is the implementation class for Module responsible for all the CRUD operations and other business related operations.
  * @author Deepak Pal
@@ -62,6 +64,10 @@ public class ModuleService{
 	VideoRepository mVideoRepository;
 	@Autowired
 	PageRepository mPageRepository;
+	
+	
+	
+	
 	@Autowired
 	private ModelMapper mModelMapper;
 
@@ -579,6 +585,20 @@ public class ModuleService{
 		
 		return tPageROs;
 	}
+	
+	
+	
+	
+	
+	public ModuleRO getModuleByKeyId(String key) {
+		Optional<?> tModule= Optional.ofNullable(mModuleRepository.findByKeyid(key));
+		 if(tModule.isPresent()) {
+	            return mModelMapper.map(tModule.get(), ModuleRO.class);
+	        }
+	      return null;  
+	}
+	
+	
 	
 	
 }

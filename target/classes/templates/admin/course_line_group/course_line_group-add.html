@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/layout3">
+
+<head>
+<title>CourseLineGroup-list</title>
+</head>
+
+<body>
+	<div layout:fragment="content">			 
+		<div class="container">
+			<div class="section">
+				<div class="divider"></div>
+				<div id="basic-form" class="section">
+					<div class="row">
+						<div class="col s12 m12 l12">													
+							<div class="card-panel">								 
+								 <h4 class="header2"><span>Add CourseLineGroup :</span></h4>
+								 <p class="caption">Fields with a red asterisk (*) are mandatory.</p>
+								  <p th:if="${error != null}" th:text="${error}" class="chip"></p>	
+								   <form action="#" th:action="@{/admin/web/course_line_groups/add}" method="POST" id="editorForm" th:object="${course_line_groupRO}">
+							             <div class="row">
+											         <div class="input-field col s12 l6">
+											          <input type="text" id="keyid" name="keyid" class="validate"  th:field="*{keyid}">
+											          <label for="keyid">Keyid</label>
+											        </div>	
+											         <div class="input-field col s12 l6">
+											          <input type="text" id="status" name="status" class="validate"  th:field="*{status}">
+											          <label for="status">Status</label>
+											        </div>	
+											         <div class="input-field col s12 l6">
+											          <input type="text" id="score" name="score" class="validate"  th:field="*{score}">
+											          <label for="score">Score</label>
+											        </div>	
+											         <div class="input-field col s12 l6">
+											          <input type="text" id="maxScore" name="maxScore" class="validate"  th:field="*{maxScore}">
+											          <label for="maxScore">MaxScore</label>
+											        </div>	
+											         <div class="input-field col s12 l6">
+											          <input type="text" id="title" name="title" class="validate"  th:field="*{title}">
+											          <label for="title">Title</label>
+											        </div>	
+										        	<div class="input-field col s12 l6">													  
+											         <textarea id="description" class="validate"  name="description"  th:field="*{description}" style="height: 200px;" rows="10" cols="100"></textarea> 	
+										          	  <label for="description">Description</label>										          	   
+										          	   <!--<br><br><div id="editor-container"  style="height: 200px;" ><p th:utext="*{description}"></p></div>  -->		
+											        </div>
+											         <div class="input-field col s12 l6">
+											          <input type="text" id="userKey" name="userKey" class="validate"  th:field="*{userKey}">
+											          <label for="userKey">UserKey</label>
+											        </div>	
+											         <div class="input-field col s12 l6">
+											          <input type="text" id="courseKey" name="courseKey" class="validate"  th:field="*{courseKey}">
+											          <label for="courseKey">CourseKey</label>
+											        </div>	
+											         <div class="input-field col s12 l6">
+											          <input type="text" id="step" name="step" class="validate"  th:field="*{step}">
+											          <label for="step">Step</label>
+											        </div>	
+											         <div class="input-field col s12 l6">
+											          <input type="text" id="totalStep" name="totalStep" class="validate"  th:field="*{totalStep}">
+											          <label for="totalStep">TotalStep</label>
+											        </div>	
+							             </div>
+							              <br>
+						             		<button class="btn btn-success btn-sm"  onClick="addEditorForm()">Apply</button>
+						        </form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</body>
+</html>

@@ -9,6 +9,8 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 
+import com.adiops.apigateway.app.role.service.AppRoleService;
+import com.adiops.apigateway.app.user.service.AppUserService;
 import com.adiops.apigateway.common.response.RestException;
 import com.adiops.apigateway.course.resourceobject.CourseRO;
 import com.adiops.apigateway.course.service.CourseService;
@@ -30,7 +32,10 @@ public class DbinitCommandLineRunner implements CommandLineRunner {
 	ModuleService mModuleService;
 	
 	@Autowired
-	TopicService mTopicService;
+	AppRoleService mAppRoleService;
+	
+	@Autowired
+	AppUserService mAppUserService;
 	
 	@Override
 	public void run(String... args) throws Exception {
@@ -46,22 +51,10 @@ public class DbinitCommandLineRunner implements CommandLineRunner {
 			Resource resource = resourceLoader.getResource("classpath:db/modules.csv");
 			InputStream inputStream = resource.getInputStream();
 			mModuleService.importCSV(inputStream);
-			
-			
-			
-		
-			
-//			List<TopicRO> topicROs= mTopicService.getTopicROs();
-//			List<ModuleRO>	tModuleROs= mModuleService.getModuleROs();
-//			for(ModuleRO tModuleRO: tModuleROs)
-//			{
-//				mModuleService.addModuleCourse(tModuleRO.getId(), tCourseRO.getId());
-//				for(TopicRO topicRO:topicROs)
-//				{
-//					mTopicService.addTopicModule(topicRO.getId(), tModuleRO.getId());
-//				}
-//			}
-//				
+			resource = resourceLoader.getResource("classpath:db/roles.csv");
+			mAppRoleService.importCSV(resource.getInputStream());
+			resource = resourceLoader.getResource("classpath:db/users.csv");
+			mAppUserService.importCSV(resource.getInputStream());
 			
 		} catch (RestException e) {
 			e.printStackTrace();

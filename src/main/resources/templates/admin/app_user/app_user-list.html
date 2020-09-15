@@ -31,6 +31,7 @@
 							  	<th>FirstName</th>
 							  	<th>LastName</th>
 							  	<th>EncryptedPassword</th>
+							  	<th>Mobile</th>
 							  	<th>Enabled</th>
 							 <th></th>
 						</tr>
@@ -46,6 +47,7 @@
 							 	<td><a th:href="@{/admin/web/app_users/{id}(id=${app_user.id})}"><span th:text="${app_user.firstName}"></span></a></td>
 							 	<td><a th:href="@{/admin/web/app_users/{id}(id=${app_user.id})}"><span th:text="${app_user.lastName}"></span></a></td>
 							 	<td><a th:href="@{/admin/web/app_users/{id}(id=${app_user.id})}"><span th:text="${app_user.encryptedPassword}"></span></a></td>
+							 	<td><a th:href="@{/admin/web/app_users/{id}(id=${app_user.id})}"><span th:text="${app_user.mobile}"></span></a></td>
 							 	<td><a th:href="@{/admin/web/app_users/{id}(id=${app_user.id})}"><span th:text="${app_user.enabled}"></span></a></td>
 							 <td>
 				                <a th:href="@{/admin/web/app_users/{id}/delete(id=${app_user.id})}" class="btn-floating btn-small"> <i class="material-icons">delete</i></a>

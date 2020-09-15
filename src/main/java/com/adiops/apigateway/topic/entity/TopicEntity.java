@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Set;
 import java.util.HashSet;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,11 +13,16 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -42,9 +48,12 @@ public class TopicEntity {
 	
 	@Column
 	@CsvDate(value = "dd/MM/yyyy")
-	@Temporal(TemporalType.DATE)
+	@UpdateTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date lastModified;	
 	
+	@CreationTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column
 	private Date createdDate;
 	
@@ -90,6 +99,11 @@ public class TopicEntity {
 	 private Set<VideoEntity> videos = new HashSet<>();
 	 	@ManyToMany(mappedBy = "topics")
 	 private Set<PageEntity> pages = new HashSet<>();
+	
+	
+	
+	
+	
 	
 	
 	public void setKeyid(String keyid){
@@ -187,6 +201,11 @@ public class TopicEntity {
 	public Set<PageEntity> getPages(){
 		return this.pages;
 	}
+	
+	
+	
+	
+	
 	
 	
 }

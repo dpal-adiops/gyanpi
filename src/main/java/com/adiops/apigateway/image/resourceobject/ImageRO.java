@@ -3,6 +3,7 @@ package com.adiops.apigateway.image.resourceobject;
 import java.util.Date;
 
 
+
 /**
  * This class is responsible for transfer the resource Image Data
  * @author Deepak Pal
@@ -23,6 +24,9 @@ public class ImageRO {
 	private String url;
 	private String authorId;
 	private String domainId;
+	
+	
+	
 	
 	public Long getId(){
 		return this.id;
@@ -72,6 +76,8 @@ public class ImageRO {
 	public String getDomainId(){
 		return this.domainId;
 	}
+	
+	
 	
 	
 }

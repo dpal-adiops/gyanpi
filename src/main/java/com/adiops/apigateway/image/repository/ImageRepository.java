@@ -19,4 +19,5 @@ import  com.adiops.apigateway.image.entity.ImageEntity;
 @Repository
 public interface ImageRepository extends JpaRepository<ImageEntity, Long>{
 
+	ImageEntity findByKeyid(String key);
 }

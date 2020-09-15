@@ -54,10 +54,9 @@
 											        </div>	
 										       
 										        	<div class="input-field col s12 l6">													  
-											          <input type="hidden" id="description" name="description"  th:field="*{description}">
-										          	  <label for="description">Description</label>
-										          	   <br><br>
-										          	  <div id="editor-container" th:utext="*{description}"></div>											        
+											          <textarea id="description" class="validate"  name="description"  th:field="*{description}" style="height: 200px;" rows="10" cols="100"></textarea> 	
+										          	  <label for="description">Description</label>										          	   
+										          	   <!--<br><br><div id="editor-container"  style="height: 200px;" ><p th:utext="*{description}"></p></div>  -->		
 											        </div>
 										       
 											         <div class="input-field col s12 l6">

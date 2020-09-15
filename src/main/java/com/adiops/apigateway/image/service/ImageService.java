@@ -38,6 +38,8 @@ import com.adiops.apigateway.question.repository.QuestionRepository;
 import com.adiops.apigateway.question.resourceobject.QuestionRO;
 
 
+
+
 /**
  * This is the implementation class for Image responsible for all the CRUD operations and other business related operations.
  * @author Deepak Pal
@@ -57,6 +59,10 @@ public class ImageService{
 	TopicRepository mTopicRepository;
 	@Autowired
 	QuestionRepository mQuestionRepository;
+	
+	
+	
+	
 	@Autowired
 	private ModelMapper mModelMapper;
 
@@ -496,6 +502,20 @@ public class ImageService{
 		
 		return tQuestionROs;
 	}
+	
+	
+	
+	
+	
+	public ImageRO getImageByKeyId(String key) {
+		Optional<?> tImage= Optional.ofNullable(mImageRepository.findByKeyid(key));
+		 if(tImage.isPresent()) {
+	            return mModelMapper.map(tImage.get(), ImageRO.class);
+	        }
+	      return null;  
+	}
+	
+	
 	
 	
 }

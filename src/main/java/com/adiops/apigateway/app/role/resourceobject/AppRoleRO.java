@@ -3,6 +3,7 @@ package com.adiops.apigateway.app.role.resourceobject;
 import java.util.Date;
 
 
+
 /**
  * This class is responsible for transfer the resource AppRole Data
  * @author Deepak Pal
@@ -22,6 +23,9 @@ public class AppRoleRO {
 	private String name;
 	private String description;
 	private String permission;
+	
+	
+	
 	
 	public Long getId(){
 		return this.id;
@@ -63,6 +67,8 @@ public class AppRoleRO {
 	public String getPermission(){
 		return this.permission;
 	}
+	
+	
 	
 	
 }

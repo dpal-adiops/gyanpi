@@ -29,6 +29,8 @@ import com.adiops.apigateway.app.user.repository.AppUserRepository;
 import com.adiops.apigateway.app.user.resourceobject.AppUserRO;
 
 
+
+
 /**
  * This is the implementation class for AppRole responsible for all the CRUD operations and other business related operations.
  * @author Deepak Pal
@@ -42,6 +44,10 @@ public class AppRoleService{
 
 	@Autowired
 	AppUserRepository mAppUserRepository;
+	
+	
+	
+	
 	@Autowired
 	private ModelMapper mModelMapper;
 
@@ -245,6 +251,20 @@ public class AppRoleService{
 		
 		return tAppUserROs;
 	}
+	
+	
+	
+	
+	
+	public AppRoleRO getAppRoleByKeyId(String key) {
+		Optional<?> tAppRole= Optional.ofNullable(mAppRoleRepository.findByKeyid(key));
+		 if(tAppRole.isPresent()) {
+	            return mModelMapper.map(tAppRole.get(), AppRoleRO.class);
+	        }
+	      return null;  
+	}
+	
+	
 	
 	
 }

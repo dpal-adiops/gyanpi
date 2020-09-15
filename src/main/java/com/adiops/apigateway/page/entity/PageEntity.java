@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Set;
 import java.util.HashSet;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,11 +13,16 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -41,9 +47,12 @@ public class PageEntity {
 	
 	@Column
 	@CsvDate(value = "dd/MM/yyyy")
-	@Temporal(TemporalType.DATE)
+	@UpdateTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date lastModified;	
 	
+	@CreationTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column
 	private Date createdDate;
 	
@@ -88,6 +97,11 @@ public class PageEntity {
  joinColumns = @JoinColumn(name = "page_id"),
  inverseJoinColumns = @JoinColumn(name = "question_id"))
 	 private Set<QuestionEntity> questions = new HashSet<>();
+	
+	
+	
+	
+	
 	
 	
 	public void setKeyid(String keyid){
@@ -168,6 +182,11 @@ public class PageEntity {
 	public Set<QuestionEntity> getQuestions(){
 		return this.questions;
 	}
+	
+	
+	
+	
+	
 	
 	
 }

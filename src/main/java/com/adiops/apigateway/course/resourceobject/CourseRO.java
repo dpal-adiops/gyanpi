@@ -3,6 +3,7 @@ package com.adiops.apigateway.course.resourceobject;
 import java.util.Date;
 
 
+
 /**
  * This class is responsible for transfer the resource Course Data
  * @author Deepak Pal
@@ -23,6 +24,9 @@ public class CourseRO {
 	private String description;
 	private String authorId;
 	private String domainId;
+	
+	
+	
 	
 	public Long getId(){
 		return this.id;
@@ -72,6 +76,8 @@ public class CourseRO {
 	public String getDomainId(){
 		return this.domainId;
 	}
+	
+	
 	
 	
 }
