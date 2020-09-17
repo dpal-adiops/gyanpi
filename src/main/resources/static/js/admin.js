@@ -4,3 +4,7 @@ function addEditorForm(){
 	 document.getElementById("description").value=justHtml;
 	 document.getElementById("editorForm").submit();
 }
+
+$(document).ready(function(){
+    $('.modal').modal();
+  });

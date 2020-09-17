@@ -12,6 +12,11 @@ $(document).ready(function(){
   
 });
 
+$(document).ready(function(){
+    $('.modal').modal();
+  });
+        
+
 
 MathJax = {
 	    mml: {forceReparse: true},
