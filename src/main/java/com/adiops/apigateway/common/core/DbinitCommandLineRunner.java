@@ -1,7 +1,8 @@
 package com.adiops.apigateway.common.core;
 
 import java.io.InputStream;
-import java.util.List;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -14,10 +15,7 @@ import com.adiops.apigateway.app.user.service.AppUserService;
 import com.adiops.apigateway.common.response.RestException;
 import com.adiops.apigateway.course.resourceobject.CourseRO;
 import com.adiops.apigateway.course.service.CourseService;
-import com.adiops.apigateway.module.resourceobject.ModuleRO;
 import com.adiops.apigateway.module.service.ModuleService;
-import com.adiops.apigateway.topic.resourceobject.TopicRO;
-import com.adiops.apigateway.topic.service.TopicService;
 
 @Component
 public class DbinitCommandLineRunner implements CommandLineRunner {
@@ -37,7 +35,11 @@ public class DbinitCommandLineRunner implements CommandLineRunner {
 	@Autowired
 	AppUserService mAppUserService;
 	
+	@Autowired
+	TopicCLI mTopicCLI;
+	
 	@Override
+	@Transactional
 	public void run(String... args) throws Exception {
 		CourseRO tCourseRO= new CourseRO();
 		tCourseRO.setKeyid("Math10");
@@ -55,6 +57,8 @@ public class DbinitCommandLineRunner implements CommandLineRunner {
 			mAppRoleService.importCSV(resource.getInputStream());
 			resource = resourceLoader.getResource("classpath:db/users.csv");
 			mAppUserService.importCSV(resource.getInputStream());
+			
+			mTopicCLI.run();
 			
 		} catch (RestException e) {
 			e.printStackTrace();

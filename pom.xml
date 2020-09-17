@@ -81,7 +81,7 @@
 			<groupId>javax.transaction</groupId>
 			<artifactId>javax.transaction-api</artifactId>
 		</dependency>
-
+<!-- 
 		<dependency>
 		    <groupId>org.springframework</groupId>
 		    <artifactId>spring-aspects</artifactId>
@@ -90,6 +90,7 @@
 	        <groupId>org.springframework.boot</groupId>
 	        <artifactId>spring-boot-starter-aop</artifactId>
     	</dependency>
+ -->    	
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
@@ -164,13 +165,14 @@
 					<projectId>GCLOUD_CONFIG</projectId>
 				</configuration>
 			</plugin>
+			<!-- 
 			<plugin>
 			    <groupId>org.codehaus.mojo</groupId>
 			    <artifactId>aspectj-maven-plugin</artifactId>
 			    <version>1.11</version>
-			    <!-- configuration and executions -->
+			   
 			    <configuration>
-				    <complianceLevel>11</complianceLevel>
+				    <complianceLevel>1.8</complianceLevel>
 				    <Xlint>ignore</Xlint>
 				    <aspectLibraries>
 				        <aspectLibrary>
@@ -187,6 +189,7 @@
 					</executions>
 				</configuration>				
 			</plugin>
+			 -->
 		</plugins>
 		
 	</build>
