@@ -41,28 +41,29 @@ public class DbinitCommandLineRunner implements CommandLineRunner {
 	@Override
 	@Transactional
 	public void run(String... args) throws Exception {
+		
 		CourseRO tCourseRO= new CourseRO();
 		tCourseRO.setKeyid("Math10");
-		tCourseRO.setName("NCERT Class 10 Maths chapter-wise Quiz");
-		tCourseRO.setDescription("This test qiz brings to level wise questions to exam preparation. ");
+		tCourseRO.setName("NCERT based Class 10 Math chapter-wise practice exercise");
+		tCourseRO.setDescription("This fundamental practice set journey enable you to choose the topic areas you're interested in most. Begin your journey to the Master in Math with Gyanpi.");
 		tCourseRO.setAuthorId("Sourabh Singh");
-		
 		
 		try {
 			tCourseRO=mCourseService.createOrUpdateCourse(tCourseRO);
 			Resource resource = resourceLoader.getResource("classpath:db/modules.csv");
-			InputStream inputStream = resource.getInputStream();
+				InputStream inputStream = resource.getInputStream();
 			mModuleService.importCSV(inputStream);
-			resource = resourceLoader.getResource("classpath:db/roles.csv");
-			mAppRoleService.importCSV(resource.getInputStream());
-			resource = resourceLoader.getResource("classpath:db/users.csv");
-			mAppUserService.importCSV(resource.getInputStream());
+			Resource resource2 = resourceLoader.getResource("classpath:db/roles.csv");
+			mAppRoleService.importCSV(resource2.getInputStream());
+			resource2 = resourceLoader.getResource("classpath:db/users.csv");
+			mAppUserService.importCSV(resource2.getInputStream());
 			
 			mTopicCLI.run();
 			
 		} catch (RestException e) {
 			e.printStackTrace();
 		}
+		
 		
 	}
 }
