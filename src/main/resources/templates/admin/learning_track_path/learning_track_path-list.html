@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/layout3">
+
+<head>
+<title>LearningTrackPath-list</title>
+</head>
+
+<body>
+
+<section id="content" layout:fragment="content">	
+	<div  class="container">		
+		<div class="section">
+			<h4 class="header">LearningTrackPaths</h4>
+			<div class="divider"></div>
+			<br>
+			<div class="row">
+				<div class="col s12">                   
+                   <a th:href="@{/admin/web/learning_track_paths/add}"  id="scale-demo" href="#!" class="btn-floating btn-large scale-transition">
+					    <i class="material-icons">add</i>
+					</a>
+                  The list shows all learning_track_paths of the author. Click New to add learning_track_path.             
+                </div>
+                <div class="col s12">
+					<table class="centered">
+						<thead>
+						<tr>
+							  	<th>Keyid</th>
+							  	<th>Step</th>
+							  	<th>Status</th>
+							  	<th>Refid</th>
+							 <th></th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr th:if="${learning_track_paths.empty}">
+				            <td colspan="3"> No LearningTrackPath Available </td>
+				        </tr>
+						 <tr th:each ="learning_track_path : ${learning_track_paths}">
+							 	<td><a th:href="@{/admin/web/learning_track_paths/{id}(id=${learning_track_path.id})}"><span th:text="${learning_track_path.keyid}"></span></a></td>
+							 	<td><a th:href="@{/admin/web/learning_track_paths/{id}(id=${learning_track_path.id})}"><span th:text="${learning_track_path.step}"></span></a></td>
+							 	<td><a th:href="@{/admin/web/learning_track_paths/{id}(id=${learning_track_path.id})}"><span th:text="${learning_track_path.status}"></span></a></td>
+							 	<td><a th:href="@{/admin/web/learning_track_paths/{id}(id=${learning_track_path.id})}"><span th:text="${learning_track_path.refid}"></span></a></td>
+							 <td>
+				                <a th:href="@{/admin/web/learning_track_paths/{id}/delete(id=${learning_track_path.id})}" class="btn-floating btn-small"> <i class="material-icons">delete</i></a>
+				            </td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>	
+</body>
+</html>

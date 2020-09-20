@@ -93,6 +93,10 @@ public class CourseLineGroupService{
         {
         	newEntity=	 mCourseLineGroupRepository.findById(tCourseLineGroupRO.getId()).orElse(new CourseLineGroupEntity());
         }
+         else if(tCourseLineGroupRO.getKeyid() !=null)
+        {
+        	newEntity=Optional.ofNullable(mCourseLineGroupRepository.findByKeyid(tCourseLineGroupRO.getKeyid())).orElse(new CourseLineGroupEntity());
+        }
         else
         {
         	newEntity=new CourseLineGroupEntity();
@@ -151,7 +155,13 @@ public class CourseLineGroupService{
 	public void importCSV(MultipartFile file) throws RestException {
 		try {
 			List<CourseLineGroupEntity> tCourseLineGroups = CSVHelper.csvToPOJOs(file.getInputStream(), CourseLineGroupEntity.class);
-			mCourseLineGroupRepository.deleteAll();
+			tCourseLineGroups=tCourseLineGroups.stream().map(entity->{
+				CourseLineGroupEntity tCourseLineGroupEntity=mCourseLineGroupRepository.findByKeyid(entity.getKeyid());
+				if(tCourseLineGroupEntity!=null) {
+					entity.setId(tCourseLineGroupEntity.getId());
+				}
+				return entity;
+			}).collect(Collectors.toList());
 			mCourseLineGroupRepository.saveAll(tCourseLineGroups);
 		} catch (IOException e) {
 			throw new RestException(RestException.ERROR_STATUS_BAD_REQUEST,
@@ -165,6 +175,13 @@ public class CourseLineGroupService{
 	public void importCSV(InputStream is) throws RestException {
 		try {
 			List<CourseLineGroupEntity> tCourseLineGroups = CSVHelper.csvToPOJOs(is, CourseLineGroupEntity.class);
+			tCourseLineGroups=tCourseLineGroups.stream().map(entity->{
+				CourseLineGroupEntity tCourseLineGroupEntity=mCourseLineGroupRepository.findByKeyid(entity.getKeyid());
+				if(tCourseLineGroupEntity!=null) {
+					entity.setId(tCourseLineGroupEntity.getId());
+				}
+				return entity;
+			}).collect(Collectors.toList());
 			mCourseLineGroupRepository.saveAll(tCourseLineGroups);
 		} catch (Exception e) {
 			throw new RestException(RestException.ERROR_STATUS_BAD_REQUEST,

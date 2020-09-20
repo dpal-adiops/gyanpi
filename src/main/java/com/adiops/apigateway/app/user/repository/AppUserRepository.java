@@ -21,5 +21,5 @@ public interface AppUserRepository extends JpaRepository<AppUserEntity, Long>{
 
 	AppUserEntity findByKeyid(String key);
 
-	AppUserEntity findByUserName(String name);
+	AppUserEntity findByUserName(String username);
 }

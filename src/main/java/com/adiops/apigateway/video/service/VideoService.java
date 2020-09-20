@@ -103,6 +103,10 @@ public class VideoService{
         {
         	newEntity=	 mVideoRepository.findById(tVideoRO.getId()).orElse(new VideoEntity());
         }
+         else if(tVideoRO.getKeyid() !=null)
+        {
+        	newEntity=Optional.ofNullable(mVideoRepository.findByKeyid(tVideoRO.getKeyid())).orElse(new VideoEntity());
+        }
         else
         {
         	newEntity=new VideoEntity();
@@ -151,7 +155,13 @@ public class VideoService{
 	public void importCSV(MultipartFile file) throws RestException {
 		try {
 			List<VideoEntity> tVideos = CSVHelper.csvToPOJOs(file.getInputStream(), VideoEntity.class);
-			mVideoRepository.deleteAll();
+			tVideos=tVideos.stream().map(entity->{
+				VideoEntity tVideoEntity=mVideoRepository.findByKeyid(entity.getKeyid());
+				if(tVideoEntity!=null) {
+					entity.setId(tVideoEntity.getId());
+				}
+				return entity;
+			}).collect(Collectors.toList());
 			mVideoRepository.saveAll(tVideos);
 		} catch (IOException e) {
 			throw new RestException(RestException.ERROR_STATUS_BAD_REQUEST,
@@ -165,6 +175,13 @@ public class VideoService{
 	public void importCSV(InputStream is) throws RestException {
 		try {
 			List<VideoEntity> tVideos = CSVHelper.csvToPOJOs(is, VideoEntity.class);
+			tVideos=tVideos.stream().map(entity->{
+				VideoEntity tVideoEntity=mVideoRepository.findByKeyid(entity.getKeyid());
+				if(tVideoEntity!=null) {
+					entity.setId(tVideoEntity.getId());
+				}
+				return entity;
+			}).collect(Collectors.toList());
 			mVideoRepository.saveAll(tVideos);
 		} catch (Exception e) {
 			throw new RestException(RestException.ERROR_STATUS_BAD_REQUEST,

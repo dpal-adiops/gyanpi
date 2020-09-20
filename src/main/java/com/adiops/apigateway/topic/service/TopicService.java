@@ -108,6 +108,10 @@ public class TopicService{
         {
         	newEntity=	 mTopicRepository.findById(tTopicRO.getId()).orElse(new TopicEntity());
         }
+         else if(tTopicRO.getKeyid() !=null)
+        {
+        	newEntity=Optional.ofNullable(mTopicRepository.findByKeyid(tTopicRO.getKeyid())).orElse(new TopicEntity());
+        }
         else
         {
         	newEntity=new TopicEntity();
@@ -158,7 +162,13 @@ public class TopicService{
 	public void importCSV(MultipartFile file) throws RestException {
 		try {
 			List<TopicEntity> tTopics = CSVHelper.csvToPOJOs(file.getInputStream(), TopicEntity.class);
-			mTopicRepository.deleteAll();
+			tTopics=tTopics.stream().map(entity->{
+				TopicEntity tTopicEntity=mTopicRepository.findByKeyid(entity.getKeyid());
+				if(tTopicEntity!=null) {
+					entity.setId(tTopicEntity.getId());
+				}
+				return entity;
+			}).collect(Collectors.toList());
 			mTopicRepository.saveAll(tTopics);
 		} catch (IOException e) {
 			throw new RestException(RestException.ERROR_STATUS_BAD_REQUEST,
@@ -172,6 +182,13 @@ public class TopicService{
 	public void importCSV(InputStream is) throws RestException {
 		try {
 			List<TopicEntity> tTopics = CSVHelper.csvToPOJOs(is, TopicEntity.class);
+			tTopics=tTopics.stream().map(entity->{
+				TopicEntity tTopicEntity=mTopicRepository.findByKeyid(entity.getKeyid());
+				if(tTopicEntity!=null) {
+					entity.setId(tTopicEntity.getId());
+				}
+				return entity;
+			}).collect(Collectors.toList());
 			mTopicRepository.saveAll(tTopics);
 		} catch (Exception e) {
 			throw new RestException(RestException.ERROR_STATUS_BAD_REQUEST,

@@ -103,6 +103,10 @@ public class CourseService{
         {
         	newEntity=	 mCourseRepository.findById(tCourseRO.getId()).orElse(new CourseEntity());
         }
+         else if(tCourseRO.getKeyid() !=null)
+        {
+        	newEntity=Optional.ofNullable(mCourseRepository.findByKeyid(tCourseRO.getKeyid())).orElse(new CourseEntity());
+        }
         else
         {
         	newEntity=new CourseEntity();
@@ -151,7 +155,13 @@ public class CourseService{
 	public void importCSV(MultipartFile file) throws RestException {
 		try {
 			List<CourseEntity> tCourses = CSVHelper.csvToPOJOs(file.getInputStream(), CourseEntity.class);
-			mCourseRepository.deleteAll();
+			tCourses=tCourses.stream().map(entity->{
+				CourseEntity tCourseEntity=mCourseRepository.findByKeyid(entity.getKeyid());
+				if(tCourseEntity!=null) {
+					entity.setId(tCourseEntity.getId());
+				}
+				return entity;
+			}).collect(Collectors.toList());
 			mCourseRepository.saveAll(tCourses);
 		} catch (IOException e) {
 			throw new RestException(RestException.ERROR_STATUS_BAD_REQUEST,
@@ -165,6 +175,13 @@ public class CourseService{
 	public void importCSV(InputStream is) throws RestException {
 		try {
 			List<CourseEntity> tCourses = CSVHelper.csvToPOJOs(is, CourseEntity.class);
+			tCourses=tCourses.stream().map(entity->{
+				CourseEntity tCourseEntity=mCourseRepository.findByKeyid(entity.getKeyid());
+				if(tCourseEntity!=null) {
+					entity.setId(tCourseEntity.getId());
+				}
+				return entity;
+			}).collect(Collectors.toList());
 			mCourseRepository.saveAll(tCourses);
 		} catch (Exception e) {
 			throw new RestException(RestException.ERROR_STATUS_BAD_REQUEST,

@@ -103,6 +103,10 @@ public class ImageService{
         {
         	newEntity=	 mImageRepository.findById(tImageRO.getId()).orElse(new ImageEntity());
         }
+         else if(tImageRO.getKeyid() !=null)
+        {
+        	newEntity=Optional.ofNullable(mImageRepository.findByKeyid(tImageRO.getKeyid())).orElse(new ImageEntity());
+        }
         else
         {
         	newEntity=new ImageEntity();
@@ -151,7 +155,13 @@ public class ImageService{
 	public void importCSV(MultipartFile file) throws RestException {
 		try {
 			List<ImageEntity> tImages = CSVHelper.csvToPOJOs(file.getInputStream(), ImageEntity.class);
-			mImageRepository.deleteAll();
+			tImages=tImages.stream().map(entity->{
+				ImageEntity tImageEntity=mImageRepository.findByKeyid(entity.getKeyid());
+				if(tImageEntity!=null) {
+					entity.setId(tImageEntity.getId());
+				}
+				return entity;
+			}).collect(Collectors.toList());
 			mImageRepository.saveAll(tImages);
 		} catch (IOException e) {
 			throw new RestException(RestException.ERROR_STATUS_BAD_REQUEST,
@@ -165,6 +175,13 @@ public class ImageService{
 	public void importCSV(InputStream is) throws RestException {
 		try {
 			List<ImageEntity> tImages = CSVHelper.csvToPOJOs(is, ImageEntity.class);
+			tImages=tImages.stream().map(entity->{
+				ImageEntity tImageEntity=mImageRepository.findByKeyid(entity.getKeyid());
+				if(tImageEntity!=null) {
+					entity.setId(tImageEntity.getId());
+				}
+				return entity;
+			}).collect(Collectors.toList());
 			mImageRepository.saveAll(tImages);
 		} catch (Exception e) {
 			throw new RestException(RestException.ERROR_STATUS_BAD_REQUEST,

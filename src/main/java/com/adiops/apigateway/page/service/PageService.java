@@ -103,6 +103,10 @@ public class PageService{
         {
         	newEntity=	 mPageRepository.findById(tPageRO.getId()).orElse(new PageEntity());
         }
+         else if(tPageRO.getKeyid() !=null)
+        {
+        	newEntity=Optional.ofNullable(mPageRepository.findByKeyid(tPageRO.getKeyid())).orElse(new PageEntity());
+        }
         else
         {
         	newEntity=new PageEntity();
@@ -151,7 +155,13 @@ public class PageService{
 	public void importCSV(MultipartFile file) throws RestException {
 		try {
 			List<PageEntity> tPages = CSVHelper.csvToPOJOs(file.getInputStream(), PageEntity.class);
-			mPageRepository.deleteAll();
+			tPages=tPages.stream().map(entity->{
+				PageEntity tPageEntity=mPageRepository.findByKeyid(entity.getKeyid());
+				if(tPageEntity!=null) {
+					entity.setId(tPageEntity.getId());
+				}
+				return entity;
+			}).collect(Collectors.toList());
 			mPageRepository.saveAll(tPages);
 		} catch (IOException e) {
 			throw new RestException(RestException.ERROR_STATUS_BAD_REQUEST,
@@ -165,6 +175,13 @@ public class PageService{
 	public void importCSV(InputStream is) throws RestException {
 		try {
 			List<PageEntity> tPages = CSVHelper.csvToPOJOs(is, PageEntity.class);
+			tPages=tPages.stream().map(entity->{
+				PageEntity tPageEntity=mPageRepository.findByKeyid(entity.getKeyid());
+				if(tPageEntity!=null) {
+					entity.setId(tPageEntity.getId());
+				}
+				return entity;
+			}).collect(Collectors.toList());
 			mPageRepository.saveAll(tPages);
 		} catch (Exception e) {
 			throw new RestException(RestException.ERROR_STATUS_BAD_REQUEST,

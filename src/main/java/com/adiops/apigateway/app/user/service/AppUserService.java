@@ -88,6 +88,10 @@ public class AppUserService{
         {
         	newEntity=	 mAppUserRepository.findById(tAppUserRO.getId()).orElse(new AppUserEntity());
         }
+         else if(tAppUserRO.getKeyid() !=null)
+        {
+        	newEntity=Optional.ofNullable(mAppUserRepository.findByKeyid(tAppUserRO.getKeyid())).orElse(new AppUserEntity());
+        }
         else
         {
         	newEntity=new AppUserEntity();
@@ -142,7 +146,13 @@ public class AppUserService{
 	public void importCSV(MultipartFile file) throws RestException {
 		try {
 			List<AppUserEntity> tAppUsers = CSVHelper.csvToPOJOs(file.getInputStream(), AppUserEntity.class);
-			mAppUserRepository.deleteAll();
+			tAppUsers=tAppUsers.stream().map(entity->{
+				AppUserEntity tAppUserEntity=mAppUserRepository.findByKeyid(entity.getKeyid());
+				if(tAppUserEntity!=null) {
+					entity.setId(tAppUserEntity.getId());
+				}
+				return entity;
+			}).collect(Collectors.toList());
 			mAppUserRepository.saveAll(tAppUsers);
 		} catch (IOException e) {
 			throw new RestException(RestException.ERROR_STATUS_BAD_REQUEST,
@@ -156,6 +166,13 @@ public class AppUserService{
 	public void importCSV(InputStream is) throws RestException {
 		try {
 			List<AppUserEntity> tAppUsers = CSVHelper.csvToPOJOs(is, AppUserEntity.class);
+			tAppUsers=tAppUsers.stream().map(entity->{
+				AppUserEntity tAppUserEntity=mAppUserRepository.findByKeyid(entity.getKeyid());
+				if(tAppUserEntity!=null) {
+					entity.setId(tAppUserEntity.getId());
+				}
+				return entity;
+			}).collect(Collectors.toList());
 			mAppUserRepository.saveAll(tAppUsers);
 		} catch (Exception e) {
 			throw new RestException(RestException.ERROR_STATUS_BAD_REQUEST,

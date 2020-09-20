@@ -88,6 +88,10 @@ public class AppRoleService{
         {
         	newEntity=	 mAppRoleRepository.findById(tAppRoleRO.getId()).orElse(new AppRoleEntity());
         }
+         else if(tAppRoleRO.getKeyid() !=null)
+        {
+        	newEntity=Optional.ofNullable(mAppRoleRepository.findByKeyid(tAppRoleRO.getKeyid())).orElse(new AppRoleEntity());
+        }
         else
         {
         	newEntity=new AppRoleEntity();
@@ -134,7 +138,13 @@ public class AppRoleService{
 	public void importCSV(MultipartFile file) throws RestException {
 		try {
 			List<AppRoleEntity> tAppRoles = CSVHelper.csvToPOJOs(file.getInputStream(), AppRoleEntity.class);
-			mAppRoleRepository.deleteAll();
+			tAppRoles=tAppRoles.stream().map(entity->{
+				AppRoleEntity tAppRoleEntity=mAppRoleRepository.findByKeyid(entity.getKeyid());
+				if(tAppRoleEntity!=null) {
+					entity.setId(tAppRoleEntity.getId());
+				}
+				return entity;
+			}).collect(Collectors.toList());
 			mAppRoleRepository.saveAll(tAppRoles);
 		} catch (IOException e) {
 			throw new RestException(RestException.ERROR_STATUS_BAD_REQUEST,
@@ -148,6 +158,13 @@ public class AppRoleService{
 	public void importCSV(InputStream is) throws RestException {
 		try {
 			List<AppRoleEntity> tAppRoles = CSVHelper.csvToPOJOs(is, AppRoleEntity.class);
+			tAppRoles=tAppRoles.stream().map(entity->{
+				AppRoleEntity tAppRoleEntity=mAppRoleRepository.findByKeyid(entity.getKeyid());
+				if(tAppRoleEntity!=null) {
+					entity.setId(tAppRoleEntity.getId());
+				}
+				return entity;
+			}).collect(Collectors.toList());
 			mAppRoleRepository.saveAll(tAppRoles);
 		} catch (Exception e) {
 			throw new RestException(RestException.ERROR_STATUS_BAD_REQUEST,

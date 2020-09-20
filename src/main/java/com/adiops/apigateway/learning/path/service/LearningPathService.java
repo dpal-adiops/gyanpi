@@ -88,6 +88,10 @@ public class LearningPathService{
         {
         	newEntity=	 mLearningPathRepository.findById(tLearningPathRO.getId()).orElse(new LearningPathEntity());
         }
+         else if(tLearningPathRO.getKeyid() !=null)
+        {
+        	newEntity=Optional.ofNullable(mLearningPathRepository.findByKeyid(tLearningPathRO.getKeyid())).orElse(new LearningPathEntity());
+        }
         else
         {
         	newEntity=new LearningPathEntity();
@@ -140,7 +144,13 @@ public class LearningPathService{
 	public void importCSV(MultipartFile file) throws RestException {
 		try {
 			List<LearningPathEntity> tLearningPaths = CSVHelper.csvToPOJOs(file.getInputStream(), LearningPathEntity.class);
-			mLearningPathRepository.deleteAll();
+			tLearningPaths=tLearningPaths.stream().map(entity->{
+				LearningPathEntity tLearningPathEntity=mLearningPathRepository.findByKeyid(entity.getKeyid());
+				if(tLearningPathEntity!=null) {
+					entity.setId(tLearningPathEntity.getId());
+				}
+				return entity;
+			}).collect(Collectors.toList());
 			mLearningPathRepository.saveAll(tLearningPaths);
 		} catch (IOException e) {
 			throw new RestException(RestException.ERROR_STATUS_BAD_REQUEST,
@@ -154,6 +164,13 @@ public class LearningPathService{
 	public void importCSV(InputStream is) throws RestException {
 		try {
 			List<LearningPathEntity> tLearningPaths = CSVHelper.csvToPOJOs(is, LearningPathEntity.class);
+			tLearningPaths=tLearningPaths.stream().map(entity->{
+				LearningPathEntity tLearningPathEntity=mLearningPathRepository.findByKeyid(entity.getKeyid());
+				if(tLearningPathEntity!=null) {
+					entity.setId(tLearningPathEntity.getId());
+				}
+				return entity;
+			}).collect(Collectors.toList());
 			mLearningPathRepository.saveAll(tLearningPaths);
 		} catch (Exception e) {
 			throw new RestException(RestException.ERROR_STATUS_BAD_REQUEST,

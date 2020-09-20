@@ -93,6 +93,10 @@ public class ModuleLineGroupService{
         {
         	newEntity=	 mModuleLineGroupRepository.findById(tModuleLineGroupRO.getId()).orElse(new ModuleLineGroupEntity());
         }
+         else if(tModuleLineGroupRO.getKeyid() !=null)
+        {
+        	newEntity=Optional.ofNullable(mModuleLineGroupRepository.findByKeyid(tModuleLineGroupRO.getKeyid())).orElse(new ModuleLineGroupEntity());
+        }
         else
         {
         	newEntity=new ModuleLineGroupEntity();
@@ -153,7 +157,13 @@ public class ModuleLineGroupService{
 	public void importCSV(MultipartFile file) throws RestException {
 		try {
 			List<ModuleLineGroupEntity> tModuleLineGroups = CSVHelper.csvToPOJOs(file.getInputStream(), ModuleLineGroupEntity.class);
-			mModuleLineGroupRepository.deleteAll();
+			tModuleLineGroups=tModuleLineGroups.stream().map(entity->{
+				ModuleLineGroupEntity tModuleLineGroupEntity=mModuleLineGroupRepository.findByKeyid(entity.getKeyid());
+				if(tModuleLineGroupEntity!=null) {
+					entity.setId(tModuleLineGroupEntity.getId());
+				}
+				return entity;
+			}).collect(Collectors.toList());
 			mModuleLineGroupRepository.saveAll(tModuleLineGroups);
 		} catch (IOException e) {
 			throw new RestException(RestException.ERROR_STATUS_BAD_REQUEST,
@@ -167,6 +177,13 @@ public class ModuleLineGroupService{
 	public void importCSV(InputStream is) throws RestException {
 		try {
 			List<ModuleLineGroupEntity> tModuleLineGroups = CSVHelper.csvToPOJOs(is, ModuleLineGroupEntity.class);
+			tModuleLineGroups=tModuleLineGroups.stream().map(entity->{
+				ModuleLineGroupEntity tModuleLineGroupEntity=mModuleLineGroupRepository.findByKeyid(entity.getKeyid());
+				if(tModuleLineGroupEntity!=null) {
+					entity.setId(tModuleLineGroupEntity.getId());
+				}
+				return entity;
+			}).collect(Collectors.toList());
 			mModuleLineGroupRepository.saveAll(tModuleLineGroups);
 		} catch (Exception e) {
 			throw new RestException(RestException.ERROR_STATUS_BAD_REQUEST,

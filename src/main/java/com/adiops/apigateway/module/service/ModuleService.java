@@ -108,6 +108,10 @@ public class ModuleService{
         {
         	newEntity=	 mModuleRepository.findById(tModuleRO.getId()).orElse(new ModuleEntity());
         }
+         else if(tModuleRO.getKeyid() !=null)
+        {
+        	newEntity=Optional.ofNullable(mModuleRepository.findByKeyid(tModuleRO.getKeyid())).orElse(new ModuleEntity());
+        }
         else
         {
         	newEntity=new ModuleEntity();
@@ -156,7 +160,13 @@ public class ModuleService{
 	public void importCSV(MultipartFile file) throws RestException {
 		try {
 			List<ModuleEntity> tModules = CSVHelper.csvToPOJOs(file.getInputStream(), ModuleEntity.class);
-			mModuleRepository.deleteAll();
+			tModules=tModules.stream().map(entity->{
+				ModuleEntity tModuleEntity=mModuleRepository.findByKeyid(entity.getKeyid());
+				if(tModuleEntity!=null) {
+					entity.setId(tModuleEntity.getId());
+				}
+				return entity;
+			}).collect(Collectors.toList());
 			mModuleRepository.saveAll(tModules);
 		} catch (IOException e) {
 			throw new RestException(RestException.ERROR_STATUS_BAD_REQUEST,
@@ -170,6 +180,13 @@ public class ModuleService{
 	public void importCSV(InputStream is) throws RestException {
 		try {
 			List<ModuleEntity> tModules = CSVHelper.csvToPOJOs(is, ModuleEntity.class);
+			tModules=tModules.stream().map(entity->{
+				ModuleEntity tModuleEntity=mModuleRepository.findByKeyid(entity.getKeyid());
+				if(tModuleEntity!=null) {
+					entity.setId(tModuleEntity.getId());
+				}
+				return entity;
+			}).collect(Collectors.toList());
 			mModuleRepository.saveAll(tModules);
 		} catch (Exception e) {
 			throw new RestException(RestException.ERROR_STATUS_BAD_REQUEST,
