@@ -10,6 +10,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 
+import com.adiops.apigateway.account.web.bo.view.CacheMgr;
 import com.adiops.apigateway.app.role.service.AppRoleService;
 import com.adiops.apigateway.app.user.service.AppUserService;
 import com.adiops.apigateway.common.response.RestException;
@@ -40,8 +41,7 @@ public class DbinitCommandLineRunner implements CommandLineRunner {
 	
 	@Override
 	@Transactional
-	public void run(String... args) throws Exception {
-		
+	public void run(String... args) throws Exception {		
 		CourseRO tCourseRO= new CourseRO();
 		tCourseRO.setKeyid("Math10");
 		tCourseRO.setName("NCERT based Class 10 Math chapter-wise practice exercise");

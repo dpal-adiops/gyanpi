@@ -1,14 +1,17 @@
 package com.adiops.apigateway.account.web.bo;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 
+import com.adiops.apigateway.account.web.bo.view.CacheMgr;
 import com.adiops.apigateway.common.inject.NamingMgr;
 import com.adiops.apigateway.common.response.RestException;
 import com.adiops.apigateway.module.line.group.resourceobject.ModuleLineGroupRO;
@@ -73,10 +76,19 @@ public class ModuleBO {
 	}
 
 	public void fetchTopicBOs() {
-		List<TopicRO> tTopicROs = mModuleService.findModuleTopics(moduleRO.getId());
+		Collection<TopicRO> tTopicROs =CacheMgr.getModuleTopicROs(moduleRO.getKeyid());
+		AtomicBoolean missflag = new AtomicBoolean(false);
+		if (tTopicROs.isEmpty()) {
+			tTopicROs = mModuleService.findModuleTopics(moduleRO.getId());
+			missflag.set(true);
+		}
 		topicBOs = tTopicROs.stream().map(ro ->{
 			TopicBO tTopicBO= getTopicBO(ro.getKeyid());
 			mapTopicBOs.put(ro.getKeyid(), tTopicBO);
+			if (missflag.get()) {
+				CacheMgr.addTopicRO(ro);
+				CacheMgr.addModuleTopicROs(moduleRO.getKeyid(),ro.getKeyid());
+			}
 			return tTopicBO;	
 		}).collect(Collectors.toList());
 	}
@@ -112,7 +124,8 @@ public class ModuleBO {
 		if (tModuleRO != null) {
 			TopicLineGroupRO tTopicLineGroup = mTopicLineGroupService
 					.getTopicLineGroupByKeyId(moduleLineGroupRO.getKeyid() + "_" + id);
-			TopicRO tTopicRO = mTopicService.getTopicByKeyId(id);
+			//TopicRO tTopicRO = mTopicService.getTopicByKeyId(id);
+			TopicRO tTopicRO = CacheMgr.getTopicRO(id);
 			if (tTopicRO == null)
 				return tTopicBO;
 

@@ -11,6 +11,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 
+import com.adiops.apigateway.account.web.bo.view.CacheMgr;
 import com.adiops.apigateway.app.role.resourceobject.AppRoleRO;
 import com.adiops.apigateway.app.role.service.AppRoleService;
 import com.adiops.apigateway.app.user.resourceobject.AppUserRO;
@@ -36,26 +37,25 @@ public class TopicCLI {
 
 	@Autowired
 	ResourceLoader resourceLoader;
-	
+
 	@Autowired
 	TopicService mTopicService;
 
 	@Autowired
 	QuestionService mQuestionService;
-	
+
 	@Autowired
 	AppUserService mAppUserService;
-	
+
 	@Autowired
 	AppRoleService mAppRoleService;
 
-	
 	@Transactional
-	public void run() throws IOException  {
+	public void run() throws IOException {
 		try {
 			importFile();
-			importCourse();			
-			addRoles();		
+			importCourse();
+			addRoles();
 		} catch (RestException e) {
 			e.printStackTrace();
 		}
@@ -66,19 +66,22 @@ public class TopicCLI {
 	public void importCourse() throws IOException {
 		List<CourseRO> tCourseROs = mCourseService.getCourseROs();
 		List<ModuleRO> tModuleROs = mModuleService.getModuleROs();
-		for (CourseRO tCourseRO : tCourseROs)
+		for (CourseRO tCourseRO : tCourseROs) {
+			CacheMgr.addCourseRO(tCourseRO);
 			for (ModuleRO tModuleRO : tModuleROs) {
-				mModuleService.addModuleCourse(tModuleRO.getId(), tCourseRO.getId());
 
+				CacheMgr.addModuleRO(tModuleRO);
+				mModuleService.addModuleCourse(tModuleRO.getId(), tCourseRO.getId());
 				for (int j = 1; j <= 5; j++) {
 					TopicRO tTopicRO = new TopicRO();
 					tTopicRO.setKeyid(tModuleRO.getKeyid() + "0" + j);
-					tTopicRO.setName("Level " + j);
+					tTopicRO.setName("Type " + j);
 					tTopicRO.setTitle(tModuleRO.getName());
 					tTopicRO.setAuthorId(tCourseRO.getAuthorId());
 					try {
 						tTopicRO = mTopicService.createOrUpdateTopic(tTopicRO);
 						mTopicService.addTopicModule(tTopicRO.getId(), tModuleRO.getId());
+						CacheMgr.addTopicRO(tTopicRO);
 						addQuestionsToTopic(tTopicRO);
 					} catch (RestException e) {
 						e.printStackTrace();
@@ -86,6 +89,8 @@ public class TopicCLI {
 				}
 
 			}
+		}
+
 	}
 
 	@Transactional
@@ -97,20 +102,21 @@ public class TopicCLI {
 
 	@Transactional
 	private void addQuestionsToTopic(TopicRO topicRO) throws IOException, RestException {
-		for (QuestionRO tQuestionRO : mQuestionService.getQuestionROs()) {
+		for (QuestionRO tQuestionRO : mQuestionService.getQuestionROs()) {			
 			mTopicService.addTopicQuestion(topicRO.getId(), tQuestionRO.getId());
+			CacheMgr.addQuestionRO(tQuestionRO);
 		}
 	}
-	
+
 	@Transactional
 	private void addRoles() throws RestException {
-		AppRoleRO tAppRole=	mAppRoleService.getAppRoleByKeyId("SYS_ADMIN");
+		AppRoleRO tAppRole = mAppRoleService.getAppRoleByKeyId("SYS_ADMIN");
 		AppUserRO tAppUserRO = mAppUserService.getAppUserByKeyId("AD001");
-		
+
 		mAppUserService.addAppUserAppRole(tAppUserRO.getId(), tAppRole.getId());
-		tAppRole=	mAppRoleService.getAppRoleByKeyId("APP_LEARNER");
+		tAppRole = mAppRoleService.getAppRoleByKeyId("APP_LEARNER");
 		mAppUserService.addAppUserAppRole(tAppUserRO.getId(), tAppRole.getId());
-		
+
 		tAppUserRO = mAppUserService.getAppUserByKeyId("USER001");
 		mAppUserService.addAppUserAppRole(tAppUserRO.getId(), tAppRole.getId());
 	}

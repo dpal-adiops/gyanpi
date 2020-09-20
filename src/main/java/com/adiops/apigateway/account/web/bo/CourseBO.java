@@ -1,14 +1,17 @@
 package com.adiops.apigateway.account.web.bo;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 
+import com.adiops.apigateway.account.web.bo.view.CacheMgr;
 import com.adiops.apigateway.common.inject.NamingMgr;
 import com.adiops.apigateway.common.response.RestException;
 import com.adiops.apigateway.course.line.group.resourceobject.CourseLineGroupRO;
@@ -31,22 +34,21 @@ public class CourseBO {
 
 	@Autowired
 	private ModuleService mModuleService;
-	
+
 	@Autowired
 	private CourseService mCourseService;
-	
+
 	private CourseRO courseRO;
 
 	private CourseLineGroupRO courseLineGroupRO;
-	
+
 	private LearningPathBO learningPathBO;
 
 	private List<ModuleBO> moduleBOs = new ArrayList<ModuleBO>();
-	private Map<String,ModuleBO> mapModuleBOs = new HashMap<String,ModuleBO>();
-
+	private Map<String, ModuleBO> mapModuleBOs = new HashMap<String, ModuleBO>();
 
 	public CourseBO() {
-		NamingMgr.injectMembers(this);		
+		NamingMgr.injectMembers(this);
 	}
 
 	public LearningPathBO getLearningPathBO() {
@@ -82,26 +84,40 @@ public class CourseBO {
 	}
 
 	public void fetchModuleBOs() {
-		List<ModuleRO> tModuleROs = mCourseService.findCourseModules(courseRO.getId());
+		Collection<ModuleRO> tModuleROs = CacheMgr.getCourseModuleROs(courseRO.getKeyid());
+		AtomicBoolean missflag = new AtomicBoolean(false);
+		if (tModuleROs.isEmpty()) {
+			tModuleROs = mCourseService.findCourseModules(courseRO.getId());
+			missflag.set(true);
+		}
 		moduleBOs = tModuleROs.stream().map(ro -> {
-			ModuleBO tModuleBO= getModuleBO(ro.getKeyid());
+			ModuleBO tModuleBO = getModuleBO(ro.getKeyid());
 			mapModuleBOs.put(ro.getKeyid(), tModuleBO);
+			if (missflag.get()) {
+				CacheMgr.addModuleRO(ro);
+				CacheMgr.addCourseModuleROs(courseRO.getKeyid(),ro.getKeyid());
+			}
 			return tModuleBO;
-			}).collect(Collectors.toList());
-		
+		}).collect(Collectors.toList());
+
 	}
 
 	public ModuleBO getModuleBO(String id) {
-		if(mapModuleBOs.containsKey(id)) {return mapModuleBOs.get(id);}
+		if (mapModuleBOs.containsKey(id)) {
+			ModuleBO tModuleBO=mapModuleBOs.get(id);
+			tModuleBO.unlock();
+			return tModuleBO;
+		}
 		ModuleBO tModuleBO = new ModuleBO();
 		CourseRO tCourseRO = getCourseRO();
 		if (tCourseRO != null) {
 			ModuleLineGroupRO tModuleLineGroup = mModuleLineGroupService
 					.getModuleLineGroupByKeyId(courseLineGroupRO.getKeyid() + "_" + id);
-			ModuleRO tModuleRO = mModuleService.getModuleByKeyId(id);
+			// ModuleRO tModuleRO = mModuleService.getModuleByKeyId(id);
+			ModuleRO tModuleRO = CacheMgr.getModuleRO(id);
 			if (tModuleRO == null)
 				return tModuleBO;
-			
+
 			if (tModuleLineGroup == null) {
 				tModuleLineGroup = new ModuleLineGroupRO();
 				tModuleLineGroup.setKeyid(courseLineGroupRO.getKeyid() + "_" + id);
@@ -116,7 +132,7 @@ public class CourseBO {
 				tModuleLineGroup.setCourseLineGroupRO(courseLineGroupRO);
 				tModuleLineGroup.setStep(0);
 				tModuleLineGroup.setTotalStep(0);
-				
+
 			}
 			tModuleBO.setModuleRO(tModuleRO);
 			tModuleBO.setModuleLineGroupRO(tModuleLineGroup);
@@ -129,57 +145,58 @@ public class CourseBO {
 
 	public void save() {
 		try {
-			courseLineGroupRO = mCourseLineGroupService.createOrUpdateCourseLineGroup(courseLineGroupRO);			
+			courseLineGroupRO = mCourseLineGroupService.createOrUpdateCourseLineGroup(courseLineGroupRO);
 			mCourseLineGroupService.addCourseLineGroupLearningPath(courseLineGroupRO.getId(),
 					learningPathBO.getLearningPath().getId());
-			
+
 		} catch (RestException e) {
 		}
 	}
-	
+
 	public void calculateBackwardSteps() {
-		int steps=0;
-		int totalsteps=0;
-		for(ModuleBO tModuleBO:getModuleBOs()) {			
+		int steps = 0;
+		int totalsteps = 0;
+		for (ModuleBO tModuleBO : getModuleBOs()) {
 			tModuleBO.calculateBackwardSteps();
-			Integer step=tModuleBO.getModuleLineGroupRO().getStep();
-			Integer totalstep=tModuleBO.getModuleLineGroupRO().getTotalStep();
-			steps=steps+step;
-			totalsteps=totalsteps+totalstep;
+			Integer step = tModuleBO.getModuleLineGroupRO().getStep();
+			Integer totalstep = tModuleBO.getModuleLineGroupRO().getTotalStep();
+			steps = steps + step;
+			totalsteps = totalsteps + totalstep;
 		}
 		courseLineGroupRO.setStep(steps);
-		courseLineGroupRO.setTotalStep(totalsteps);		
+		courseLineGroupRO.setTotalStep(totalsteps);
 	}
-	
+
 	public void saveSteps() {
-		int steps=0;
-		int totalsteps=0;
-		int score=0;
-		int max_score=0;
-		for(ModuleBO tModuleBO:getModuleBOs()) {			
-			Integer step=tModuleBO.getModuleLineGroupRO().getStep();
-			Integer totalstep=tModuleBO.getModuleLineGroupRO().getTotalStep();
-			Integer tScore=tModuleBO.getModuleLineGroupRO().getScore();
-			Integer tmaxScore=tModuleBO.getModuleLineGroupRO().getMaxScore();
-			steps = (step==null)?0:step + steps ;
-			totalsteps = (totalstep==null)?0:totalstep+ totalsteps  ;
-			score= (tScore==null)?0:tScore+ score;
-			max_score=(tmaxScore==null)?0:tmaxScore+  max_score;
+		int steps = 0;
+		int totalsteps = 0;
+		int score = 0;
+		int max_score = 0;
+		for (ModuleBO tModuleBO : getModuleBOs()) {
+			Integer step = tModuleBO.getModuleLineGroupRO().getStep();
+			Integer totalstep = tModuleBO.getModuleLineGroupRO().getTotalStep();
+			Integer tScore = tModuleBO.getModuleLineGroupRO().getScore();
+			Integer tmaxScore = tModuleBO.getModuleLineGroupRO().getMaxScore();
+			steps = (step == null) ? 0 : step + steps;
+			totalsteps = (totalstep == null) ? 0 : totalstep + totalsteps;
+			score = (tScore == null) ? 0 : tScore + score;
+			max_score = (tmaxScore == null) ? 0 : tmaxScore + max_score;
 		}
 		courseLineGroupRO.setStep(steps);
-		courseLineGroupRO.setTotalStep(totalsteps);	
+		courseLineGroupRO.setTotalStep(totalsteps);
 		courseLineGroupRO.setScore(score);
 		courseLineGroupRO.setMaxScore(max_score);
 		try {
 			courseLineGroupRO = mCourseLineGroupService.createOrUpdateCourseLineGroup(courseLineGroupRO);
 		} catch (RestException e) {
-		
-		}	
+
+		}
+		getLearningPathBO().setCourseBO(this);
 	}
 
 	public int getProgress() {
-		int step=courseLineGroupRO.getStep();
-		int total=courseLineGroupRO.getTotalStep();
-		return (step*100)/total;
+		int step = courseLineGroupRO.getStep();
+		int total = courseLineGroupRO.getTotalStep();
+		return (step * 100) / total;
 	}
 }

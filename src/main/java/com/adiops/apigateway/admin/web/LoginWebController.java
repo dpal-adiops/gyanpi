@@ -44,6 +44,11 @@ public class LoginWebController {
 		return "login/login";
 	}
 	
+	@GetMapping(value = "/error")
+	public String getError(Model model) {
+		return "login/login";
+	}
+	
 	@GetMapping(value = "/signup")
 	public String showRegistration(Model model) {
 		model.addAttribute("userRO", new AppUserRO());
@@ -71,11 +76,21 @@ public class LoginWebController {
 	}
 
 	@GetMapping("/")
-    public String index() {
+    public String index(Model model) {
 		if(AuthUtils.hasRole("ROLE_USER"))
-			return "redirect:/account";
+		{
+			model.addAttribute("courseBO", mAccountLearningTrackBO.getLearningPathBO().getCourse());
+			return "web/learning-track";
+		}
+		else if(AuthUtils.hasRole("ROLE_ADMIN"))
+		{
+			return "redirect:/admin/web/questions";
+		}
+		else
+		{
+			return "login/login";
+		}
 		
-		return "redirect:/admin/web/questions";
     }
 
 }

@@ -2,10 +2,12 @@ package com.adiops.apigateway.account.web.bo;
 
 import java.util.Optional;
 
+import org.hibernate.dialect.identity.Chache71IdentityColumnSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Component;
 
+import com.adiops.apigateway.account.web.bo.view.CacheMgr;
 import com.adiops.apigateway.app.user.service.UserService;
 import com.adiops.apigateway.common.inject.NamingMgr;
 import com.adiops.apigateway.common.response.RestException;
@@ -32,12 +34,20 @@ public class LearningPathBO {
 	@Autowired
 	private UserService mUserService;
 
-	public LearningPathBO() {
+	private String keyId;
+	
+	public LearningPathBO(String keyId) {
+		this.keyId=keyId;
 		NamingMgr.injectMembers(this);
+		
 	}
 
 	private CourseBO courseBO;
 	
+	public void setCourseBO(CourseBO courseBO) {
+		this.courseBO=courseBO;
+		CacheMgr.addLearningPathBO(this);
+	}
 	
 	public CourseBO getCourse() {
 		if(courseBO==null)		
@@ -53,7 +63,8 @@ public class LearningPathBO {
 		if (tLearningPath != null) {
 			CourseLineGroupRO tCourseLineGroup = mCourseLineGroupService
 					.getCourseLineGroupByKeyId(tLearningPath.getKeyid() + "_" + id);
-			CourseRO tCourseRO = mCourseService.getCourseByKeyId(id);
+			//CourseRO tCourseRO = mCourseService.getCourseByKeyId(id);
+			CourseRO tCourseRO = CacheMgr.getCourseRO(id);
 			if (tCourseRO == null)
 				return tCourseBO;
 
@@ -87,7 +98,9 @@ public class LearningPathBO {
 		LearningPathRO tLearningPath = null;
 		Optional<String> key = ObjectUtils.resolve(() -> mUserService.getCurrentUserRO().getKeyid());
 		if (key.isPresent()) {
-			tLearningPath = mLearningPathService.getLearningPathByKeyId(key.get());
+			this.keyId=key.get();
+			tLearningPath = mLearningPathService.getLearningPathByKeyId(keyId);
+			
 			if (tLearningPath == null) {
 				tLearningPath = new LearningPathRO();
 				tLearningPath.setKeyid(key.get());
@@ -101,5 +114,9 @@ public class LearningPathBO {
 		return tLearningPath;
 	}
 
+	public String getKeyId()
+	{
+		return keyId;
+	}
 
 }

@@ -48,14 +48,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.sessionManagement().invalidSessionUrl("/logout");
 		http.csrf().disable().authorizeRequests().antMatchers("/admin/**").hasAnyRole("ADMIN").and().formLogin()
 				.loginPage("/login").and().logout().logoutUrl("/logout")// Custom User Logout Page
-				.logoutSuccessUrl("/").and()
+				.logoutSuccessUrl("/login").and()
                 /*
                  * By default, all paths are accessible to everyone, ensuring normal access to static resources.
                  * Later, the method annotations are used to control the right of control.
                  */
                 .authorizeRequests().anyRequest().permitAll()
                 .and()
-                .exceptionHandling().accessDeniedPage("/");
+                .exceptionHandling().accessDeniedPage("/login");
 		http.csrf().disable();
 		http.headers().frameOptions().disable();
 		
