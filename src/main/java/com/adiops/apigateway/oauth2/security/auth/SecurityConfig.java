@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 /**
  * This class extends WebSecurityConfigurerAdapter and provides usual spring
@@ -44,22 +45,31 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      */
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/login","/h2-console/**","/css/**", "/js/**", "/images/**").permitAll();
-		http.sessionManagement().invalidSessionUrl("/logout");
-		http.csrf().disable().authorizeRequests().antMatchers("/admin/**").hasAnyRole("ADMIN").and().formLogin()
-				.loginPage("/login").and().logout().logoutUrl("/logout")// Custom User Logout Page
-				.logoutSuccessUrl("/login").and()
-                /*
-                 * By default, all paths are accessible to everyone, ensuring normal access to static resources.
-                 * Later, the method annotations are used to control the right of control.
-                 */
-                .authorizeRequests().anyRequest().permitAll()
-                .and()
-                .exceptionHandling().accessDeniedPage("/login");
-		http.csrf().disable();
-		http.headers().frameOptions().disable();
+		http
+        .authorizeRequests()        	
+        	.antMatchers("/css/**", "/js/**", "/fonts/**","/sass/**","/vendors/**","/images/**","/resources/**").permitAll() 
+        	.antMatchers("/*").permitAll() 
+        	.antMatchers("/admin/**").hasAnyRole("ADMIN")
+        	.antMatchers("/api/**").hasAnyRole("ADMIN")
+        	.antMatchers("/web/**").hasAnyRole("USER")            
+            .anyRequest().authenticated()
+            .and()
+        .formLogin()
+            .loginPage("/login")
+            .permitAll()
+            .and()
+        .logout() 
+        	.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+        	.deleteCookies("JSESSIONID")
+        	.invalidateHttpSession(true) 
+            .permitAll()
+            .and()
+            .exceptionHandling().accessDeniedPage("/403");
 		
-
+	
+		
+		
+		
 	}
 
 	@Autowired

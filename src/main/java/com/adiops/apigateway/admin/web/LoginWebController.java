@@ -44,9 +44,34 @@ public class LoginWebController {
 		return "login/login";
 	}
 	
+
+	
 	@GetMapping(value = "/error")
 	public String getError(Model model) {
 		return "login/login";
+	}
+	
+	@GetMapping(value = "/logout")
+	public String getLogout(Model model) {
+		return "login/login";
+	}
+	
+	
+	@GetMapping(value = "/403")
+	public String getAccessDenied(Model model) {
+		if(AuthUtils.hasRole("ROLE_USER"))
+		{
+			model.addAttribute("courseBO", mAccountLearningTrackBO.getLearningPathBO().getCourse());
+			return "web/learning-track";
+		}
+		else if(AuthUtils.hasRole("ROLE_ADMIN"))
+		{
+			return "redirect:/admin/web/questions";
+		}
+		else
+		{
+			return "login/login";
+		}
 	}
 	
 	@GetMapping(value = "/signup")
@@ -55,7 +80,7 @@ public class LoginWebController {
 		return "login/registration";
 	}
 	
-	@PostMapping(value = "/web/users/add")
+	@PostMapping(value = "/users/add")
 	public String addAppUser(@ModelAttribute AppUserRO tAppUserRO,Model model)  {
 		try {
 			tAppUserRO=mAccountDetailService.encodePassword(tAppUserRO);
@@ -66,7 +91,7 @@ public class LoginWebController {
 			return "login/registration";
 		}
 		
-		return "redirect:/login";
+		return "login/login";
 	}
 	
 	@GetMapping(value = "/account")
