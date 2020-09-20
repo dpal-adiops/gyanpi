@@ -80,12 +80,13 @@ public class LoginWebController {
 		return "login/registration";
 	}
 	
-	@PostMapping(value = "/users/add")
+	@PostMapping(value = "/add_user")
 	public String addAppUser(@ModelAttribute AppUserRO tAppUserRO,Model model)  {
 		try {
 			tAppUserRO=mAccountDetailService.encodePassword(tAppUserRO);
 			tAppUserRO.setKeyid(UserUtils.getKeyId(mAppUserService.count()));
 			tAppUserRO=mAppUserService.createOrUpdateAppUser(tAppUserRO);
+			model.addAttribute("error","You have been registered successfully. Please login.");
 		} catch (RestException e) {
 			model.addAttribute("error", e.getMessage());
 			return "login/registration";

@@ -30,6 +30,7 @@
     		 <div class="row">
                 <div class="card-panel">
                   <div class="row">
+                    <p th:if="${error != null}" th:text="${error}" class="chip"></p>	
                     <form class="col s11"  th:action="@{/login}" method='POST' >
                       <h4 class="header2 center-align">Login</h4>
                       <div class="row">
