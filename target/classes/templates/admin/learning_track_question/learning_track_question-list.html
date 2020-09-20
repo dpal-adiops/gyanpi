@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/layout3">
+
+<head>
+<title>LearningTrackQuestion-list</title>
+</head>
+
+<body>
+
+<section id="content" layout:fragment="content">	
+	<div  class="container">		
+		<div class="section">
+			<h4 class="header">LearningTrackQuestions</h4>
+			<div class="divider"></div>
+			<br>
+			<div class="row">
+				<div class="col s12">                   
+                   <a th:href="@{/admin/web/learning_track_questions/add}"  id="scale-demo" href="#!" class="btn-floating btn-large scale-transition">
+					    <i class="material-icons">add</i>
+					</a>
+                  The list shows all learning_track_questions of the author. Click New to add learning_track_question.             
+                </div>
+                <div class="col s12">
+					<table class="centered">
+						<thead>
+						<tr>
+							  	<th>Keyid</th>
+							  	<th>Title</th>
+							  	<th>Question</th>
+							  	<th>Answer</th>
+							  	<th>CorrectAnswer</th>
+							  	<th>Score</th>
+							  	<th>MaxScore</th>
+							  	<th>CourseKey</th>
+							  	<th>ModuleKey</th>
+							  	<th>TopicKey</th>
+							  	<th>QuestionKey</th>
+							  	<th>UserKey</th>
+							  	<th>Status</th>
+							 <th></th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr th:if="${learning_track_questions.empty}">
+				            <td colspan="3"> No LearningTrackQuestion Available </td>
+				        </tr>
+						 <tr th:each ="learning_track_question : ${learning_track_questions}">
+							 	<td><a th:href="@{/admin/web/learning_track_questions/{id}(id=${learning_track_question.id})}"><span th:text="${learning_track_question.keyid}"></span></a></td>
+							 	<td><a th:href="@{/admin/web/learning_track_questions/{id}(id=${learning_track_question.id})}"><span th:text="${learning_track_question.title}"></span></a></td>
+							 	<td><a th:href="@{/admin/web/learning_track_questions/{id}(id=${learning_track_question.id})}"><span th:text="${learning_track_question.question}"></span></a></td>
+							 	<td><a th:href="@{/admin/web/learning_track_questions/{id}(id=${learning_track_question.id})}"><span th:text="${learning_track_question.answer}"></span></a></td>
+							 	<td><a th:href="@{/admin/web/learning_track_questions/{id}(id=${learning_track_question.id})}"><span th:text="${learning_track_question.correctAnswer}"></span></a></td>
+							 	<td><a th:href="@{/admin/web/learning_track_questions/{id}(id=${learning_track_question.id})}"><span th:text="${learning_track_question.score}"></span></a></td>
+							 	<td><a th:href="@{/admin/web/learning_track_questions/{id}(id=${learning_track_question.id})}"><span th:text="${learning_track_question.maxScore}"></span></a></td>
+							 	<td><a th:href="@{/admin/web/learning_track_questions/{id}(id=${learning_track_question.id})}"><span th:text="${learning_track_question.courseKey}"></span></a></td>
+							 	<td><a th:href="@{/admin/web/learning_track_questions/{id}(id=${learning_track_question.id})}"><span th:text="${learning_track_question.moduleKey}"></span></a></td>
+							 	<td><a th:href="@{/admin/web/learning_track_questions/{id}(id=${learning_track_question.id})}"><span th:text="${learning_track_question.topicKey}"></span></a></td>
+							 	<td><a th:href="@{/admin/web/learning_track_questions/{id}(id=${learning_track_question.id})}"><span th:text="${learning_track_question.questionKey}"></span></a></td>
+							 	<td><a th:href="@{/admin/web/learning_track_questions/{id}(id=${learning_track_question.id})}"><span th:text="${learning_track_question.userKey}"></span></a></td>
+							 	<td><a th:href="@{/admin/web/learning_track_questions/{id}(id=${learning_track_question.id})}"><span th:text="${learning_track_question.status}"></span></a></td>
+							 <td>
+				                <a th:href="@{/admin/web/learning_track_questions/{id}/delete(id=${learning_track_question.id})}" class="btn-floating btn-small"> <i class="material-icons">delete</i></a>
+				            </td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>	
+</body>
+</html>
