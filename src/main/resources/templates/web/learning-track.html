@@ -10,8 +10,17 @@
 
 <section id="content" layout:fragment="content">	
 	<div  class="container2">		
-			
-			<div class="row">
+				
+				<ul id="slide-out" class="collection side-nav fixed leftside-navigation hide-on-large-only">
+					<li class="collection-item hide-on-large-only">
+		              <a href="/logout" class="grey-text text-darken-1">
+		                  <i class="material-icons">keyboard_tab</i> Logout</a>
+		            </li>	
+		            
+				</ul>
+				
+						
+			<div class="row" th:if="${courseBO.CourseLineGroupRO !=null}" >
 				<div class="col s12 m12 l12"> 
 			      <div class="card">			        
 			        <span class="progress">
@@ -24,7 +33,7 @@
 			      </div>
 			    </div>
 			</div>
-			<div class="row">
+			<div class="row" th:if="${courseBO.CourseLineGroupRO !=null}">
 				<div class="col s12 m12 l12" th:each ="moduleBO : ${courseBO.moduleBOs}">
 					<ul class="collapsible">
 						<li>

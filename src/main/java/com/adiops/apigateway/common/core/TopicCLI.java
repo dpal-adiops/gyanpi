@@ -7,7 +7,6 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
@@ -27,7 +26,7 @@ import com.adiops.apigateway.topic.resourceobject.TopicRO;
 import com.adiops.apigateway.topic.service.TopicService;
 
 @Component
-public class TopicCLI implements CommandLineRunner {
+public class TopicCLI {
 
 	@Autowired
 	CourseService mCourseService;
@@ -50,9 +49,9 @@ public class TopicCLI implements CommandLineRunner {
 	@Autowired
 	AppRoleService mAppRoleService;
 
-	@Override
+	
 	@Transactional
-	public void run(String... args) throws Exception {
+	public void run() throws IOException  {
 		try {
 			importFile();
 			importCourse();			

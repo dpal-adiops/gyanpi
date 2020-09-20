@@ -41,7 +41,8 @@ public class LearningPathBO {
 	
 	public CourseBO getCourse() {
 		if(courseBO==null)		
-		 courseBO=getCourseBO("Math10");
+		courseBO=getCourseBO("Math10");
+		if(courseBO.getCourseLineGroupRO()!=null)
 		courseBO.calculateBackwardSteps();
 		return courseBO;
 	}

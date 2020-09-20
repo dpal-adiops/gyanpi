@@ -15,11 +15,11 @@
 <div class="section no-pad-bot" id="index-banner">
   <div class="container">
     <div class="row">
-    	<div class="col s12 m8">
+    	<div id="banner" class="col s12 m8">
     		<br><br>
-		    <h1 class="header center orange-text">Gain confidence in maths!</h1>
+		     <h1 class="header center orange-text">Learning like a playing a game</h1>
 		    <div class="row center">
-		      <h5 class="header col s12 light"> Gyanpi helps students to learn maths at their own pace through fun and interactive questions, built in support and motivating awards.</h5>
+		      <h5 class="header col s12 light">Learning in delightful interactive game can be really fun. Points, badges, cute monsters...who knew learning could be this enjoyable?</h5>
 		    </div>
 		    <div class="row center">
 		      <a th:href="@{/signup}"  id="download-button" class="btn-large waves-effect waves-light orange">Get Started</a>
@@ -57,7 +57,7 @@
 							             </div>
 							              <br>
 						             		<button class="btn btn-success btn-sm" >Apply</button>
-						             		<button class="btn btn-success btn-sm" >Back to Login</button>
+						             		<a th:href="@{/login}" class="waves-effect waves-light" name="action">Back To Login</a>  
 						        </form>
 							</div>
 						</div>

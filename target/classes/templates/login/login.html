@@ -13,16 +13,16 @@
 <div th:replace="fragments/navigation :: navigation"></div>
 
 <div class="section no-pad-bot" id="index-banner">
-  <div class="container">
+  <div class="container banner-content-bg">
     <div class="row">
-    	<div class="col m8 s12">
+    	<div id="banner" class="col m8 s12">
     		<br><br>
-		    <h1 class="header center orange-text">Gain confidence in maths!</h1>
+		    <h1 class="header center orange-text">Learning like a playing a game</h1>
 		    <div class="row center">
-		      <h5 class="header col s12 light"> Gyanpi helps students to learn maths at their own pace through fun and interactive questions, built in support and motivating awards.</h5>
+		      <h5 class="header col s12 light">Learning in delightful interactive game can be really fun. Points, badges, cute monsters...who knew learning could be this enjoyable?</h5>
 		    </div>
 		    <div class="row center">
-		      <a th:href="@{/signup}"  id="download-button" class="btn-large waves-effect waves-light orange">Get Started</a>
+		      <a th:href="@{/signup}"  id="download-button" class="btn-large waves-effect waves-light orange">Get Started Now</a>
 		    </div>
 		    <br><br><br>
     	</div>
@@ -46,7 +46,7 @@
                         <div class="input-field">
                           <div class="input-field">
                             <button class="btn waves-effect waves-light" type="submit" name="action">
-                              <i class="material-icons">lock_open</i> Login</button> <a th:href="@{/signup}" class="btn waves-effect waves-light" name="action">Register</a>                              
+                              <i class="material-icons">lock_open</i> Login</button> <a th:href="@{/signup}" class="waves-effect waves-light" name="action">Register</a>                              
                           </div>
                           
                         </div>
